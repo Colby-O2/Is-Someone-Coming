@@ -1,0 +1,44 @@
+ToolBar 
+{
+	background-color: #1D1D1E;
+	height: 35px;
+	padding-bottom: 4px;
+}
+
+Button
+{
+	background-color: #252729;
+	border-color: #1D1D1E;
+	max-height: 35px;
+	margin: 2px;
+}
+
+Button:hover
+{
+	background-color: #2B2D2F;
+}
+
+Button:active
+{
+	background-color: #1D1D1E;
+}
+
+TextField 
+{
+	padding-left: 4px;
+}
+
+.unity-text-field__label 
+{
+	padding-left: 4px;
+}
+
+.unity-text-field__input 
+{
+	background-color: #252729;
+	border-color: #27292C;
+	border-radius: 4px;
+	max-height: 25px;
+	min-width: 160px;
+	padding-left: 6px;
+}

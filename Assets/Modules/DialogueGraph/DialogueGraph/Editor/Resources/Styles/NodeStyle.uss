@@ -1,0 +1,143 @@
+.ds-node-extension-container 
+{
+	background-color: var(--colors-window-dark-gray-1);
+	padding: 8px;
+}
+
+.ds-node-main-container 
+{
+	background-color: var(--colors-window-dark-gray-1);
+}
+
+.ds-node-custom-data-container 
+{
+	background-color: var(--colors-window-dark-gray-3);
+	border-radius: 4px;
+	padding: 8px;
+}
+
+.ds-node-textfield > .unity-text-field__input 
+{
+	background-color: var(--colors-window-dark-gray-1);
+	border-color: var(--colors-window-dark-gray-6);
+	border-radius: 4px;
+	max-width: 300px;
+	min-width: 160px;
+	padding: 8px;
+}
+
+.ds-node-textfield-hidden > .unity-text-field__input 
+{
+	background-color: transparent; 
+	border-color: transparent;  
+}
+
+.ds-node-textfield-hidden > .unity-text-field__input:focus
+{
+	background-color: var(--colors-window-dark-gray-1);
+	border-color: var(--colors-window-dark-gray-6);
+}
+
+.ds-node-filename-textfield > .unity-text-field__input 
+{
+	max-width: 1000px;
+}
+
+.ds-node-filename-textfield > .unity-text-field__input:focus
+{
+	margin: 4px;
+	padding: 4px;
+}
+
+.ds-node-choice-textfield {
+    max-width: 300px;  
+    min-width: 160px;
+}
+
+.ds-node-choice-textfield > .unity-text-field__input {
+	background-color: var(--colors-window-dark-gray-4);
+	border-color: var(--colors-window-dark-gray-6);
+
+    font-size: 11px;
+    padding: 6px 8px;
+
+    white-space: normal;
+    flex-wrap: wrap;
+
+    min-height: 22px;
+    align-items: flex-start;
+}
+
+.ds-node-choice-textfield .unity-text-element {
+    color: white;
+    font-size: 11px;
+    white-space: normal; 
+}
+
+.ds-node-quote-textfield {
+    max-width: 600px;
+    margin: 4px 0;
+}
+
+.ds-node-quote-textfield > .unity-text-field__input {
+    background-color: var(--colors-window-dark-gray-4);
+    padding: 4px 8px;
+
+    min-height: 22px;
+    align-items: center; 
+}
+
+.ds-node-quote-textfield > .unity-text-field__input:hover {
+    background-color: var(--colors-window-dark-gray-5);
+}
+
+.ds-node-quote-textfield > .unity-text-field__input:focus {
+    background-color: var(--colors-window-dark-gray-1);
+    border-color: var(--colors-window-dark-gray-6);
+}
+
+.ds-node-quote-textfield .unity-text-element {
+    color: white;
+    font-size: 13px;
+}
+
+.ds-node-button 
+{
+	background-color: var(--colors-window-dark-gray-5);
+	border-color: var(--colors-window-dark-gray-1);
+	max-height: 25px;
+	margin: 4px;
+}
+
+.ds-node-button:hover
+{
+	background-color: var(--colors-window-dark-gray-2);
+}
+
+.ds-node-button:active
+{
+	background-color: var(--colors-window-dark-gray-3);
+	color: #FDD057;
+}
+
+TextField 
+{
+	margin-left: 0px;
+}
+
+.ds-node-data-container > Foldout 
+{
+	margin-left: -4px;
+	margin-top: 4px;
+}
+
+.ds-node-data-container > Foldout > TextField
+{
+	margin-left: -12px;
+	margin-top: 8px;
+}
+
+.unity-toggle__text 
+{
+	margin-left: 2px;
+}

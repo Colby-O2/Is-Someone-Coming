@@ -1,0 +1,9 @@
+:root 
+{
+	--colors-window-dark-gray-1: #121213;
+	--colors-window-dark-gray-2: #1C1C1F; 
+	--colors-window-dark-gray-3: #26262A; 
+	--colors-window-dark-gray-4: #303036; 
+	--colors-window-dark-gray-5: #3A3A42; 
+	--colors-window-dark-gray-6: #4A4A55; 
+}

@@ -1,0 +1,22 @@
+{
+    "name": "PlazmaGamesEditor",
+    "rootNamespace": "PlazmaGames.Editor",
+    "references": [
+<<<<<<< Updated upstream
+        "GUID:ba514b584b6be8f69ac6ef1e0229e6c0"
+=======
+        "GUID:ab44afb389d78e841bb28422ce0a2831"
+>>>>>>> Stashed changes
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "UNITY_EDITOR"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

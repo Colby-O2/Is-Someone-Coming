@@ -1,0 +1,25 @@
+{
+    "name": "PlazmaGamesPlayMode",
+    "rootNamespace": "PlazmaGames.Tests",
+    "references": [
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner",
+        "PlazmaGames.Core",
+        "PlazmaGames.Editor",
+        "PlazmaGames.Runtime",
+        "PlazmaGames.Settings"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
