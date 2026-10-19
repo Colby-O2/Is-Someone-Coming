@@ -92,13 +92,13 @@ MonoBehaviour:
     m_Value: 1
   ScreenBend:
     m_OverrideState: 1
-    m_Value: 4
+    m_Value: 8
   EnableVignette:
     m_OverrideState: 1
     m_Value: 1
   ScreenRoundness:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0.328
   VignetteOpacity:
     m_OverrideState: 1
     m_Value: 1
@@ -119,13 +119,13 @@ MonoBehaviour:
     m_Value: -0.2
   ScanLineStrength:
     m_OverrideState: 1
-    m_Value: 0.2
+    m_Value: 0.04
   EnableNoise:
     m_OverrideState: 1
     m_Value: 1
   NoiseScale:
     m_OverrideState: 1
-    m_Value: 0.9
+    m_Value: 0.856
   NoiseRBGOffsetX:
     m_OverrideState: 1
     m_Value: 0.4
@@ -137,13 +137,13 @@ MonoBehaviour:
     m_Value: 0.1
   NoiseFade:
     m_OverrideState: 1
-    m_Value: 0.55
+    m_Value: 0.264
   EnableVhs:
     m_OverrideState: 1
     m_Value: 1
   VhsSmear:
     m_OverrideState: 1
-    m_Value: 0.95
+    m_Value: 0.698
   EnableTrackerLine:
     m_OverrideState: 1
     m_Value: 1
@@ -197,19 +197,19 @@ MonoBehaviour:
     m_Value: 1.5
   UnsharpRadius:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 1.92
   UnsharpThreshold:
     m_OverrideState: 1
-    m_Value: 0.02
+    m_Value: 0.026
   EnableClampColor:
     m_OverrideState: 1
     m_Value: 1
   ClampBlack:
     m_OverrideState: 1
-    m_Value: 0.05
+    m_Value: 0
   ClampWhite:
     m_OverrideState: 1
-    m_Value: 0.95
+    m_Value: 1
   ShadowTint:
     m_OverrideState: 1
     m_Value: {r: 0.7, g: 0.6, b: 0.9, a: 1}
@@ -218,16 +218,16 @@ MonoBehaviour:
     m_Value: 1
   Gamma:
     m_OverrideState: 1
-    m_Value: 0.374
+    m_Value: 0.564
   Brightness:
     m_OverrideState: 1
-    m_Value: 0.5
+    m_Value: 0.471
   Contrast:
     m_OverrideState: 1
     m_Value: 0.5
   Saturation:
     m_OverrideState: 1
-    m_Value: 0.5
+    m_Value: 1
   Hue:
     m_OverrideState: 1
     m_Value: 0

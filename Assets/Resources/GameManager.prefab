@@ -340,6 +340,9 @@ Transform:
   - {fileID: 8408040010703515460}
   - {fileID: 6160255724865132221}
   - {fileID: 6168431099845029175}
+  - {fileID: 2323336754153805906}
+  - {fileID: 1611995781267754718}
+  - {fileID: 8074254358296866501}
   m_Father: {fileID: 4775556590630408094}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3377396468597120417
@@ -402,6 +405,204 @@ MonoBehaviour:
   _sfxSources: []
   _musicSources: []
   _hasInitialized: 0
+--- !u!1 &3776932978582798148
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1611995781267754718}
+  - component: {fileID: 4587515273793016002}
+  m_Layer: 0
+  m_Name: GPSMonoSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1611995781267754718
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3776932978582798148}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2956269746140199252}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4587515273793016002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3776932978582798148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4596c9a5e5ccda949a4cacf936236ab2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ColbyO.SJ26.GPS.GPSMonoSystem
+  _startAddress: 
+  _targetAddress: 
+--- !u!1 &3925593769132210556
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8074254358296866501}
+  - component: {fileID: 834372187236808143}
+  m_Layer: 0
+  m_Name: DispatchMonoSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8074254358296866501
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3925593769132210556}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2956269746140199252}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &834372187236808143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3925593769132210556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a5f47951608df8469f702be3ad4b288, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ColbyO.SJ26.Dispatch.DispatchMonoSystem
+  _autoSpawnUnitsOnStart: 1
+  _optionalUnitPrefab: {fileID: 0}
+  _defaultSpawnConfigs:
+  - callsign: P-01
+    unitType: 0
+    initialStatus: 0
+  - callsign: P-02
+    unitType: 0
+    initialStatus: 0
+  - callsign: P-03
+    unitType: 0
+    initialStatus: 0
+  - callsign: E-01
+    unitType: 1
+    initialStatus: 0
+  - callsign: E-02
+    unitType: 1
+    initialStatus: 0
+  - callsign: PD-01
+    unitType: 2
+    initialStatus: 0
+  _registeredUnits: []
+  _testUnitCallsign: P-01
+  _testTargetAddress: 
+  _testCallId: '#1047'
+--- !u!1 &4241324389147324269
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2323336754153805906}
+  - component: {fileID: 6561226314354847670}
+  m_Layer: 0
+  m_Name: StreetMS
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2323336754153805906
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4241324389147324269}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2956269746140199252}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6561226314354847670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4241324389147324269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b752c18899989904c8eedac0d714a247, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ColbyO.SJ26.Street.StreetMonoSystem
+  _vertexMergeTolerance: 0.5
+  _addressIntervalMeters: 6
+  _intersectionBufferMeters: 1
+  _startingHouseNumber: 100
+  _streetRoots:
+  - Maple
+  - Pine
+  - Oak
+  - Cedar
+  - Hill
+  - Erie
+  - Elm
+  - Walnut
+  - Chestnut
+  - Washington
+  - River
+  - Lake
+  - Mill
+  - Main
+  - Church
+  - Park
+  - Sunset
+  - Ridge
+  - Cemetery
+  - Ash
+  - Locust
+  - Sycamore
+  _streetSuffixes:
+  - St
+  - Ave
+  - Rd
+  - Blvd
+  - Ln
+  - Ct
+  - Dr
+  - Way
+  _showRoadLines: 0
+  _showAddresses: 0
+  _showIntersections: 0
 --- !u!1 &4732747539553077922
 GameObject:
   m_ObjectHideFlags: 0
@@ -696,6 +897,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50ba82f95f7d06a47ab20ced4b7bca27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ColbyO.SJ26.SJ26GameManager
-  _verbose: 0
+  _verbose: 1
   _monoSystemHolder: {fileID: 3191178958999487411}
   _preferences: {fileID: 11400000, guid: 4d207c76311ee484f9eb15d8313daaaf, type: 2}
