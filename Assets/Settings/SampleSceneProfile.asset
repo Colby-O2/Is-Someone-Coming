@@ -65,7 +65,7 @@ MonoBehaviour:
   active: 1
   Enabled:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   ShowInSceneView:
     m_OverrideState: 1
     m_Value: 0
@@ -158,7 +158,7 @@ MonoBehaviour:
     m_Value: 1
   GlitchChance:
     m_OverrideState: 1
-    m_Value: 0.2
+    m_Value: 0.04
   GlitchLength:
     m_OverrideState: 1
     m_Value: 15
@@ -182,7 +182,7 @@ MonoBehaviour:
     m_Value: 0.1
   EnableSubPixels:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0
   SubPixelMode:
     m_OverrideState: 1
     m_Value: 0
