@@ -12,5 +12,6 @@ namespace ColbyO.SJ26.Dispatch
         bool DispatchUnitToAddress(FieldUnit unit, string targetAddress, string callId = "");
         IReadOnlyList<FieldUnit> GetAllUnits();
         FieldUnit GetUnitByCallsign(string callsign);
+        int GetNumberOfRegisteredUnits(UnitType? unitType = null, string callsignSymbol = null);
     }
 }

@@ -498,24 +498,13 @@ MonoBehaviour:
   _autoSpawnUnitsOnStart: 1
   _optionalUnitPrefab: {fileID: 0}
   _defaultSpawnConfigs:
-  - callsign: P-01
-    unitType: 0
-    initialStatus: 0
-  - callsign: P-02
-    unitType: 0
-    initialStatus: 0
-  - callsign: P-03
-    unitType: 0
-    initialStatus: 0
-  - callsign: E-01
-    unitType: 1
-    initialStatus: 0
-  - callsign: E-02
-    unitType: 1
-    initialStatus: 0
-  - callsign: PD-01
-    unitType: 2
-    initialStatus: 0
+  - unitData: {fileID: 11400000, guid: c4066115ffdf13744ba3bed9f7485762, type: 2}
+  - unitData: {fileID: 11400000, guid: c4066115ffdf13744ba3bed9f7485762, type: 2}
+  - unitData: {fileID: 11400000, guid: c4066115ffdf13744ba3bed9f7485762, type: 2}
+  - unitData: {fileID: 11400000, guid: 319ed3bbcfa96d14cbe1ec3e20effd02, type: 2}
+  - unitData: {fileID: 11400000, guid: 319ed3bbcfa96d14cbe1ec3e20effd02, type: 2}
+  - unitData: {fileID: 11400000, guid: 10d370763f2c4914c879c387abc32ad0, type: 2}
+  - unitData: {fileID: 11400000, guid: 10d370763f2c4914c879c387abc32ad0, type: 2}
   _registeredUnits: []
   _testUnitCallsign: P-01
   _testTargetAddress: 

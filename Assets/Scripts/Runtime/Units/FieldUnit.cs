@@ -1,12 +1,12 @@
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
+
 using PlazmaGames.Core;
-using ColbyO.SJ26.Street;
-using ColbyO.SJ26.GPS;
 using PlazmaGames.Attribute;
 using PlazmaGames.Core.Debugging;
 
-
+using ColbyO.SJ26.Street;
+using ColbyO.SJ26.GPS;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -18,7 +18,7 @@ namespace ColbyO.SJ26.Dispatch
     {
         Police,
         EMS,
-        Other
+        Fire
     }
 
     public enum UnitStatus
@@ -32,27 +32,34 @@ namespace ColbyO.SJ26.Dispatch
     public class FieldUnit : MonoBehaviour
     {
         [Header("Unit Identity")]
-        [SerializeField] private string _callsign = "P-01";
-        [SerializeField] private UnitType _unitType = UnitType.Police;
-        [SerializeField] private UnitStatus _status = UnitStatus.Available;
+        [SerializeField] private FieldUnitSO _unitData;
+        [SerializeField, ReadOnly] private string _callsign = "P-01";
+        [SerializeField, ReadOnly] private UnitStatus _status = UnitStatus.Available;
+
+        [Header("Icon Display Settings")]
+        [SerializeField] private GameObject _iconPrefab;
+        [SerializeField] private Vector3 _iconOffset = new Vector3(0f, 2.5f, 0f);
+        [SerializeField] private Vector2 _iconSize = new Vector2(9f * 0.8571f, 9f);
+        [SerializeField] private bool _faceUpward = true;
+
+        [Header("Route Renderer Settings")]
+        [SerializeField] private Material _routeLineMaterial;
+        [SerializeField] private Color _routeLineColor = new Color(0f, 0.75f, 1f, 1f);
+        [SerializeField] private float _routeLineWidth = 1f;
+        [SerializeField] private float _routeLineHeightOffset = 0.5f;
 
         [Header("Movement Settings")]
-        [SerializeField] private float _moveSpeed = 2f;
-        [SerializeField] private float _rotationSpeed = 8f;
         [SerializeField] private float _waypointThreshold = 0.5f;
         [SerializeField] private bool _snapToRoadOnStart = true;
         [SerializeField] private string _startingAddress = "";
-
-        [Header("Idle Patrol")]
-        [SerializeField] private bool _autoPatrolWhenAvailable = true;
-        [SerializeField] private float _patrolSpeed = 1f;
-        [SerializeField] private float _idleWaitDuration = 3f;
 
         [Header("Live Telemetry")]
         [SerializeField, ReadOnly] private string _activeCallId = "";
         [SerializeField, ReadOnly] private string _currentLocationLabel = "Patrolling";
         [SerializeField, ReadOnly] private string _destinationAddress = "None";
 
+        private GameObject _spawnedIcon;
+        private LineRenderer _routeLineRenderer;
         private float _idleTimer = 0f;
         private bool _isIdleCruising = false;
 
@@ -63,8 +70,9 @@ namespace ColbyO.SJ26.Dispatch
         private IStreetMonoSystem _streetSystem;
         private IGPSMonoSystem _gpsSystem;
 
+        public string CallsignSymbol => _unitData.callsignSymbol;
         public string Callsign => _callsign;
-        public UnitType Type => _unitType;
+        public UnitType Type => _unitData.unitType;
         public UnitStatus Status => _status;
         public string ActiveCallId => _activeCallId;
         public string CurrentLocation => _currentLocationLabel;
@@ -74,6 +82,11 @@ namespace ColbyO.SJ26.Dispatch
 
         private void Start()
         {
+            if (_iconPrefab == null)
+            {
+                _iconPrefab = Resources.Load<GameObject>("Prefabs/UnitIconPrefab");
+            }
+
             _dispatchSystem = GameManager.GetMonoSystem<IDispatchMonoSystem>();
             _streetSystem = GameManager.GetMonoSystem<IStreetMonoSystem>();
             _gpsSystem = GameManager.GetMonoSystem<IGPSMonoSystem>();
@@ -85,6 +98,8 @@ namespace ColbyO.SJ26.Dispatch
                 SnapToStartingRoadPosition();
             }
 
+            SetupUnitIcon();
+            SetupRouteRenderer();
             UpdateCurrentLocationLabel();
         }
 
@@ -108,15 +123,119 @@ namespace ColbyO.SJ26.Dispatch
             {
                 HandleIdlePatrol();
             }
+
+            UpdateRouteVisuals();
+        }
+
+        private void SetupUnitIcon()
+        {
+            if (_unitData == null) return;
+
+            Texture targetTexture = _unitData.icon;
+
+            if (targetTexture == null)
+            {
+                PlazmaDebug.LogWarning("No valid texture/sprite found on FieldUnitSO.", $"Unit {_callsign}");
+                return;
+            }
+
+            if (_iconPrefab != null)
+            {
+                _spawnedIcon = Instantiate(_iconPrefab, transform);
+            }
+
+            if (_spawnedIcon == null) return;
+
+            _spawnedIcon.transform.localPosition = _iconOffset;
+            _spawnedIcon.transform.localScale = new Vector3(_iconSize.x, _iconSize.y, 1f);
+
+            if (_faceUpward)
+            {
+                _spawnedIcon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
+            }
+
+            if (_spawnedIcon.TryGetComponent<Renderer>(out var renderer))
+            {
+                MaterialPropertyBlock block = new MaterialPropertyBlock();
+                renderer.GetPropertyBlock(block);
+                block.SetTexture("_BaseMap", targetTexture);
+                block.SetTexture("_MainTex", targetTexture);
+                renderer.SetPropertyBlock(block);
+            }
+        }
+
+        private void SetupRouteRenderer()
+        {
+            GameObject lineGO = new GameObject($"RouteLine_{_callsign}");
+            lineGO.transform.SetParent(transform, false);
+            lineGO.layer = _iconPrefab.layer;
+
+            _routeLineRenderer = lineGO.AddComponent<LineRenderer>();
+            _routeLineRenderer.useWorldSpace = true;
+            _routeLineRenderer.alignment = LineAlignment.TransformZ;
+            lineGO.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
+
+            _routeLineRenderer.startWidth = _routeLineWidth;
+            _routeLineRenderer.endWidth = _routeLineWidth;
+            _routeLineRenderer.numCapVertices = 4;
+            _routeLineRenderer.numCornerVertices = 4;
+            _routeLineRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            _routeLineRenderer.receiveShadows = false;
+
+            if (_routeLineMaterial != null)
+            {
+                _routeLineRenderer.material = _routeLineMaterial;
+            }
+            else
+            {
+                Shader defaultShader = Shader.Find("Sprites/Default");
+                if (defaultShader != null)
+                {
+                    _routeLineRenderer.material = new Material(defaultShader);
+                }
+            }
+
+            _routeLineRenderer.startColor = _routeLineColor;
+            _routeLineRenderer.endColor = _routeLineColor;
+            _routeLineRenderer.enabled = false;
+        }
+
+        private void UpdateRouteVisuals()
+        {
+            if (_routeLineRenderer == null) return;
+
+            bool shouldDraw = (_status == UnitStatus.EnRoute && !_isIdleCruising && _currentPath != null && _pathIndex < _currentPath.Count);
+
+            if (!shouldDraw)
+            {
+                if (_routeLineRenderer.enabled)
+                {
+                    _routeLineRenderer.positionCount = 0;
+                    _routeLineRenderer.enabled = false;
+                }
+                return;
+            }
+
+            _routeLineRenderer.enabled = true;
+            int remainingPoints = _currentPath.Count - _pathIndex;
+            _routeLineRenderer.positionCount = remainingPoints + 1;
+
+            Vector3 upOffset = Vector3.up * _routeLineHeightOffset;
+            _routeLineRenderer.SetPosition(0, transform.position + upOffset);
+
+            for (int i = 0; i < remainingPoints; i++)
+            {
+                _routeLineRenderer.SetPosition(i + 1, _currentPath[_pathIndex + i] + upOffset);
+            }
         }
 
         private void HandleIdlePatrol()
         {
-            if (!_autoPatrolWhenAvailable || _unitType != UnitType.Police)
+            if (_unitData == null || !_unitData.autoPatrolWhenAvailable || _unitData.unitType != UnitType.Police)
                 return;
 
             _idleTimer += Time.deltaTime;
-            if (_idleTimer >= _idleWaitDuration)
+            if (_idleTimer >= _unitData.idleWaitDuration)
             {
                 _idleTimer = 0f;
                 PickRandomPatrolDestination();
@@ -156,6 +275,12 @@ namespace ColbyO.SJ26.Dispatch
             }
         }
 
+        public void Initialize(FieldUnitSO unitData, string callsign)
+        {
+            _unitData = unitData;
+            _callsign = callsign;
+        }
+
         public void AssignRoute(List<Vector3> path, string targetAddr, string callId)
         {
             if (path == null || path.Count == 0)
@@ -170,6 +295,8 @@ namespace ColbyO.SJ26.Dispatch
             _destinationAddress = targetAddr;
             _activeCallId = callId;
             _status = UnitStatus.EnRoute;
+
+            UpdateRouteVisuals();
         }
 
         public void SetAvailable()
@@ -182,6 +309,7 @@ namespace ColbyO.SJ26.Dispatch
             _pathIndex = 0;
             _idleTimer = 0f;
             UpdateCurrentLocationLabel();
+            UpdateRouteVisuals();
         }
 
         public void SetUnavailable()
@@ -193,6 +321,7 @@ namespace ColbyO.SJ26.Dispatch
             _currentPath.Clear();
             _pathIndex = 0;
             _idleTimer = 0f;
+            UpdateRouteVisuals();
         }
 
         private void FollowPath()
@@ -220,14 +349,14 @@ namespace ColbyO.SJ26.Dispatch
                 diff = targetPoint - transform.position;
             }
 
-            float activeSpeed = _isIdleCruising ? _patrolSpeed : _moveSpeed;
+            float activeSpeed = _isIdleCruising ? _unitData.patrolSpeed : _unitData.moveSpeed;
             transform.position = Vector3.MoveTowards(transform.position, targetPoint, activeSpeed * Time.deltaTime);
 
             Vector3 flatDir = new Vector3(diff.x, 0f, diff.z);
             if (flatDir.sqrMagnitude > 0.001f)
             {
                 Quaternion targetRot = Quaternion.LookRotation(flatDir.normalized, Vector3.up);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, _rotationSpeed * Time.deltaTime);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, _unitData.rotationSpeed * Time.deltaTime);
             }
         }
 
@@ -249,6 +378,8 @@ namespace ColbyO.SJ26.Dispatch
                 _pathIndex = 0;
                 PlazmaDebug.Log($" ON SCENE at {_destinationAddress} (Call {_activeCallId}).", $"Unit {_callsign}");
             }
+
+            UpdateRouteVisuals();
         }
 
         private void SnapToStartingRoadPosition()
@@ -338,9 +469,9 @@ namespace ColbyO.SJ26.Dispatch
 #if UNITY_EDITOR
         private void OnDrawGizmos()
         {
-            if ((_status == UnitStatus.EnRoute || _isIdleCruising) && _currentPath != null && _pathIndex < _currentPath.Count)
+            if (_status == UnitStatus.EnRoute && !_isIdleCruising && _currentPath != null && _pathIndex < _currentPath.Count)
             {
-                Gizmos.color = _isIdleCruising ? new Color(0.2f, 0.8f, 0.2f, 0.7f) : Color.cyan;
+                Gizmos.color = _routeLineColor;
                 Vector3 prev = transform.position;
                 for (int i = _pathIndex; i < _currentPath.Count; i++)
                 {
@@ -352,7 +483,7 @@ namespace ColbyO.SJ26.Dispatch
 
             Gizmos.color = _status switch
             {
-                UnitStatus.Available => _isIdleCruising ? Color.cyan : Color.green,
+                UnitStatus.Available => Color.green,
                 UnitStatus.EnRoute => Color.cyan,
                 UnitStatus.OnScene => Color.yellow,
                 _ => Color.gray

@@ -15,15 +15,11 @@ namespace ColbyO.SJ26.Dispatch
     [System.Serializable]
     public struct UnitSpawnConfig
     {
-        public string callsign;
-        public UnitType unitType;
-        public UnitStatus initialStatus;
+        public FieldUnitSO unitData;
 
-        public UnitSpawnConfig(string callsign, UnitType unitType, UnitStatus initialStatus = UnitStatus.Available)
+        public UnitSpawnConfig(FieldUnitSO unitData)
         {
-            this.callsign = callsign;
-            this.unitType = unitType;
-            this.initialStatus = initialStatus;
+            this.unitData = unitData;
         }
     }
 
@@ -33,15 +29,7 @@ namespace ColbyO.SJ26.Dispatch
         [SerializeField] private bool _autoSpawnUnitsOnStart = true;
         [SerializeField] private GameObject _optionalUnitPrefab;
         [SerializeField]
-        private List<UnitSpawnConfig> _defaultSpawnConfigs = new List<UnitSpawnConfig>
-        {
-            new UnitSpawnConfig("P-01", UnitType.Police, UnitStatus.Available),
-            new UnitSpawnConfig("P-02", UnitType.Police, UnitStatus.Available),
-            new UnitSpawnConfig("P-03", UnitType.Police, UnitStatus.Available),
-            new UnitSpawnConfig("E-01", UnitType.EMS, UnitStatus.Available),
-            new UnitSpawnConfig("E-02", UnitType.EMS, UnitStatus.Available),
-            new UnitSpawnConfig("PD-01", UnitType.Other, UnitStatus.Available)
-        };
+        private List<UnitSpawnConfig> _defaultSpawnConfigs = new List<UnitSpawnConfig> { };
 
         [Header("Registered Field Units")]
         [SerializeField] private List<FieldUnit> _registeredUnits = new List<FieldUnit>();
@@ -90,8 +78,6 @@ namespace ColbyO.SJ26.Dispatch
             int spawnIndex = 0;
             foreach (var config in _defaultSpawnConfigs)
             {
-                if (GetUnitByCallsign(config.callsign) != null) continue;
-
                 Vector3 spawnPos = (spawnPoints.Count > 0)
                     ? spawnPoints[spawnIndex % spawnPoints.Count]
                     : Vector3.zero;
@@ -109,25 +95,31 @@ namespace ColbyO.SJ26.Dispatch
                 }
                 else
                 {
-                    unitGO = new GameObject($"Unit_{config.callsign}");
+                    unitGO = new GameObject($"Unit_{config.unitData.callsignSymbol}-{(GetNumberOfRegisteredUnits(config.unitData.unitType, config.unitData.callsignSymbol) + 1):D2}");
                     unitGO.transform.position = spawnPos;
                     unit = unitGO.AddComponent<FieldUnit>();
                 }
 
-                InitializeUnitProperties(unit, config.callsign, config.unitType, config.initialStatus);
+                string callsign = GetNextCallsign(
+                    config.unitData.unitType,
+                    config.unitData.callsignSymbol
+                );
+
+                unit.Initialize(config.unitData, callsign);
                 RegisterUnit(unit);
             }
         }
 
-        private void InitializeUnitProperties(FieldUnit unit, string callsign, UnitType type, UnitStatus status)
+        private string GetNextCallsign(UnitType unitType, string callsignSymbol)
         {
-            var typeField = typeof(FieldUnit).GetField("_unitType", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-            var callsignField = typeof(FieldUnit).GetField("_callsign", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-            var statusField = typeof(FieldUnit).GetField("_status", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            int number = 1;
 
-            callsignField?.SetValue(unit, callsign);
-            typeField?.SetValue(unit, type);
-            statusField?.SetValue(unit, status);
+            while (GetUnitByCallsign($"{callsignSymbol}-{number:D2}") != null)
+            {
+                number++;
+            }
+
+            return $"{callsignSymbol}-{number:D2}";
         }
 
         public void RegisterUnit(FieldUnit unit)
@@ -195,6 +187,23 @@ namespace ColbyO.SJ26.Dispatch
             unit.AssignRoute(route, targetAddress, callId);
             PlazmaDebug.Log($"Dispatched {unit.Callsign} ({unit.Type}) to {targetAddress} for Call {callId}.", "DispatchMonoSystem");
             return true;
+        }
+
+        public int GetNumberOfRegisteredUnits(UnitType? unitType = null, string callsignSymbol = null)
+        {
+            int numOfUnits = 0;
+
+            if (unitType == null && callsignSymbol == null) return numOfUnits;
+
+            _registeredUnits.ForEach(unit =>
+            {
+                if (
+                (!unitType.HasValue || unitType.Value == unit.Type) &&
+                (callsignSymbol == null || callsignSymbol == string.Empty || callsignSymbol == unit.CallsignSymbol)
+                ) numOfUnits++;
+            });
+
+            return numOfUnits;
         }
     }
 
