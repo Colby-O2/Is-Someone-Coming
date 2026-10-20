@@ -15,15 +15,15 @@ TagManager:
   - UI
   - CityMap
   - DispatchUI
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Interactable
+  - Inspecting
+  - Hint
+  - Player
+  - ActiveInspectable
+  - ActiveClickable
+  - Clickable
+  - ActiveInteractable
+  - PSXIgnore
   - 
   - 
   - 

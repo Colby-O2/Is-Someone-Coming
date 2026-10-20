@@ -1,16 +1,15 @@
 using UnityEngine;
 
+using ColbyO.SJ26.Map;
+
 namespace ColbyO.SJ26.Dispatch
 {
-    [CreateAssetMenu(fileName = "DefaultUnitSO", menuName = "Sj26/Units/Unit")]
-    public class FieldUnitSO : ScriptableObject
+    [CreateAssetMenu(fileName = "DefaultUnitSO", menuName = "SJ26/Map/Unit")]
+    public class FieldUnitSO : MapObjectSO
     {
-        [Header("Idenity")]
+        [Header("Identity")]
         public string callsignSymbol = "P";
         public UnitType unitType = UnitType.Police;
-
-        [Header("Icon")]
-        public Texture2D icon;
 
         [Header("Movement")]
         public float moveSpeed = 2f;

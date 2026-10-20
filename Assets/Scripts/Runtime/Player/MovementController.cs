@@ -5,6 +5,8 @@ using PlazmaGames.Core;
 using PlazmaGames.Math;
 
 using ColbyO.SJ26.Input;
+using InteractionSystem.Interfaces;
+using System;
 
 namespace ColbyO.SJ26
 {
@@ -15,7 +17,7 @@ namespace ColbyO.SJ26
     }
 
     [RequireComponent(typeof(CharacterController))]
-    public class MovementController : MonoBehaviour
+    public class MovementController : MonoBehaviour, IPlayerController
     {
         private readonly float GRAVITY = -9.8f;
         private readonly float GROUNDED_VEL = -2f;
@@ -36,7 +38,7 @@ namespace ColbyO.SJ26
         private float Speed => _settings.Speed;
         public float GravityScale = 1.0f;
         private float Gravity => GRAVITY * _settings.GravityMul * GravityScale;
-        public Vector3? LerpTo = null;
+        [NonSerialized] public Vector3? LerpTo = null;
 
         public bool LockJustMove = false;
 
@@ -123,6 +125,16 @@ namespace ColbyO.SJ26
             _controller.enabled = false;
             transform.position = transform.position.SetY(y);
             _controller.enabled = prev;
+        }
+
+        public void Freeze()
+        {
+            SJ26GameManager.LockMovement = true;
+        }
+
+        public void Unfreeze()
+        {
+            SJ26GameManager.LockMovement = false;
         }
     }
 }

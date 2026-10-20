@@ -1,6 +1,9 @@
+using ColbyO.SJ26.Dialogue;
+using DialogueGraph.Data;
 using InteractionSystem;
 using PlazmaGames.Core;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 namespace ColbyO.SJ26
@@ -10,6 +13,7 @@ namespace ColbyO.SJ26
         [SerializeField] private GameObject _monoSystemHolder;
 
         [SerializeField] private Preferences _preferences;
+
         public static Preferences Preferences { get => (Instance as SJ26GameManager)._preferences; }
 
         public static Scheduler GlobalScheduler = new Scheduler();
@@ -44,6 +48,8 @@ namespace ColbyO.SJ26
         private void Update()
         {
             GlobalScheduler.Tick(Time.deltaTime);
+
+            if (Keyboard.current.jKey.wasPressedThisFrame) GetMonoSystem<IDialogueMonoSystem>().StartDialoguePromise("Test");
         }
 
         private void OnApplicationFocus(bool focus)

@@ -37,6 +37,12 @@ namespace ColbyO.VNTG.PSX
             VolumeStack stack = VolumeManager.instance.stack;
             PSXEffectSettings settings = stack.GetComponent<PSXEffectSettings>();
 
+            if (camera.orthographic)
+            {
+                camera.ResetProjectionMatrix();
+                return;
+            }
+
             if (camera.cameraType == CameraType.Game || (settings.ShowInSceneView.value && camera.cameraType == CameraType.SceneView))
             {
                 if (settings != null && settings.IsActive() && settings.EnablePixelation.value && settings.EnableLetterbox.value)

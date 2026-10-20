@@ -129,6 +129,75 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &2802246564892062731
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7835883521171950401}
+  - component: {fileID: 4088902329858578179}
+  m_Layer: 0
+  m_Name: DialogueMS
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7835883521171950401
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2802246564892062731}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2956269746140199252}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4088902329858578179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2802246564892062731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 908a9aebeaa6fc44a8fe8d6ce45af828, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ColbyO.SJ26.Dialogue.DialogueMonoSystem
+  _db: {fileID: 11400000, guid: 76807ce8b942d724cac4b05ca51cf3bc, type: 2}
+  _cinematicCameraTag: MainCamera
+  _currentDialogue: {fileID: 0}
+  _currentDialogueNode:
+    Guid: 
+    ActorName: 
+    GroupName: 
+    Type: 0
+    Text: 
+    EventID: 
+    position: {x: 0, y: 0}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices: []
+  _currentNodeType: 0
+  _isDialogueInProgress: 0
 --- !u!1 &2900910220976218930
 GameObject:
   m_ObjectHideFlags: 0
@@ -303,7 +372,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: PlazmaGames.Runtime::PlazmaGames.UI.UIMonoSystem
   _preserveUIAcrossScenes: 1
-  _startingView: 
+  _startingView: ColbyO.SJ26.GameView, Assembly-CSharp
   _views: []
   _currentView: {fileID: 0}
   _hasInitialized: 0
@@ -343,6 +412,8 @@ Transform:
   - {fileID: 2323336754153805906}
   - {fileID: 1611995781267754718}
   - {fileID: 8074254358296866501}
+  - {fileID: 8567302063874678626}
+  - {fileID: 7835883521171950401}
   m_Father: {fileID: 4775556590630408094}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3377396468597120417
@@ -416,7 +487,7 @@ GameObject:
   - component: {fileID: 1611995781267754718}
   - component: {fileID: 4587515273793016002}
   m_Layer: 0
-  m_Name: GPSMonoSystem
+  m_Name: GPSMS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -462,7 +533,7 @@ GameObject:
   - component: {fileID: 8074254358296866501}
   - component: {fileID: 834372187236808143}
   m_Layer: 0
-  m_Name: DispatchMonoSystem
+  m_Name: DispatchMS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -497,6 +568,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ColbyO.SJ26.Dispatch.DispatchMonoSystem
   _autoSpawnUnitsOnStart: 1
   _optionalUnitPrefab: {fileID: 0}
+  _testCall: {fileID: 11400000, guid: c2b5542cedf726948a0f719b08ddbe9d, type: 2}
   _defaultSpawnConfigs:
   - unitData: {fileID: 11400000, guid: c4066115ffdf13744ba3bed9f7485762, type: 2}
   - unitData: {fileID: 11400000, guid: c4066115ffdf13744ba3bed9f7485762, type: 2}
@@ -889,3 +961,48 @@ MonoBehaviour:
   _verbose: 1
   _monoSystemHolder: {fileID: 3191178958999487411}
   _preferences: {fileID: 11400000, guid: 4d207c76311ee484f9eb15d8313daaaf, type: 2}
+--- !u!1 &7943168795972169655
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8567302063874678626}
+  - component: {fileID: 233866372212892222}
+  m_Layer: 0
+  m_Name: CinematicMS
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8567302063874678626
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7943168795972169655}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2956269746140199252}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &233866372212892222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7943168795972169655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8846ffdc356a014ba482ca75a9bd593, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ColbyO.SJ26.Cinematic.CinematicMonoSystem
+  _cinematicCameraTag: MainCamera

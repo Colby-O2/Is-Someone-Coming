@@ -1,10 +1,12 @@
 using UnityEngine;
+
 using System.Collections.Generic;
 
 using PlazmaGames.Core;
 using PlazmaGames.Attribute;
 using PlazmaGames.Core.Debugging;
 
+using ColbyO.SJ26.Map;
 using ColbyO.SJ26.Street;
 using ColbyO.SJ26.GPS;
 
@@ -29,18 +31,11 @@ namespace ColbyO.SJ26.Dispatch
         Unavailable
     }
 
-    public class FieldUnit : MonoBehaviour
+    public class FieldUnit : MapObject
     {
         [Header("Unit Identity")]
-        [SerializeField] private FieldUnitSO _unitData;
         [SerializeField, ReadOnly] private string _callsign = "P-01";
         [SerializeField, ReadOnly] private UnitStatus _status = UnitStatus.Available;
-
-        [Header("Icon Display Settings")]
-        [SerializeField] private GameObject _iconPrefab;
-        [SerializeField] private Vector3 _iconOffset = new Vector3(0f, 2.5f, 0f);
-        [SerializeField] private Vector2 _iconSize = new Vector2(9f * 0.8571f, 9f);
-        [SerializeField] private bool _faceUpward = true;
 
         [Header("Route Renderer Settings")]
         [SerializeField] private Material _routeLineMaterial;
@@ -50,15 +45,11 @@ namespace ColbyO.SJ26.Dispatch
 
         [Header("Movement Settings")]
         [SerializeField] private float _waypointThreshold = 0.5f;
-        [SerializeField] private bool _snapToRoadOnStart = true;
-        [SerializeField] private string _startingAddress = "";
 
-        [Header("Live Telemetry")]
+        [Header("Live Unit Telemetry")]
         [SerializeField, ReadOnly] private string _activeCallId = "";
-        [SerializeField, ReadOnly] private string _currentLocationLabel = "Patrolling";
         [SerializeField, ReadOnly] private string _destinationAddress = "None";
 
-        private GameObject _spawnedIcon;
         private LineRenderer _routeLineRenderer;
         private float _idleTimer = 0f;
         private bool _isIdleCruising = false;
@@ -67,40 +58,28 @@ namespace ColbyO.SJ26.Dispatch
         private int _pathIndex = 0;
 
         private IDispatchMonoSystem _dispatchSystem;
-        private IStreetMonoSystem _streetSystem;
         private IGPSMonoSystem _gpsSystem;
 
-        public string CallsignSymbol => _unitData.callsignSymbol;
+        public FieldUnitSO UnitData => _mapObjectData as FieldUnitSO;
+        public string CallsignSymbol => UnitData != null ? UnitData.callsignSymbol : "";
         public string Callsign => _callsign;
-        public UnitType Type => _unitData.unitType;
+        public UnitType Type => UnitData != null ? UnitData.unitType : UnitType.Police;
         public UnitStatus Status => _status;
         public string ActiveCallId => _activeCallId;
-        public string CurrentLocation => _currentLocationLabel;
         public string Destination => _destinationAddress;
         public IReadOnlyList<Vector3> CurrentPath => _currentPath;
         public int CurrentPathIndex => _pathIndex;
 
-        private void Start()
+        protected override void Start()
         {
-            if (_iconPrefab == null)
-            {
-                _iconPrefab = Resources.Load<GameObject>("Prefabs/UnitIconPrefab");
-            }
-
             _dispatchSystem = GameManager.GetMonoSystem<IDispatchMonoSystem>();
-            _streetSystem = GameManager.GetMonoSystem<IStreetMonoSystem>();
             _gpsSystem = GameManager.GetMonoSystem<IGPSMonoSystem>();
 
             _dispatchSystem?.RegisterUnit(this);
 
-            if (_snapToRoadOnStart && _streetSystem != null)
-            {
-                SnapToStartingRoadPosition();
-            }
+            base.Start();
 
-            SetupUnitIcon();
             SetupRouteRenderer();
-            UpdateCurrentLocationLabel();
         }
 
         private void OnDestroy()
@@ -109,9 +88,9 @@ namespace ColbyO.SJ26.Dispatch
             _dispatchSystem?.UnregisterUnit(this);
         }
 
-        private void Update()
+        protected override void Update()
         {
-            _streetSystem ??= GameManager.GetMonoSystem<IStreetMonoSystem>();
+            _dispatchSystem ??= GameManager.GetMonoSystem<IDispatchMonoSystem>();
             _gpsSystem ??= GameManager.GetMonoSystem<IGPSMonoSystem>();
 
             if (_status == UnitStatus.EnRoute || (_status == UnitStatus.Available && _isIdleCruising))
@@ -124,51 +103,42 @@ namespace ColbyO.SJ26.Dispatch
                 HandleIdlePatrol();
             }
 
+            base.Update();
             UpdateRouteVisuals();
         }
 
-        private void SetupUnitIcon()
+        protected override bool AreObjectsStacked(MapObject other)
         {
-            if (_unitData == null) return;
+            if (base.AreObjectsStacked(other)) return true;
 
-            Texture targetTexture = _unitData.icon;
-
-            if (targetTexture == null)
+            if (other is FieldUnit otherUnit)
             {
-                PlazmaDebug.LogWarning("No valid texture/sprite found on FieldUnitSO.", $"Unit {_callsign}");
-                return;
+                if (_status == UnitStatus.OnScene && otherUnit.Status == UnitStatus.OnScene &&
+                    !string.IsNullOrEmpty(_currentLocationLabel) &&
+                    _currentLocationLabel == otherUnit.CurrentLocation)
+                {
+                    return true;
+                }
             }
 
-            if (_iconPrefab != null)
-            {
-                _spawnedIcon = Instantiate(_iconPrefab, transform);
-            }
+            return false;
+        }
 
-            if (_spawnedIcon == null) return;
-
-            _spawnedIcon.transform.localPosition = _iconOffset;
-            _spawnedIcon.transform.localScale = new Vector3(_iconSize.x, _iconSize.y, 1f);
-
-            if (_faceUpward)
-            {
-                _spawnedIcon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
-            }
-
-            if (_spawnedIcon.TryGetComponent<Renderer>(out var renderer))
-            {
-                MaterialPropertyBlock block = new MaterialPropertyBlock();
-                renderer.GetPropertyBlock(block);
-                block.SetTexture("_BaseMap", targetTexture);
-                block.SetTexture("_MainTex", targetTexture);
-                renderer.SetPropertyBlock(block);
-            }
+        public void Initialize(FieldUnitSO unitData, string callsign)
+        {
+            _mapObjectData = unitData;
+            _callsign = callsign;
+            SetupIcon();
         }
 
         private void SetupRouteRenderer()
         {
             GameObject lineGO = new GameObject($"RouteLine_{_callsign}");
             lineGO.transform.SetParent(transform, false);
-            lineGO.layer = _iconPrefab.layer;
+            if (_iconPrefab != null)
+            {
+                lineGO.layer = _iconPrefab.layer;
+            }
 
             _routeLineRenderer = lineGO.AddComponent<LineRenderer>();
             _routeLineRenderer.useWorldSpace = true;
@@ -231,11 +201,11 @@ namespace ColbyO.SJ26.Dispatch
 
         private void HandleIdlePatrol()
         {
-            if (_unitData == null || !_unitData.autoPatrolWhenAvailable || _unitData.unitType != UnitType.Police)
+            if (UnitData == null || !UnitData.autoPatrolWhenAvailable || UnitData.unitType != UnitType.Police)
                 return;
 
             _idleTimer += Time.deltaTime;
-            if (_idleTimer >= _unitData.idleWaitDuration)
+            if (_idleTimer >= UnitData.idleWaitDuration)
             {
                 _idleTimer = 0f;
                 PickRandomPatrolDestination();
@@ -273,12 +243,6 @@ namespace ColbyO.SJ26.Dispatch
                 _destinationAddress = randomAddr.addressLabel;
                 _isIdleCruising = true;
             }
-        }
-
-        public void Initialize(FieldUnitSO unitData, string callsign)
-        {
-            _unitData = unitData;
-            _callsign = callsign;
         }
 
         public void AssignRoute(List<Vector3> path, string targetAddr, string callId)
@@ -349,14 +313,14 @@ namespace ColbyO.SJ26.Dispatch
                 diff = targetPoint - transform.position;
             }
 
-            float activeSpeed = _isIdleCruising ? _unitData.patrolSpeed : _unitData.moveSpeed;
+            float activeSpeed = _isIdleCruising ? UnitData.patrolSpeed : UnitData.moveSpeed;
             transform.position = Vector3.MoveTowards(transform.position, targetPoint, activeSpeed * Time.deltaTime);
 
             Vector3 flatDir = new Vector3(diff.x, 0f, diff.z);
             if (flatDir.sqrMagnitude > 0.001f)
             {
                 Quaternion targetRot = Quaternion.LookRotation(flatDir.normalized, Vector3.up);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, _unitData.rotationSpeed * Time.deltaTime);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, UnitData.rotationSpeed * Time.deltaTime);
             }
         }
 
@@ -382,90 +346,6 @@ namespace ColbyO.SJ26.Dispatch
             UpdateRouteVisuals();
         }
 
-        private void SnapToStartingRoadPosition()
-        {
-            var streets = _streetSystem.GetNamedStreets();
-            if (streets == null || streets.Count == 0) return;
-
-            if (!string.IsNullOrEmpty(_startingAddress))
-            {
-                foreach (var street in streets)
-                {
-                    foreach (var addr in street.addresses)
-                    {
-                        if (addr.addressLabel.Equals(_startingAddress, System.StringComparison.OrdinalIgnoreCase) ||
-                            addr.addressLabel.Contains(_startingAddress))
-                        {
-                            transform.position = addr.position;
-                            return;
-                        }
-                    }
-                }
-            }
-
-            float closestDist = float.MaxValue;
-            Vector3 bestPos = transform.position;
-
-            foreach (var street in streets)
-            {
-                foreach (var addr in street.addresses)
-                {
-                    float d = Vector3.Distance(transform.position, addr.position);
-                    if (d < closestDist)
-                    {
-                        closestDist = d;
-                        bestPos = addr.position;
-                    }
-                }
-            }
-
-            transform.position = bestPos;
-        }
-
-        private void UpdateCurrentLocationLabel()
-        {
-            if (_streetSystem == null) return;
-
-            float bestDist = float.MaxValue;
-            string bestLabel = _currentLocationLabel;
-
-            var nodes = _streetSystem.GetNodes();
-            if (nodes != null)
-            {
-                foreach (var node in nodes)
-                {
-                    if (!string.IsNullOrEmpty(node.intersectionName))
-                    {
-                        float d = Vector3.Distance(transform.position, node.position);
-                        if (d < bestDist)
-                        {
-                            bestDist = d;
-                            bestLabel = node.intersectionName;
-                        }
-                    }
-                }
-            }
-
-            var streets = _streetSystem.GetNamedStreets();
-            if (streets != null)
-            {
-                foreach (var street in streets)
-                {
-                    foreach (var addr in street.addresses)
-                    {
-                        float d = Vector3.Distance(transform.position, addr.position);
-                        if (d < bestDist)
-                        {
-                            bestDist = d;
-                            bestLabel = addr.addressLabel;
-                        }
-                    }
-                }
-            }
-
-            _currentLocationLabel = bestLabel;
-        }
-
 #if UNITY_EDITOR
         private void OnDrawGizmos()
         {
@@ -489,9 +369,10 @@ namespace ColbyO.SJ26.Dispatch
                 _ => Color.gray
             };
 
-            Gizmos.DrawSphere(transform.position + Vector3.up * 0.5f, 0.8f);
+            Vector3 gizmoPos = transform.position + _currentVisualSpreadOffset;
+            Gizmos.DrawSphere(gizmoPos + Vector3.up * 0.5f, 0.8f);
             string callInfo = !string.IsNullOrEmpty(_activeCallId) ? $" ({_activeCallId})" : (_isIdleCruising ? " (Cruising)" : "");
-            Handles.Label(transform.position + Vector3.up * 2.2f, $"[{_callsign}] {_status}{callInfo}\nLoc: {_currentLocationLabel}");
+            Handles.Label(gizmoPos + Vector3.up * 2.2f, $"[{_callsign}] {_status}{callInfo}\nLoc: {_currentLocationLabel}");
         }
 #endif
     }

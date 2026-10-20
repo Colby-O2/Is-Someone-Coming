@@ -1,9 +1,15 @@
-using System.Collections.Generic;
 using UnityEngine;
+
+using System.Collections.Generic;
+
 using PlazmaGames.Core;
+using PlazmaGames.Core.Debugging;
+
 using ColbyO.SJ26.Street;
 using ColbyO.SJ26.GPS;
-using PlazmaGames.Core.Debugging;
+using ColbyO.SJ26.Map;
+using static UnityEngine.Rendering.STP;
+
 
 
 #if UNITY_EDITOR
@@ -28,8 +34,8 @@ namespace ColbyO.SJ26.Dispatch
         [Header("Testing & Auto-Spawn")]
         [SerializeField] private bool _autoSpawnUnitsOnStart = true;
         [SerializeField] private GameObject _optionalUnitPrefab;
-        [SerializeField]
-        private List<UnitSpawnConfig> _defaultSpawnConfigs = new List<UnitSpawnConfig> { };
+        [SerializeField] MapObjectSO _testCall;
+        [SerializeField] private List<UnitSpawnConfig> _defaultSpawnConfigs = new List<UnitSpawnConfig> { };
 
         [Header("Registered Field Units")]
         [SerializeField] private List<FieldUnit> _registeredUnits = new List<FieldUnit>();
@@ -48,6 +54,36 @@ namespace ColbyO.SJ26.Dispatch
             {
                 SpawnInitialUnits();
             }
+            // ---
+            _streetSystem ??= GameManager.GetMonoSystem<IStreetMonoSystem>();
+            if (_streetSystem == null) return;
+
+            var streets = _streetSystem.GetNamedStreets();
+            List<Vector3> spawnPoints = new List<Vector3>();
+
+            if (streets != null)
+            {
+                foreach (var street in streets)
+                {
+                    if (street.addresses.Count > 0)
+                    {
+                        spawnPoints.Add(street.addresses[0].position);
+                    }
+                }
+            }
+
+            GameObject unitGO;
+            EmergencyCallMarker mapObj;
+
+            Vector3 spawnPos = (spawnPoints.Count > 0)
+            ? spawnPoints[0]
+            : Vector3.zero;
+
+            unitGO = new GameObject("Maker_Test");
+            unitGO.transform.position = spawnPos;
+            mapObj = unitGO.AddComponent<EmergencyCallMarker>();
+
+            mapObj.InitializeCall(_testCall, _testCallId, streets[0].addresses[0].addressLabel);
         }
 
         private void Update()

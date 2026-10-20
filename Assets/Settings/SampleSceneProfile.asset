@@ -286,7 +286,7 @@ MonoBehaviour:
   active: 1
   Enabled:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   ShowInSceneView:
     m_OverrideState: 1
     m_Value: 0
@@ -298,10 +298,10 @@ MonoBehaviour:
     m_Value: 1
   EnableLetterbox:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   PixelResolution:
     m_OverrideState: 1
-    m_Value: {x: 256, y: 256}
+    m_Value: {x: 640, y: 320}
   EnableColorPrecision:
     m_OverrideState: 1
     m_Value: 1
@@ -316,19 +316,19 @@ MonoBehaviour:
     m_Value: 2
   DitherPattern:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 2
   DitherDisplayMode:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   DitherReferenceRes:
     m_OverrideState: 1
     m_Value: {x: 1920, y: 1080}
   DitherScale:
     m_OverrideState: 1
-    m_Value: 0.2
+    m_Value: 0.051
   DitherThreshold:
     m_OverrideState: 1
-    m_Value: 0.1
+    m_Value: 0.65
   EnableColorPalette:
     m_OverrideState: 1
     m_Value: 0
