@@ -28,6 +28,7 @@ namespace InteractionSystem.Settings
         [Min(0f)] public float ZoomMin;
         public bool RotatePickup;
         public Vector3 PickupRotation;
+        public bool ShowUi = true;
         public string ReadText;
         public bool AllowRotate;
         public bool HasInteractions;
@@ -48,6 +49,7 @@ namespace InteractionSystem.Settings
                 ZoomMin = this.ZoomMin,
                 RotatePickup = this.RotatePickup,
                 PickupRotation = this.PickupRotation,
+                ShowUi = this.ShowUi,
                 ReadText = this.ReadText,
                 AllowRotate = this.AllowRotate,
                 HasInteractions = this.HasInteractions,

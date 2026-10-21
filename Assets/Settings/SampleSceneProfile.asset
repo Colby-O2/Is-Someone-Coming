@@ -298,7 +298,7 @@ MonoBehaviour:
     m_Value: 1
   EnableLetterbox:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0
   PixelResolution:
     m_OverrideState: 1
     m_Value: {x: 640, y: 320}
