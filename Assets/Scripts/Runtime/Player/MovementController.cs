@@ -33,6 +33,7 @@ namespace ColbyO.SJ26
 
         private CharacterController _controller;
         private ViewController _viewController;
+        private SitController _sitController;
         private IInputMonoSystem _input;
 
         private float Speed => _settings.Speed;
@@ -46,12 +47,13 @@ namespace ColbyO.SJ26
         {
             _controller = GetComponent<CharacterController>();
             _viewController = GetComponentInChildren<ViewController>();
+            _sitController = GetComponentInParent<SitController>();
             _input = GameManager.GetMonoSystem<IInputMonoSystem>();
         }
 
         private void Update()
         {
-            if (SJ26GameManager.LockMovement || SJ26GameManager.IsPaused) return;
+            if (SJ26GameManager.LockMovement || SJ26GameManager.IsPaused || _sitController.HasDetachedHead()) return;
             _movement = Vector2.ClampMagnitude(_input.RawMovement, 1f);
             ApplyGravity();
             UpdateMovement();

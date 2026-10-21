@@ -18,6 +18,8 @@ namespace ColbyO.SJ26
         [SerializeField, ReadOnly] private float _pitch = 0f;
         [SerializeField, ReadOnly] private float _yaw = 0f;
 
+        private SitController _sitController;
+
         private IInputMonoSystem _input;
 
         public float Sensitivity => _settings.Sensitivity;
@@ -28,6 +30,7 @@ namespace ColbyO.SJ26
             _startHeadPos = transform.localPosition;
             _headPos = _startHeadPos;
             if (!_playerBody) _playerBody = transform.parent;
+            _sitController = GetComponentInParent<SitController>();
             _input = GameManager.GetMonoSystem<IInputMonoSystem>();
         }
 
@@ -77,6 +80,8 @@ namespace ColbyO.SJ26
 
         private void UpdateRotation()
         {
+            if (SJ26GameManager.IsPaused || SJ26GameManager.LockMovement || _sitController.HasDetachedHead()) return;
+
             ProcessHead();
             ProcessBody();
 

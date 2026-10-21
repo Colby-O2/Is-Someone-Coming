@@ -159,7 +159,7 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _StarDensity: 0.5
-    - _StarSharpness: 0.197
+    - _StarSharpness: 0.029
     - _Surface: 0
     - _SurfaceType: 0
     - _TEXTURESAMPLEMODE: 0

@@ -7,5 +7,6 @@ namespace ColbyO.SJ26
     public class Preferences : ScriptableObject
     {
         public Texture2D Cursor;
+        public float DetachedHeadTransitionTime = 1f;
     }
 }

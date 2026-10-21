@@ -22,6 +22,10 @@ namespace ColbyO.SJ26
         public static bool LockMovement { get; set; }
         public static bool HasStarted { get; set; }
 
+        public static MovementController Player;
+        public static SitController PlayerSit;
+        public static AnimationController PlayerAnimator;
+
         private void Awake()
         {
             Application.runInBackground = true;
@@ -31,6 +35,10 @@ namespace ColbyO.SJ26
         private void Start()
         {
             HideCursor();
+
+            Player = GameObject.FindWithTag("Player").GetComponent<MovementController>();
+            PlayerSit = Player.GetComponent<SitController>();
+            PlayerAnimator = Player.GetComponent<AnimationController>();
         }
 
         private void OnEnable()

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - MusicSource
   - StreetSpline
+  - SnowFallController
   layers:
   - Default
   - TransparentFX
@@ -24,7 +25,7 @@ TagManager:
   - Clickable
   - ActiveInteractable
   - PSXIgnore
-  - 
+  - Walkable
   - 
   - 
   - 
