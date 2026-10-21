@@ -11,6 +11,7 @@ using PlazmaGames.UI;
 
 using ColbyO.SJ26.Dialogue;
 using ColbyO.SJ26.Rig;
+using PlazmaGames.Math;
 
 namespace ColbyO.SJ26.Entities
 {
@@ -77,50 +78,50 @@ namespace ColbyO.SJ26.Entities
             if (_animator != null)
                 _animator.UpdateAnimator(_state, Time.deltaTime);
 
-            //if (_withTarget != null && _state != MoveState.ChangingState && !_isWaitingForDoor)
-            //{
-            //    float dstToWith = Vector3.Distance(transform.position, _withTarget.position);
-            //    bool isPlayerFarAway = dstToWith > _followDistance;
+            if (_withTarget != null && _state != MoveState.ChangingState && !_isWaitingForDoor)
+            {
+                float dstToWith = Vector3.Distance(transform.position, _withTarget.position);
+                bool isPlayerFarAway = dstToWith > _followDistance;
 
-            //    Vector3 forward = transform.forward;
-            //    Vector3 playerDir = (SJ26GameManager.Player.transform.position.SetY(transform.position.y) - transform.position).normalized;
-            //    float dot = Vector3.Dot(forward, playerDir);
+                Vector3 forward = transform.forward;
+                Vector3 playerDir = (SJ26GameManager.Player.transform.position.SetY(transform.position.y) - transform.position).normalized;
+                float dot = Vector3.Dot(forward, playerDir);
 
-            //    if (_isWaitingForPlayer)
-            //    {
-            //        _timeAwayFromPlayer += Time.deltaTime;
+                if (_isWaitingForPlayer)
+                {
+                    _timeAwayFromPlayer += Time.deltaTime;
 
-            //        Quaternion targetRot = Quaternion.LookRotation((_withTarget.position.SetY(transform.position.y) - transform.position).normalized);
-            //        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, _agent.angularSpeed * Time.deltaTime);
+                    Quaternion targetRot = Quaternion.LookRotation((_withTarget.position.SetY(transform.position.y) - transform.position).normalized);
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, _agent.angularSpeed * Time.deltaTime);
 
-            //        if (_timeAwayFromPlayer > _timeBeforeMad)
-            //        {
-            //            if (!string.IsNullOrEmpty(_farDialogue) && GameManager.GetMonoSystem<IUIMonoSystem>().GetCurrentViewIs<GameView>())
-            //            {
-            //                GameManager.GetMonoSystem<IDialogueMonoSystem>().StartDialoguePromise(_farDialogue, passive: true)
-            //                   .Then(_ =>
-            //                   {
-            //                       _timeAwayFromPlayer = 0f;
-            //                   });
-            //            }
-            //        }
-            //    }
+                    if (_timeAwayFromPlayer > _timeBeforeMad)
+                    {
+                        if (!string.IsNullOrEmpty(_farDialogue) && GameManager.GetMonoSystem<IUIMonoSystem>().GetCurrentViewIs<GameView>())
+                        {
+                            GameManager.GetMonoSystem<IDialogueMonoSystem>().StartDialoguePromise(_farDialogue, passive: true)
+                               .Then(_ =>
+                               {
+                                   _timeAwayFromPlayer = 0f;
+                               });
+                        }
+                    }
+                }
 
-            //    if (dot < 0 && isPlayerFarAway && !_isWaitingForPlayer)
-            //    {
-            //        _isWaitingForPlayer = true;
-            //        _timeAwayFromPlayer = 0f;
-            //        _agent.isStopped = true;
+                if (dot < 0 && isPlayerFarAway && !_isWaitingForPlayer)
+                {
+                    _isWaitingForPlayer = true;
+                    _timeAwayFromPlayer = 0f;
+                    _agent.isStopped = true;
 
-            //        if (_state != MoveState.Idle) UpdateState(MoveState.Idle, 0.25f);
-            //    }
-            //    else if (!isPlayerFarAway && _isWaitingForPlayer)
-            //    {
-            //        _isWaitingForPlayer = false;
-            //        _agent.isStopped = false;
-            //        UpdateState(MoveState.Moving, 0f);
-            //    }
-            //}
+                    if (_state != MoveState.Idle) UpdateState(MoveState.Idle, 0.25f);
+                }
+                else if (!isPlayerFarAway && _isWaitingForPlayer)
+                {
+                    _isWaitingForPlayer = false;
+                    _agent.isStopped = false;
+                    UpdateState(MoveState.Moving, 0f);
+                }
+            }
 
             if (_state == MoveState.Moving && !_agent.isStopped)
                 UpdateMovement();
@@ -149,57 +150,57 @@ namespace ColbyO.SJ26.Entities
 
         private void HandleDoor()
         {
-            return;
-            //if (!InFrontOfDoor(out Interactable doorObj)) return;
-            //DoorAction door = doorObj.GetAction<DoorAction>();
-            //if (door.IsOpen) return;
+            if (!InFrontOfDoor(out Interactable doorObj)) return;
+            DoorAction door = doorObj.GetAction<DoorAction>();
+            if (door.IsOpen) return;
 
-            //_agent.isStopped = true;
-            //_isWaitingForDoor = true;
+            _agent.isStopped = true;
+            _isWaitingForDoor = true;
 
-            //Quaternion startRot = transform.rotation;
-            //Quaternion targetRot = Quaternion.LookRotation((doorObj.transform.position.SetY(transform.position.y) - transform.position).normalized);
+            Quaternion startRot = transform.rotation;
+            Quaternion targetRot = Quaternion.LookRotation((doorObj.transform.position.SetY(transform.position.y) - transform.position).normalized);
 
-            //UpdateState(MoveState.Idle, 0.25f)
-            //.Then(_ =>
-            //{
-            //    GameManager.GetMonoSystem<IAnimationMonoSystem>().RequestAnimation(
-            //        this,
-            //        1f,
-            //        (float t) =>
-            //        {
-            //            transform.rotation = Quaternion.Slerp(startRot, targetRot, t);
-            //        },
-            //        () => {
-            //            UpdateState(MoveState.Reach)
-            //            .Then(_ =>
-            //            {
+            UpdateState(MoveState.Idle, 0.25f)
+            .Then(_ =>
+            {
+                GameManager.GetMonoSystem<IAnimationMonoSystem>().RequestAnimation(
+                    this,
+                    1f,
+                    (float t) =>
+                    {
+                        transform.rotation = Quaternion.Slerp(startRot, targetRot, t);
+                    })
+                    .Then(_ =>
+                    {
+                        UpdateState(MoveState.Reach)
+                        .Then(_ =>
+                        {
 
-            //                Promise promise = door.RequestOpen();
+                            Promise promise = door.RequestOpen();
 
-            //                if (promise == null)
-            //                {
-            //                    UpdateState(MoveState.Moving)
-            //                    .Then(_ =>
-            //                    {
-            //                        _isWaitingForDoor = false;
-            //                        _agent.isStopped = false;
-            //                    });
+                            if (promise == null)
+                            {
+                                UpdateState(MoveState.Moving)
+                                .Then(_ =>
+                                {
+                                    _isWaitingForDoor = false;
+                                    _agent.isStopped = false;
+                                });
 
-            //                    return null;
-            //                }
+                                return null;
+                            }
 
-            //                return promise;
-            //            })
-            //            .Then(_ => UpdateState(MoveState.Moving))
-            //            .Then(_ =>
-            //            {
-            //                _isWaitingForDoor = false;
-            //                _agent.isStopped = false;
-            //            });
-            //        }
-            //    );
-            //});
+                            return promise;
+                        })
+                        .Then(_ => UpdateState(MoveState.Moving))
+                        .Then(_ =>
+                        {
+                            _isWaitingForDoor = false;
+                            _agent.isStopped = false;
+                        });
+                    }
+                );
+            });
         }
 
         private bool InFrontOfDoor(out Interactable door)
@@ -211,11 +212,11 @@ namespace ColbyO.SJ26.Entities
             if (direction.sqrMagnitude < 0.1f)
                 return false;
 
-            //if (Physics.SphereCast(origin, 0.1f, direction, out RaycastHit hit, 0.3f))
-            //{
-            //    if (hit.collider.TryGetComponent<Interactable>(out door))
-            //        return door.HasAction<DoorAction>();
-            //}
+            if (Physics.SphereCast(origin, 0.1f, direction, out RaycastHit hit, 0.3f))
+            {
+                if (hit.collider.TryGetComponent<Interactable>(out door))
+                    return door.HasAction<DoorAction>();
+            }
 
             return false;
         }

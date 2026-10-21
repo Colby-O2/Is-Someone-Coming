@@ -22,7 +22,7 @@ namespace ColbyO.SJ26.Entities
             RefreshActorList();
             RefreshLocationsList();
 
-            TellActorToSitAt("Coworker", "SitPoint_PlayersOffice", 1f)
+            TellActorToSitAt("Coworker", "TestLoc", 1f)
             .Then(_ => { Debug.Log("The Coworker Has Sat Down."); });
             //.Then(_ => SJ26GameManager.GlobalScheduler.Wait(2f))
             //.Then(_ => TellActorToUnsit("Coworker"));
