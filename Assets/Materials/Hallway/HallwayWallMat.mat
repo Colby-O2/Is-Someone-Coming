@@ -20,13 +20,13 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: TestMat 2
+  m_Name: HallwayWallMat
   m_Shader: {fileID: -6465566751694194690, guid: 2668c7952a46ee1419e6d867b9bdd3dc, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _DITHERINGMETHOD_TEXTURERELATIVE
-  - _LIGHTINGMETHOD_UNLIT
+  - _LIGHTINGMETHOD_TEXEL_LIT
   - _SHADINGMETHOD_DEFAULT
   - _TEXTURESAMPLEMODE_N64
   - _VERTEXJITTERMODE_VIEW_SPACE
@@ -106,7 +106,8 @@ Material:
     m_Ints: []
     m_Floats:
     - _AddPrecomputedVelocity: 0
-    - _AffineWrapStrength: 0.038
+    - _AffineWrapStrength: 0.2
+    - _Alpha: 1
     - _AlphaClip: 0
     - _AlphaClipThreshold: 0
     - _AlphaToMask: 0
@@ -127,16 +128,16 @@ Material:
     - _DitherStrength: 1
     - _DstBlend: 0
     - _DstBlendAlpha: 0
-    - _EnableAffineTextureMapping: 0
+    - _EnableAffineTextureMapping: 1
     - _EnableDithering: 0
-    - _EnableShadows: 0
+    - _EnableShadows: 1
     - _EnableTextureDownsampling: 1
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _HueShift: 0
-    - _LIGHTINGMETHOD: 0
+    - _LIGHTINGMETHOD: 2
     - _LightnessMultiplier: 0.65
     - _Metallic: 0
     - _Metalness: 0
@@ -151,7 +152,7 @@ Material:
     - _ScreenSpaceReflections: 1
     - _ScreenSpaceReflectionsContributeTransparent: 1
     - _ShadowDistCutoff: 100
-    - _ShadowOffset: 0.01
+    - _ShadowOffset: 0
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -160,7 +161,7 @@ Material:
     - _Surface: 0
     - _SurfaceType: 0
     - _TEXTURESAMPLEMODE: 2
-    - _TextureResolution: 256
+    - _TextureResolution: 128
     - _TextureResolutionScale: 1
     - _UseColorQuantization: 0
     - _UsePalette: 0
@@ -181,6 +182,6 @@ Material:
     - _ShadowTint: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _SpecularColor: {r: 1, g: 1, b: 1, a: 0}
-    - _Tiling: {r: 5, g: 5, b: 0, a: 0}
+    - _Tiling: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

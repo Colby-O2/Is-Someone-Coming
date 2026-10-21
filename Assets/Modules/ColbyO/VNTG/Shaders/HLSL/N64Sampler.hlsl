@@ -6,7 +6,7 @@
 #ifndef COLBYO_VNTG_N64_SAMPLER_INCLUDED
 #define COLBYO_VNTG_N64_SAMPLER_INCLUDED
 
-void N64Sampler_float(UnityTexture2D Texture, UnitySamplerState Sampler, float4 TexelSize, float2 UV, out float4 Out)
+void N64Sampler_float(UnityTexture2D Texture, UnitySamplerState Sampler, float4 TexelSize, float2 UV, float LOD, out float4 Out)
 {
     uint width, height;
     Texture.tex.GetDimensions(width, height);
@@ -27,14 +27,14 @@ void N64Sampler_float(UnityTexture2D Texture, UnitySamplerState Sampler, float4 
     float2 uvB = (floor(texels) + float2(1.5, 0.5)) * TexelSize.xy;
     float2 uvC = (floor(texels) + float2(0.5, 1.5)) * TexelSize.xy;
     
-    float4 A = SAMPLE_TEXTURE2D_LOD(Texture.tex, Sampler.samplerstate, uvA, 0.0);
-    float4 B = SAMPLE_TEXTURE2D_LOD(Texture.tex, Sampler.samplerstate, uvB, 0.0);
-    float4 C = SAMPLE_TEXTURE2D_LOD(Texture.tex, Sampler.samplerstate, uvC, 0.0);
+    float4 A = SAMPLE_TEXTURE2D_LOD(Texture.tex, Sampler.samplerstate, uvA, LOD);
+    float4 B = SAMPLE_TEXTURE2D_LOD(Texture.tex, Sampler.samplerstate, uvB, LOD);
+    float4 C = SAMPLE_TEXTURE2D_LOD(Texture.tex, Sampler.samplerstate, uvC, LOD);
     
     Out = A * blend.x + B * blend.y + C * blend.z;
 }
 
-void N64Sampler_half(UnityTexture2D Texture, UnitySamplerState Sampler, half4 TexelSize, half2 UV, out half4 Out)
+void N64Sampler_half(UnityTexture2D Texture, UnitySamplerState Sampler, half4 TexelSize, half2 UV, half LOD, out half4 Out)
 {
     half width, height;
     Texture.tex.GetDimensions(width, height);
@@ -55,9 +55,9 @@ void N64Sampler_half(UnityTexture2D Texture, UnitySamplerState Sampler, half4 Te
     half2 uvB = (floor(texels) + half2(1.5, 0.5)) * TexelSize.xy;
     half2 uvC = (floor(texels) + half2(0.5, 1.5)) * TexelSize.xy;
     
-    half4 A = SAMPLE_TEXTURE2D_LOD(Texture, Sampler, uvA, 0.0);
-    half4 B = SAMPLE_TEXTURE2D_LOD(Texture, Sampler, uvB, 0.0);
-    half4 C = SAMPLE_TEXTURE2D_LOD(Texture, Sampler, uvC, 0.0);
+    half4 A = SAMPLE_TEXTURE2D_LOD(Texture, Sampler, uvA, LOD);
+    half4 B = SAMPLE_TEXTURE2D_LOD(Texture, Sampler, uvB, LOD);
+    half4 C = SAMPLE_TEXTURE2D_LOD(Texture, Sampler, uvC, LOD);
     
     Out = A * blend.x + B * blend.y + C * blend.z;
 }

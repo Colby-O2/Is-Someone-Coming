@@ -24,7 +24,7 @@ Shader "Hidden/ColbyO/VNTG/Editor/ColorBar"
             #pragma fragment frag
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
-            #include "Assets/ColbyO/VNTG/Shaders/HLSL/ColorSpace.hlsl"
+            #include "Assets/Modules/ColbyO/VNTG/Shaders/HLSL/ColorSpace.hlsl"
 
             struct Attributes
             {

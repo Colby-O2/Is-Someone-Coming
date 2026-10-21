@@ -128,13 +128,14 @@ namespace ColbyO.VNTG.PSX
 
             TextureHandle src = resourceData.activeColorTexture;
             TextureDesc dstDesc = renderGraph.GetTextureDesc(src);
-            dstDesc.filterMode = FilterMode.Point;
-            dstDesc.width = Screen.width;
-            dstDesc.height = Screen.height;
+            dstDesc.filterMode = FilterMode.Bilinear;
+            //dstDesc.width = Screen.width;
+            //dstDesc.height = Screen.height;
             dstDesc.name = _passName;
             TextureHandle dst = renderGraph.CreateTexture(dstDesc);
 
-            Vector2 screenParams = new Vector2(Screen.width, Screen.height);
+            //Vector2 screenParams = new Vector2(Screen.width, Screen.height);
+            Vector2 screenParams = new Vector2(dstDesc.width, dstDesc.height);
 
             using (IRasterRenderGraphBuilder builder = renderGraph.AddRasterRenderPass(_passName, out PassData passData))
             {

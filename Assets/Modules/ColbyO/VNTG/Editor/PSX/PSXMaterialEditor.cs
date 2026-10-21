@@ -39,6 +39,7 @@ public class PSXMaterialEditor : ShaderGUI
 
     MaterialProperty _surfaceType;
     MaterialProperty _cullMode;
+    MaterialProperty _alpha;
 
     MaterialProperty _mainTex;
     MaterialProperty _textureSampleMode;
@@ -248,6 +249,10 @@ public class PSXMaterialEditor : ShaderGUI
         if (_surfaceType != null && targetMat.shader != null && targetMat.shader.name != _decalShaderName && targetMat.shader.name != _skyboxShaderName) VNTGEditorGUIUtils.DrawEnumToolbar<SurfaceType>(materialEditor, _surfaceType, "Surface Type", _surfaceOptions);
         if (_cullMode != null && targetMat.shader != null && targetMat.shader.name != _decalShaderName && targetMat.shader.name != _skyboxShaderName) VNTGEditorGUIUtils.DrawEnumToolbar<CullMode>(materialEditor, _cullMode, "Face Culling", _cullOptions);
         if (_alphaClipThreshold != null) materialEditor.ShaderProperty(_alphaClipThreshold, "Alpha Clip Threshold");
+        if (_alpha != null && targetMat.shader != null && targetMat.shader.name != _decalShaderName && targetMat.shader.name != _skyboxShaderName && _surfaceType.floatValue == (float)SurfaceType.Transparent)
+        {
+            materialEditor.ShaderProperty(_alpha, "Alpha");
+        }
         if (targetMat.shader != null && targetMat.shader.name != _decalShaderName && targetMat.shader.name != _skyboxShaderName && targetMat.shader.name != _terrianShaderName) EditorGUILayout.Space(16);
 
         if (textureProp != null)
@@ -726,6 +731,8 @@ public class PSXMaterialEditor : ShaderGUI
     {
         _surfaceType = FindProperty("_SurfaceType", properties, false);
         _cullMode = FindProperty("_Cull", properties, false);
+
+        _alpha = FindProperty("_Alpha", properties, false);
 
         _mainTex = FindProperty("_MainTex", properties, false);
         _textureSampleMode = FindProperty("_TEXTURESAMPLEMODE", properties, false);

@@ -26,7 +26,7 @@ Material:
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _DITHERINGMETHOD_FULL
-  - _PROCEDUALSKYBOXMODE_FLAT_GRADIENT
+  - _PROCEDUALSKYBOXMODE_SPACE
   - _SKYBOXMODE_PROCEDUAL
   - _TEXTURESAMPLEMODE_POINT
   m_InvalidKeywords: []
@@ -127,9 +127,9 @@ Material:
     - _DitherStrength: 0.122
     - _DstBlend: 0
     - _DstBlendAlpha: 0
-    - _EnableDithering: 1
+    - _EnableDithering: 0
     - _EnableNebula: 1
-    - _EnableTextureDownsampling: 0
+    - _EnableTextureDownsampling: 1
     - _EnvironmentReflections: 1
     - _FlatGradientBottomAngle: -27.95
     - _FlatGradientTopAngle: 38.9
@@ -139,10 +139,10 @@ Material:
     - _HueShift: 0
     - _LightnessMultiplier: 1
     - _Metallic: 0
-    - _NebulaPeriod: 20
-    - _NebulaPower: 4.79
+    - _NebulaPeriod: 47
+    - _NebulaPower: 8.48
     - _OcclusionStrength: 1
-    - _PROCEDUALSKYBOXMODE: 0
+    - _PROCEDUALSKYBOXMODE: 1
     - _Parallax: 0.005
     - _QueueControl: -1
     - _QueueOffset: 0
@@ -159,11 +159,11 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _StarDensity: 0.5
-    - _StarSharpness: 0.5
+    - _StarSharpness: 0.197
     - _Surface: 0
     - _SurfaceType: 0
     - _TEXTURESAMPLEMODE: 0
-    - _TextureResolution: 256
+    - _TextureResolution: 512
     - _TextureResolutionScale: 1
     - _UseColorQuantization: 0
     - _UsePalette: 0
