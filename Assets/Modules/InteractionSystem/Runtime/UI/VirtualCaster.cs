@@ -9,9 +9,9 @@ namespace InteractionSystem.UI
 {
     public class VirtualCaster : GraphicRaycaster
     {
-        [SerializeField] private Camera _screenCamera;
+        [SerializeField] public Camera _screenCamera;
         [SerializeField] private RectTransform _virtualCursor;
-        [SerializeField] private Canvas _canvas;
+        [SerializeField] public Canvas _canvas;
         private RectTransform _canvasRect;
         [SerializeField, ReadOnly] private Vector2 _cursorPos;
 

@@ -138,7 +138,7 @@ namespace InteractionSystem.Handlers
             }
 
             CreateTargets(from);
-            ShowInspectorView();
+            if (profile.Settings.ShowUi) ShowInspectorView();
 
             _controller.Controls.InspectionClickAction.performed += CheckForClickable;
             _controller.Controls.InspectionClickAction.canceled += CancelClickable;
