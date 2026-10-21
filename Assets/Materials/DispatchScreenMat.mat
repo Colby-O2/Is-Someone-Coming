@@ -28,7 +28,7 @@ Material:
   - _DITHERINGMETHOD_TEXTURERELATIVE
   - _LIGHTINGMETHOD_UNLIT
   - _SHADINGMETHOD_DEFAULT
-  - _TEXTURESAMPLEMODE_N64
+  - _TEXTURESAMPLEMODE_BILINEAR
   - _VERTEXJITTERMODE_VIEW_SPACE
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -160,7 +160,7 @@ Material:
     - _SrcBlendAlpha: 1
     - _Surface: 0
     - _SurfaceType: 0
-    - _TEXTURESAMPLEMODE: 2
+    - _TEXTURESAMPLEMODE: 1
     - _TextureResolution: 256
     - _TextureResolutionScale: 1
     - _UseColorQuantization: 0

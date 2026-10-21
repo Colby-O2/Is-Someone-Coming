@@ -1051,7 +1051,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!108 &410087040
 Light:
   m_ObjectHideFlags: 0
@@ -13135,6 +13135,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1045683414}
     m_Modifications:
+    - target: {fileID: 1796533735741864453, guid: 99a738dac4361f14481feb33a152c723, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 470dffd419e3ef5419cd851ba352b94c, type: 2}
     - target: {fileID: 5004249841911652689, guid: 99a738dac4361f14481feb33a152c723, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.5
@@ -13215,6 +13219,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 990929716}
     m_Modifications:
+    - target: {fileID: 1796533735741864453, guid: 99a738dac4361f14481feb33a152c723, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 470dffd419e3ef5419cd851ba352b94c, type: 2}
     - target: {fileID: 5004249841911652689, guid: 99a738dac4361f14481feb33a152c723, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.75
