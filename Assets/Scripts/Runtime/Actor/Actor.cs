@@ -12,7 +12,7 @@ using PlazmaGames.UI;
 using ColbyO.SJ26.Dialogue;
 using ColbyO.SJ26.Rig;
 
-namespace ColbyO.SJ26
+namespace ColbyO.SJ26.Entities
 {
     public enum MoveState
     {
@@ -39,8 +39,13 @@ namespace ColbyO.SJ26
         [Header("State")]
         [SerializeField, ReadOnly] private MoveState _state = MoveState.Idle;
 
-        [Header("Settings")]
-        [SerializeField] private float _sitDistance = 0.3f;
+        [Header("Sitting Settings")]
+        [SerializeField] private Transform _mesh;
+        [SerializeField] private float _sitDistance = 0.35f;
+        [SerializeField] private float _sitHeightOffset = 0.2f;
+        [SerializeField] private float _sitForwardOffset = 0.25f;
+
+        [Header("Follow Settings")]
         [SerializeField] private float _followDistance = 1f;
         [SerializeField] private float _timeBeforeMad;
 
@@ -54,6 +59,9 @@ namespace ColbyO.SJ26
         [SerializeField, ReadOnly] private Promise _gotoPromise;
         [SerializeField, ReadOnly] private Promise _sitPromise;
         [SerializeField, ReadOnly] private string _farDialogue;
+
+        private Vector3 _meshSavedLocalPos;
+        private Quaternion _meshSavedLocalRot;
 
         public string ActorName => _actorName;
 
@@ -259,55 +267,106 @@ namespace ColbyO.SJ26
             return _gotoPromise;
         }
 
-        private void SitStep(float t, Quaternion startRot, Quaternion targetRot)
+        private void SitStep(float t, Vector3 startPos, Vector3 targetPos, Quaternion startRot, Quaternion targetRot)
         {
-            transform.rotation = Quaternion.Slerp(startRot, targetRot, t);
+            if (_mesh)
+            {
+                _mesh.position = Vector3.Lerp(startPos, targetPos, t);
+                _mesh.rotation = Quaternion.Slerp(startRot, targetRot, t);
+            }
+            else
+            {
+                transform.rotation = Quaternion.Slerp(startRot, targetRot, t);
+            }
         }
 
         public Promise SitAt(Transform seat)
         {
             if (_state == MoveState.Sitting || _sitPromise != null) return null;
 
-            Vector3 forward = seat.forward;
-            Vector3 targetPos = seat.position - forward * _sitDistance;
-            Quaternion targetRot = Quaternion.LookRotation(-forward);
+            Promise.CreateExisting(ref _sitPromise);
 
-            Goto(targetPos).Then(_ =>
+            Vector3 forward = seat.forward;
+            Vector3 walkTargetPos = seat.position + forward * _sitDistance;
+            Quaternion targetRot = Quaternion.LookRotation(forward);
+
+            Goto(walkTargetPos).Then(_ =>
             {
                 _state = MoveState.ChangingState;
                 _agent.isStopped = true;
 
-                Quaternion startRot = transform.rotation;
+                Transform movingPart = _mesh ? _mesh : transform;
+                if (_mesh)
+                {
+                    _meshSavedLocalPos = _mesh.localPosition;
+                    _meshSavedLocalRot = _mesh.localRotation;
+                }
 
-                GameManager.GetMonoSystem<IAnimationMonoSystem>().RequestAnimation(this, 1f, (float t) =>
+                Vector3 startPos = movingPart.position;
+                Quaternion startRot = movingPart.rotation;
+
+                Vector3 sitTargetPos = new Vector3(
+                    seat.position.x,
+                    startPos.y - _sitHeightOffset,
+                    seat.position.z
+                ) + forward * _sitForwardOffset;
+
+                UpdateState(MoveState.SittingIntermediate)
+                .Then(_ =>
                 {
-                    SitStep(t, startRot, targetRot);
-                }).Then(_ =>
+                    UpdateState(MoveState.Sitting);
+                    return GameManager.GetMonoSystem<IAnimationMonoSystem>().RequestAnimation(this, 1f, (float t) =>
+                    {
+                        SitStep(t, startPos, sitTargetPos, startRot, targetRot);
+                    });
+                })
+                .Then(_ =>
                 {
-                    UpdateState(MoveState.SittingIntermediate)
-                    .Then(_ => UpdateState(MoveState.Sitting))
-                    .Then(_ => { Promise.ResolveExisting(ref _sitPromise); });
+                    Promise.ResolveExisting(ref _sitPromise);
                 });
             });
 
-            return Promise.CreateExisting(ref _sitPromise);
+            return _sitPromise;
         }
 
         public Promise Unsit()
         {
             if (_state != MoveState.Sitting) return null;
 
+            Promise.CreateExisting(ref _sitPromise);
             _state = MoveState.ChangingState;
+
+            Transform movingPart = _mesh ? _mesh : transform;
+            Vector3 startPos = movingPart.position;
+            Quaternion startRot = movingPart.rotation;
+
+            Vector3 targetWorldPos = _mesh && _mesh.parent
+                ? _mesh.parent.TransformPoint(_meshSavedLocalPos)
+                : transform.position;
+            Quaternion targetWorldRot = _mesh && _mesh.parent
+                ? _mesh.parent.rotation * _meshSavedLocalRot
+                : transform.rotation;
+
+            GameManager.GetMonoSystem<IAnimationMonoSystem>().RequestAnimation(this, 1f, (float t) =>
+            {
+                SitStep(t, startPos, targetWorldPos, startRot, targetWorldRot);
+            });
+
             UpdateState(MoveState.SittingIntermediate)
-            .Then(_ => { Promise.ResolveExisting(ref _sitPromise); })
+            .Then(_ => UpdateState(MoveState.Idle))
             .Then(_ =>
             {
+                if (_mesh)
+                {
+                    _mesh.localPosition = _meshSavedLocalPos;
+                    _mesh.localRotation = _meshSavedLocalRot;
+                }
                 _state = MoveState.Idle;
                 _agent.isStopped = false;
                 Promise.ResolveExisting(ref _sitPromise);
             });
 
-            return Promise.CreateExisting(ref _sitPromise);
+            return _sitPromise;
         }
     }
 }

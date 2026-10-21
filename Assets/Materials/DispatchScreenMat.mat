@@ -26,7 +26,7 @@ Material:
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _DITHERINGMETHOD_TEXTURERELATIVE
-  - _LIGHTINGMETHOD_TEXEL_LIT
+  - _LIGHTINGMETHOD_UNLIT
   - _SHADINGMETHOD_DEFAULT
   - _TEXTURESAMPLEMODE_N64
   - _VERTEXJITTERMODE_VIEW_SPACE
@@ -137,7 +137,7 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _HueShift: 0
-    - _LIGHTINGMETHOD: 2
+    - _LIGHTINGMETHOD: 0
     - _LightnessMultiplier: 1
     - _Metallic: 0
     - _Metalness: 0

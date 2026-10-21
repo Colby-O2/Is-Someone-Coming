@@ -7,6 +7,7 @@ TagManager:
   - MusicSource
   - StreetSpline
   - SnowFallController
+  - Location
   layers:
   - Default
   - TransparentFX

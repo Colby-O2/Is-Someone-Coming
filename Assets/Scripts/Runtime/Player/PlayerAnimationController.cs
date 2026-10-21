@@ -9,6 +9,7 @@ using PlazmaGames.Attribute;
 
 using ColbyO.SJ26.Rig;
 using ColbyO.SJ26.Utilities;
+using ColbyO.SJ26.Entities;
 
 
 namespace ColbyO.SJ26

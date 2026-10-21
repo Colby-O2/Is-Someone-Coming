@@ -1,7 +1,7 @@
 using UnityEngine;
 using PlazmaGames.Attribute;
 
-namespace ColbyO.SJ26
+namespace ColbyO.SJ26.Entities
 {
     [System.Serializable]
     public class ActorAnimator
@@ -11,7 +11,6 @@ namespace ColbyO.SJ26
         [SerializeField] private Transform _rHand;
         [SerializeField] private Transform _lFoot;
         [SerializeField] private Transform _rFoot;
-        [Tooltip("Optional: Assign your character's hips/pelvis or mesh root for subtle weight shift and bobbing.")]
         [SerializeField] private Transform _pelvis;
 
         [Header("Walking Settings")]
@@ -28,7 +27,7 @@ namespace ColbyO.SJ26
         [SerializeField] private float _footRaycastHeight = 1f;
         [SerializeField] private float _footGroundOffset = 0.02f;
 
-        [Header("Pelvis Motion (If Assigned)")]
+        [Header("Pelvis Motion")]
         [SerializeField] private float _hipBounce = 0.025f;
         [SerializeField] private float _hipSway = 0.03f;
 
