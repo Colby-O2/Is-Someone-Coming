@@ -1,0 +1,131 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dde6bf8a896c98c48b27db112dac91a0, type: 3}
+  m_Name: Extra1Dialogue
+  m_EditorClassIdentifier: DialogueGraph::DialogueGraph.Data.DialogueGraphSO
+  id: -1
+  includeInDatabase: 1
+  Name: Extra1Dialogue
+  Nodes:
+  - Guid: bffadcc8-c613-4037-9206-2884912a371a
+    ActorName: Dispatch Worker
+    GroupName: 
+    Type: 1
+    Text: <i>911 what's your emergency?</i>
+    EventID: 
+    position: {x: 348, y: -26}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: db512882-38b0-4535-b192-db708b04703b
+  - Guid: 79b43609-28de-4d0f-8042-a1a870a0ae95
+    ActorName: 
+    GroupName: 
+    Type: 0
+    Text: 
+    EventID: 
+    position: {x: -244, y: -13}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: d3845b74-f415-4630-bf8d-ecf851df07f4
+  - Guid: d3845b74-f415-4630-bf8d-ecf851df07f4
+    ActorName: 
+    GroupName: 
+    Type: 6
+    Text: 
+    EventID: 
+    position: {x: 5, y: -20}
+    PropertyType: Int
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: Extra1_NumberOfTalks
+    IncrementAmount: 0
+    ComparisonType: 2
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: bffadcc8-c613-4037-9206-2884912a371a
+    - Text: 
+      Next: db512882-38b0-4535-b192-db708b04703b
+  - Guid: db512882-38b0-4535-b192-db708b04703b
+    ActorName: Dispatch Worker
+    GroupName: 
+    Type: 1
+    Text: 'Excuse me buddy i''m busy here. '
+    EventID: 
+    position: {x: 695, y: -1}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: c72be69d-8b75-4757-86dd-0fb013d7e1e9
+  - Guid: c72be69d-8b75-4757-86dd-0fb013d7e1e9
+    ActorName: 
+    GroupName: 
+    Type: 5
+    Text: 
+    EventID: 
+    position: {x: 1101, y: 2}
+    PropertyType: Int
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: Extra1_NumberOfTalks
+    IncrementAmount: 1
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 
+  Groups: []
+  Properties:
+  - Name: Extra1_NumberOfTalks
+    Type: Int
+    BooleanValue: 0
+    IntValue: 0

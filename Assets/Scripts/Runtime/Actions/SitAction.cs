@@ -15,6 +15,8 @@ namespace ColbyO.SJ26
         [SerializeField] private Transform _target;
         [SerializeField, ReadOnly] private bool _isPlayerSitting = false;
 
+        private Promise _promise;
+
         public override string ActionName => "Sit";
 
         public override bool CanExecute() => !_isPlayerSitting && !SJ26GameManager.PlayerSit.HasDetachedHead() && SJ26GameManager.PlayerAnimator.CanSit();
@@ -35,6 +37,8 @@ namespace ColbyO.SJ26
 
                 Quaternion startRot = playerTrans.rotation;
 
+                Promise.ResolveExisting(ref _promise);
+
                 GameManager.GetMonoSystem<IAnimationMonoSystem>().RequestAnimation(
                     _owner,
                     0.5f,
@@ -51,6 +55,12 @@ namespace ColbyO.SJ26
                     });
                 });
             }
+        }
+
+        public Promise WaitForSit()
+        {
+            _promise = Promise.CreateExisting(ref _promise);
+            return _promise;
         }
 
         public Transform GetSitTarget() => _target;

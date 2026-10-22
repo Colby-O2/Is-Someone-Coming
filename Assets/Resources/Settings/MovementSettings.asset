@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77e69e4e10ad2584d87a71a638738d01, type: 3}
   m_Name: MovementSettings
   m_EditorClassIdentifier: Assembly-CSharp::ColbyO.SJ26.MovementSettings
-  ControllerSensitivityScaleFactor: 2
+  ControllerSensitivityScaleFactor: 3
   Sensitivity: 0.1
   YLookLimit: {x: -80, y: 80}
   InvertLookY: 0
   InvertLookX: 0
-  Speed: 3.5
+  Speed: 2
   CrouchedMultiplier: 0.5
   BackwardSpeedMul: 0.5
   StrafingSpeedMul: 1

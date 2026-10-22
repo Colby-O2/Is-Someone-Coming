@@ -35,6 +35,10 @@ namespace ColbyO.SJ26
         [SerializeField, ReadOnly] private Vector2 _detachedLookLimits;
         [SerializeField, ReadOnly] private float _detachedHeadTransition = 0;
         [SerializeField, ReadOnly] private bool _lockHead = false;
+        [SerializeField, ReadOnly] private MathExt.Transform _savedLookTransform;
+        [SerializeField, ReadOnly] private Vector2 _savedLookLimits;
+        [SerializeField, ReadOnly] private bool _isOverridingLook = false;
+
 
         private Promise _sitPromise;
         private IInputMonoSystem _input;
@@ -115,7 +119,7 @@ namespace ColbyO.SJ26
             _detachedHeadState = DetachedHeadState.Entering;
             _detachedHeadFromTrans = _head;
 
-            CalcualteYawLookLimits(obj);
+            if (obj) CalcualteYawLookLimits(obj);
         }
 
         public void DetachHeadImmediate(Transform target)
@@ -160,6 +164,45 @@ namespace ColbyO.SJ26
             _detachedHeadFromTrans.ApplyTo(_head);
             _detachedHeadTargetObject = null;
             _animation.Unsit();
+        }
+
+        public void RetargetHeadLookAt(Vector3 targetPos)
+        {
+            if (_detachedHeadState == DetachedHeadState.Attached) return;
+
+            if (!_isOverridingLook)
+            {
+                _savedLookTransform = _head;
+                _savedLookLimits = _detachedLookLimits;
+                _isOverridingLook = true;
+            }
+
+            _detachedHeadFromTrans = _head;
+
+            MathExt.Transform target = _head;
+            target.rotation = Quaternion.LookRotation(targetPos - _head.position);
+            _detachedHeadTarget = target;
+
+            Vector3 targetDir = (targetPos - _head.position).normalized;
+            Vector3 localDir = _head.parent.InverseTransformDirection(targetDir);
+            float targetYaw = Mathf.Atan2(localDir.x, localDir.z) * Mathf.Rad2Deg;
+            _detachedLookLimits = new Vector2(targetYaw, targetYaw);
+
+            _detachedHeadTransition = 0f;
+            _detachedHeadState = DetachedHeadState.Entering;
+        }
+
+        public void RestoreHeadLook()
+        {
+            if (!_isOverridingLook || _detachedHeadState == DetachedHeadState.Attached) return;
+
+            _detachedHeadFromTrans = _head;
+            _detachedHeadTarget = _savedLookTransform;
+            _detachedLookLimits = _savedLookLimits;
+
+            _detachedHeadTransition = 0f;
+            _detachedHeadState = DetachedHeadState.Entering;
+            _isOverridingLook = false;
         }
 
         private void ProcessDetachedHeadLook()

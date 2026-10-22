@@ -287,6 +287,50 @@ MonoBehaviour:
     Choices: []
   _currentNodeType: 0
   _isDialogueInProgress: 0
+--- !u!1 &2851956367858142319
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3358117326317438326}
+  - component: {fileID: 720909592346267528}
+  m_Layer: 0
+  m_Name: VisualEffectMS
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3358117326317438326
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2851956367858142319}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2956269746140199252}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &720909592346267528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2851956367858142319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afa4d77020a5bee4f94cb9b3bcfd4492, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ColbyO.Sj26.Effects.VisualEffectMonoSystem
 --- !u!1 &2900910220976218930
 GameObject:
   m_ObjectHideFlags: 0
@@ -505,6 +549,9 @@ Transform:
   - {fileID: 7835883521171950401}
   - {fileID: 6218167391325972246}
   - {fileID: 6627732067196906923}
+  - {fileID: 3358117326317438326}
+  - {fileID: 68052566191580509}
+  - {fileID: 8780669198540770711}
   m_Father: {fileID: 4775556590630408094}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3377396468597120417
@@ -567,6 +614,50 @@ MonoBehaviour:
   _sfxSources: []
   _musicSources: []
   _hasInitialized: 0
+--- !u!1 &3430167825245366380
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 68052566191580509}
+  - component: {fileID: 6664629198334276965}
+  m_Layer: 0
+  m_Name: GameLogicMS
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &68052566191580509
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3430167825245366380}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2956269746140199252}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6664629198334276965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3430167825245366380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34d56b392095f4c44a74c7208a8d66a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ColbyO.SJ26.GameLogic.GameLogicMonoSystem
 --- !u!1 &3776932978582798148
 GameObject:
   m_ObjectHideFlags: 0
@@ -1097,3 +1188,51 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ColbyO.SJ26.Cinematic.CinematicMonoSystem
   _cinematicCameraTag: MainCamera
+--- !u!1 &8460783740900677185
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8780669198540770711}
+  - component: {fileID: 7421916839376599373}
+  m_Layer: 0
+  m_Name: TaskMS
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8780669198540770711
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8460783740900677185}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2956269746140199252}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7421916839376599373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8460783740900677185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bfd6a911485ad641a8f8b891b2bae74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ColbyO.SJ26.Task.TaskMonoSystem
+  _hasTask: 0
+  _taskMsg: 
+  _maxCount: 0
+  _count: 0

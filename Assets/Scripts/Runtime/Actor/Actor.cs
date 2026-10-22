@@ -36,6 +36,7 @@ namespace ColbyO.SJ26.Entities
 
         [Header("References")]
         [SerializeField] private NavMeshAgent _agent;
+        [SerializeField] private Transform _face;
 
         [Header("State")]
         [SerializeField, ReadOnly] private MoveState _state = MoveState.Idle;
@@ -57,8 +58,8 @@ namespace ColbyO.SJ26.Entities
         [SerializeField, ReadOnly] private bool _isWaitingForPlayer;
         [SerializeField, ReadOnly] private float _timeAwayFromPlayer;
 
-        [SerializeField, ReadOnly] private Promise _gotoPromise;
-        [SerializeField, ReadOnly] private Promise _sitPromise;
+        private Promise _gotoPromise;
+        private Promise _sitPromise;
         [SerializeField, ReadOnly] private string _farDialogue;
 
         private Vector3 _meshSavedLocalPos;
@@ -135,13 +136,19 @@ namespace ColbyO.SJ26.Entities
 
             if (_agent.remainingDistance <= _agent.stoppingDistance)
             {
-                if (!_agent.hasPath || _agent.velocity.sqrMagnitude < 0.01f)
+                if (!_agent.hasPath || _agent.velocity.sqrMagnitude < 0.1f)
                 {
                     _agent.isStopped = true;
+                    _agent.ResetPath();
                     _withTarget = null;
-                    UpdateState(_sitPromise != null ? MoveState.Idle : MoveState.Waiting)
+
+                    MoveState nextState = _sitPromise != null ? MoveState.Idle : MoveState.Waiting;
+
+                    Debug.Log("About to resolve A goto promise");
+                    UpdateState(nextState)
                     .Then(_ =>
                     {
+                        Debug.Log("Resolving A goto promise");
                         Promise.ResolveExisting(ref _gotoPromise);
                     });
                 }
@@ -221,6 +228,8 @@ namespace ColbyO.SJ26.Entities
             return false;
         }
 
+        public Transform GetFace() => _face;
+
         public void SetMoveSpeed(float speed) => _agent.speed = speed;
 
         public Promise LerpPose(string poseName, float? duration = null)
@@ -252,6 +261,7 @@ namespace ColbyO.SJ26.Entities
 
         public Promise Goto(Vector3 position, Transform with = null, string farDialgoue = null)
         {
+            Debug.Log("Making A goto promise");
             Promise.CreateExisting(ref _gotoPromise);
 
             _withTarget = with;
@@ -368,6 +378,27 @@ namespace ColbyO.SJ26.Entities
             });
 
             return _sitPromise;
+        }
+
+        public Promise LookAt(Transform target, float duration)
+        {
+            if (target == null) return null;
+
+            Vector3 targetDirection = (target.position.SetY(transform.position.y) - transform.position).normalized;
+
+            if (targetDirection.sqrMagnitude < 0.001f) return null;
+
+            Quaternion startRot = transform.rotation;
+            Quaternion targetRot = Quaternion.LookRotation(targetDirection);
+
+            return GameManager.GetMonoSystem<IAnimationMonoSystem>().RequestAnimation(
+                this,
+                duration,
+                (float t) =>
+                {
+                    transform.rotation = Quaternion.Slerp(startRot, targetRot, t);
+                }
+            );
         }
     }
 }

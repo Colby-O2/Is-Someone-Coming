@@ -8,6 +8,7 @@ TagManager:
   - StreetSpline
   - SnowFallController
   - Location
+  - PlayerSeat
   layers:
   - Default
   - TransparentFX

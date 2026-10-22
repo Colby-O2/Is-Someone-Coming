@@ -21,13 +21,6 @@ namespace ColbyO.SJ26.Entities
 
             RefreshActorList();
             RefreshLocationsList();
-
-            TellActorToSitAt("Coworker", "TestLoc", 1f)
-            .Then(_ => { Debug.Log("The Coworker Has Sat Down."); });
-            //.Then(_ => SJ26GameManager.GlobalScheduler.Wait(2f))
-            //.Then(_ => TellActorToUnsit("Coworker"));
-            //.Then(_ => SendActorTo("FoxMan", "Test2", 1f))
-            //.Then(_ => Debug.Log("The Fox Man is here!"));
         }
 
         public Promise SendActorToWith(Transform withTransform, string actorName, string locationName, float speed, string farDialogue = null, bool rebuildNavMesh = false)
