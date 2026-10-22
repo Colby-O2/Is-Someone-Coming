@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9616fcd2fc12b8e4ba6e00b876b2b0e5, type: 3}
+  m_Name: RescueUnit
+  m_EditorClassIdentifier: Assembly-CSharp::ColbyO.SJ26.Dispatch.FieldUnitSO
+  icon: {fileID: 2800000, guid: 2b338c8909c6b84bc9294d9741202215, type: 3}
+  color: {r: 0.95399916, g: 1, b: 0.11937553, a: 1}
+  callsignSymbol: R
+  unitType: 3
+  moveSpeed: 6
+  rotationSpeed: 8
+  autoPatrolWhenAvailable: 1
+  patrolSpeed: 1
+  idleWaitDuration: 3

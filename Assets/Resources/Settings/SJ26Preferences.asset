@@ -13,3 +13,6 @@ MonoBehaviour:
   m_Name: SJ26Preferences
   m_EditorClassIdentifier: Assembly-CSharp::ColbyO.SJ26.Preferences
   Cursor: {fileID: 0}
+  DetachedHeadTransitionTime: 1
+  SuccessMapIcon: {fileID: 2800000, guid: c6270987f8b586f5aaffc8e16807e116, type: 3}
+  FailedMapIcon: {fileID: 2800000, guid: b4436f4f96230d426ad727e38ef9806e, type: 3}

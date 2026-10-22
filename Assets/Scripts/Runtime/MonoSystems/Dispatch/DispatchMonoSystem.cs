@@ -1,13 +1,17 @@
 using UnityEngine;
 
 using System.Collections.Generic;
-
+using System.Diagnostics.Contracts;
+using System.Linq;
 using PlazmaGames.Core;
 using PlazmaGames.Core.Debugging;
 
 using ColbyO.SJ26.Street;
 using ColbyO.SJ26.GPS;
 using ColbyO.SJ26.Map;
+using DialogueGraph.Data;
+using Unity.U2D.Physics;
+using Unity.VisualScripting;
 using static UnityEngine.Rendering.STP;
 
 
@@ -28,9 +32,68 @@ namespace ColbyO.SJ26.Dispatch
             this.unitData = unitData;
         }
     }
+    
+    public class DispatchEvent
+    {
+        public DialogueGraphSO Dialogue;
+        public string Address;
+        public int RequiredPolice;
+        public int RequiredEMS;
+        public int RequiredFire;
+        public int RequiredRescue;
+        public float TimeToRespond;
+        public float TimeToResolve;
+    }
+    
 
     public class DispatchMonoSystem : MonoBehaviour, IDispatchMonoSystem
     {
+
+        private class ActiveDispatchEvent
+        {
+            public DispatchEvent Event;
+            public float StartTime;
+            public EmergencyCallMarker Marker;
+            public string CallId;
+            
+            public float ResolveStartTime = 0;
+            public bool Resolving = false;
+
+            public ActiveDispatchEvent(DispatchEvent e, EmergencyCallMarker marker, string callId)
+            {
+                Event = e;
+                StartTime = Time.time;
+                Marker = marker;
+                CallId = callId;
+            }
+
+            public float ActiveTime() => Time.time - StartTime;
+            
+            public float TimeLeft() => Event.TimeToRespond - ActiveTime();
+            
+            public bool IsResolving() => Resolving;
+
+            public bool IsResolved() =>
+                IsResolving() &&
+                Time.time - ResolveStartTime >= Event.TimeToResolve;
+            
+            public void StartResolving()
+            {
+                Resolving = true;
+                ResolveStartTime = Time.time;
+            }
+
+            public bool HasRequiredUnits(List<UnitType> units)
+            {
+                return
+                    units.Count(u => u == UnitType.Fire) == Event.RequiredFire &&
+                    units.Count(u => u == UnitType.EMS) == Event.RequiredEMS &&
+                    units.Count(u => u == UnitType.Police) == Event.RequiredPolice &&
+                    units.Count(u => u == UnitType.Rescue) == Event.RequiredRescue;
+            }
+
+        }
+        
         [Header("Testing & Auto-Spawn")]
         [SerializeField] private bool _autoSpawnUnitsOnStart = true;
         [SerializeField] private GameObject _optionalUnitPrefab;
@@ -46,6 +109,9 @@ namespace ColbyO.SJ26.Dispatch
         [SerializeField] private string _testCallId = "#1047";
 
         private FieldUnit _selectedFieldUnit = null;
+
+        private List<ActiveDispatchEvent> _events = new();
+        private List<ActiveDispatchEvent> _eventsToRemove = new();
 
         private IGPSMonoSystem _gpsSystem;
         private IStreetMonoSystem _streetSystem;
@@ -81,17 +147,112 @@ namespace ColbyO.SJ26.Dispatch
             ? spawnPoints[0]
             : Vector3.zero;
 
-            unitGO = new GameObject("Maker_Test");
-            unitGO.transform.position = spawnPos;
-            mapObj = unitGO.AddComponent<EmergencyCallMarker>();
+            
+            StartEvent(new DispatchEvent()
+            {
+                Address="fsad",
+                RequiredFire = 1,
+                RequiredPolice = 0,
+                RequiredRescue = 0,
+                RequiredEMS = 1,
+                TimeToRespond = 40,
+                TimeToResolve = 5,
+            });
+        }
 
-            mapObj.InitializeCall(_testCall, _testCallId, streets[0].addresses[0].addressLabel);
+        public void StartEvent(DispatchEvent e)
+        {
+            var streets = _streetSystem.GetNamedStreets();
+            List<Vector3> spawnPoints = new List<Vector3>();
+
+            if (streets != null)
+            {
+                foreach (var street in streets)
+                {
+                    if (street.addresses.Count > 0)
+                    {
+                        spawnPoints.Add(street.addresses[0].position);
+                    }
+                }
+            }
+            
+            Vector3 spawnPos = (spawnPoints.Count > 0)
+            ? spawnPoints[Random.Range(0, spawnPoints.Count)]
+            : Vector3.zero;
+            
+            var unitGO = new GameObject("Maker_Test");
+            unitGO.transform.position = spawnPos;
+            var marker = unitGO.AddComponent<EmergencyCallMarker>();
+            var callId = "#" + Random.Range(0, 9999).ToString();
+            e.Address = streets[0].addresses[0].addressLabel;
+            marker.InitializeCall(_testCall, callId, e.Address);
+            
+            _events.Add(new ActiveDispatchEvent(e, marker, callId));
+        }
+
+        private void FailEvent(ActiveDispatchEvent e)
+        {
+            e.Marker.SetFailed(e.Event);
+            EndEvent(e);
+        }
+
+        private void SuccessEvent(ActiveDispatchEvent e)
+        {
+            e.Marker.SetSuccess(e.Event);
+            EndEvent(e);
+        }
+
+        private void EndEvent(ActiveDispatchEvent e)
+        {
+            foreach (FieldUnit u in _registeredUnits)
+            {
+                if (u.ActiveCallId == e.CallId)
+                {
+                    u.TakeOffCall();
+                }
+            }
+            _eventsToRemove.Add(e);
+        }
+
+        private List<UnitType> GetUnitsAtAddress(string address)
+        {
+            return _registeredUnits
+                .Where(u => u.CurrentLocation == address)
+                .Select(u => u.Type)
+                .ToList();
         }
 
         private void Update()
         {
             _gpsSystem ??= GameManager.GetMonoSystem<IGPSMonoSystem>();
             _streetSystem ??= GameManager.GetMonoSystem<IStreetMonoSystem>();
+
+            foreach (ActiveDispatchEvent e in _events)
+            {
+                if (e.IsResolving())
+                {
+                    if (e.IsResolved())
+                    {
+                        Debug.Log("SUCCESSSS!!!!!!!!!");
+                        SuccessEvent(e);
+                    }
+                }
+                else if (e.HasRequiredUnits(GetUnitsAtAddress(e.Event.Address)))
+                {
+                    Debug.Log("On Scene!!!!!!!!!!");
+                    e.StartResolving();
+                }
+                
+                if (e.TimeLeft() < 0)
+                {
+                    FailEvent(e);
+                }
+            }
+
+            foreach (ActiveDispatchEvent e in _eventsToRemove)
+            {
+                _events.Remove(e);
+            }
         }
 
         private void SpawnInitialUnits()
@@ -255,7 +416,11 @@ namespace ColbyO.SJ26.Dispatch
             else if (mo is EmergencyCallMarker ecm)
             {
                 Debug.Log("TRY SEND");
-                if (_selectedFieldUnit)
+                if (ecm.IsEnded())
+                {
+                    GameObject.Destroy(ecm.gameObject);
+                }
+                else if (_selectedFieldUnit)
                 {
                     DispatchUnitToAddress(_selectedFieldUnit, ecm.CurrentLocation);
                 }
