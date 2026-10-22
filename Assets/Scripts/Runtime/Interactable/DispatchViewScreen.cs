@@ -1,6 +1,9 @@
 using System.Collections.Generic;
+using ColbyO.SJ26.Dispatch;
+using ColbyO.SJ26.Map;
 using InteractionSystem.Interfaces;
 using InteractionSystem.UI;
+using PlazmaGames.Core;
 using PlazmaGames.Math;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -22,7 +25,10 @@ namespace ColbyO.SJ26
         {
             Vector2 p = VirtualCaster.GetVirtualMousePosition() / (VirtualCaster.Instance._canvas.transform as RectTransform).rect.size;
             Debug.Log(_ucc.Resolve(p));
-            Debug.Log(_ucc.Raycast(p)?.transform.gameObject);
+            if (_ucc.Raycast(p)?.transform is Transform hit && hit.parent?.TryGetComponent<MapObject>(out var mo) != null)
+            {
+                GameManager.GetMonoSystem<IDispatchMonoSystem>().HandleMapObjectClick(mo);
+            }
         }
 
         public void OnDrag()

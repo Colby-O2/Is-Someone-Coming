@@ -30,7 +30,8 @@ Material:
   - _SHADINGMETHOD_DEFAULT
   - _TEXTURESAMPLEMODE_BILINEAR
   - _VERTEXJITTERMODE_VIEW_SPACE
-  m_InvalidKeywords: []
+  m_InvalidKeywords:
+  - _VERTEXJITTERMODE_VIEW
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
