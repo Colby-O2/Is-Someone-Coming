@@ -45,6 +45,8 @@ namespace ColbyO.SJ26.Dispatch
         [SerializeField] private string _testTargetAddress = "";
         [SerializeField] private string _testCallId = "#1047";
 
+        private FieldUnit _selectedFieldUnit = null;
+
         private IGPSMonoSystem _gpsSystem;
         private IStreetMonoSystem _streetSystem;
 
@@ -240,6 +242,24 @@ namespace ColbyO.SJ26.Dispatch
             });
 
             return numOfUnits;
+        }
+
+        public void HandleMapObjectClick(MapObject mo)
+        {
+            Debug.Log(mo);
+            if (mo is FieldUnit fu)
+            {
+                Debug.Log("SELECT");
+                _selectedFieldUnit = fu == _selectedFieldUnit ? null : fu;
+            }
+            else if (mo is EmergencyCallMarker ecm)
+            {
+                Debug.Log("TRY SEND");
+                if (_selectedFieldUnit)
+                {
+                    DispatchUnitToAddress(_selectedFieldUnit, ecm.CurrentLocation);
+                }
+            }
         }
     }
 

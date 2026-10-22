@@ -65,7 +65,7 @@ MonoBehaviour:
   active: 1
   Enabled:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0
   ShowInSceneView:
     m_OverrideState: 1
     m_Value: 0
@@ -286,7 +286,7 @@ MonoBehaviour:
   active: 1
   Enabled:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0
   ShowInSceneView:
     m_OverrideState: 1
     m_Value: 0

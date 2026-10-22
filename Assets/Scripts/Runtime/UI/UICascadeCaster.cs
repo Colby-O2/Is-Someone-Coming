@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 using PlazmaGames.Core.Debugging;
 using PlazmaGames.Core.Utils;
 using PlazmaGames.Math;
+using Unity.VisualScripting;
 using UnityEditor.UIElements;
 using UnityEngine;
 
@@ -68,8 +69,6 @@ namespace ColbyO.SJ26
                         return null;
                     }
                     pos = layer.Object.transform.InverseTransformPoint(hit.point).XZ() + new Vector2(0.5f, 0.5f);
-                    pos.y = 1.0f - pos.y;
-                    pos.x = 1.0f - pos.x;
                 }
             }
 

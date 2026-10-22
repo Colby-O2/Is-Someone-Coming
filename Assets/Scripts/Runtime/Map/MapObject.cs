@@ -22,8 +22,8 @@ namespace ColbyO.SJ26.Map
         [SerializeField] protected Vector3 _iconOffset = new Vector3(0f, 2.5f, 0f);
         [SerializeField] protected Vector2 _iconSize = new Vector2(9f * 0.8571f, 9f);
         [SerializeField] protected bool _faceUpward = true;
-        [SerializeField] protected float _stackDetectionRadius = 1.0f;
-        [SerializeField] protected float _iconSpreadRadius = 1.0f;
+        [SerializeField] protected float _stackDetectionRadius = 3.0f;
+        [SerializeField] protected float _iconSpreadRadius = 2.0f;
         [SerializeField] protected float _iconOffsetSmoothSpeed = 10f;
 
         [Header("Map Positioning")]
@@ -96,10 +96,13 @@ namespace ColbyO.SJ26.Map
             _spawnedIcon.transform.position = transform.position + _iconOffset;
             _spawnedIcon.transform.localScale = new Vector3(_iconSize.x, _iconSize.y, 1f);
 
+            float zRot = 90;
+            float xRot = 0;
             if (_faceUpward)
             {
-                _spawnedIcon.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
+                xRot = 90;
             }
+            _spawnedIcon.transform.rotation = Quaternion.Euler(xRot, zRot, 0f);
 
             ApplyIconTexture(targetTexture);
         }
@@ -165,10 +168,13 @@ namespace ColbyO.SJ26.Map
 
             _spawnedIcon.transform.position = transform.position + _iconOffset + _currentVisualSpreadOffset;
 
+            float zRot = 90;
+            float xRot = 0;
             if (_faceUpward)
             {
-                _spawnedIcon.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
+                xRot = 90;
             }
+            _spawnedIcon.transform.rotation = Quaternion.Euler(xRot, zRot, 0f);
         }
 
         protected virtual bool AreObjectsStacked(MapObject other)

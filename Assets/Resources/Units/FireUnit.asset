@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9616fcd2fc12b8e4ba6e00b876b2b0e5, type: 3}
   m_Name: FireUnit
   m_EditorClassIdentifier: Assembly-CSharp::ColbyO.SJ26.Dispatch.FieldUnitSO
+  icon: {fileID: 2800000, guid: e0bb913ae769ff60a864fcba44b7a990, type: 3}
   callsignSymbol: F
   unitType: 2
-  icon: {fileID: 2800000, guid: 648122bc7a87f1c4bb31651df56ba80b, type: 3}
   moveSpeed: 2
   rotationSpeed: 8
   autoPatrolWhenAvailable: 0

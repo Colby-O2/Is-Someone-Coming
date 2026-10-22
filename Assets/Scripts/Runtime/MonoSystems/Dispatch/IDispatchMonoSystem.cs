@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-
+using ColbyO.SJ26.Map;
 using PlazmaGames.Core.MonoSystem;
 
 namespace ColbyO.SJ26.Dispatch
@@ -13,5 +13,6 @@ namespace ColbyO.SJ26.Dispatch
         IReadOnlyList<FieldUnit> GetAllUnits();
         FieldUnit GetUnitByCallsign(string callsign);
         int GetNumberOfRegisteredUnits(UnitType? unitType = null, string callsignSymbol = null);
+        void HandleMapObjectClick(MapObject mo);
     }
 }
