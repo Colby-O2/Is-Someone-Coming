@@ -299,17 +299,14 @@ namespace ColbyO.SJ26.Dispatch
             }
         }
 
-        private void StartCall()
+        public void StartCallWith(DispatchEventSO eventSO)
         {
-            if (_stagedEvent != null || DialogueSystem == null)
-            {
-                _newCallCountDown = 3;
-                return;
-            }
+            //if (_stagedEvent != null || DialogueSystem == null)
+            //{
+            //    _newCallCountDown = 3;
+            //    return;
+            //}
             
-            DispatchEventSO eventSO = RandomDispatchEvent();
-            if (eventSO == null) return;
-
             _stagedEvent = CreateActiveDispatchEvent(eventSO);
             if (_stagedEvent == null) return;
             
@@ -322,15 +319,28 @@ namespace ColbyO.SJ26.Dispatch
                 _phone.IsEnabled = false;
                 _phoneRinger.Pause();
                 StartEvent(_stagedEvent);
+                _stagedEvent = null;
                 if (!DialogueSystem.IsPlayingDialogue())
                 {
                     DialogueSystem.StartDialoguePromise("CallEnded", true);
                 }
-                _stagedEvent = null;
             });
 
             _phone.IsEnabled = true;
             _phoneRinger.UnPause();
+        }
+
+        private void StartCall()
+        {
+            if (_stagedEvent != null || DialogueSystem == null)
+            {
+                _newCallCountDown = 3;
+                return;
+            }
+            
+            DispatchEventSO eventSO = RandomDispatchEvent();
+            if (eventSO == null) return;
+            StartCallWith(eventSO);
         }
 
         private void SpawnInitialUnits()
