@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dde6bf8a896c98c48b27db112dac91a0, type: 3}
-  m_Name: HouseFireSuccess
+  m_Name: BadFireSuccess
   m_EditorClassIdentifier: DialogueGraph::DialogueGraph.Data.DialogueGraphSO
-  id: -1
+  id: 5
   includeInDatabase: 1
-  Name: HouseFireSuccess
+  Name: BadFireSuccess
   Nodes:
   - Guid: 22a0af60-8670-40ae-ad1b-120fe9199355
     ActorName: 

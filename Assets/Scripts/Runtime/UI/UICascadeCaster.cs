@@ -1,13 +1,12 @@
+using UnityEngine;
+
 using System.Collections.Generic;
 using System.Linq;
-using InteractionSystem.UI;
+
 using JetBrains.Annotations;
-using PlazmaGames.Core.Debugging;
-using PlazmaGames.Core.Utils;
+
 using PlazmaGames.Math;
-using Unity.VisualScripting;
-using UnityEditor.UIElements;
-using UnityEngine;
+using PlazmaGames.Core.Debugging;
 
 namespace ColbyO.SJ26
 {
@@ -61,7 +60,7 @@ namespace ColbyO.SJ26
                 {
                     if (!layer.Camera)
                     {
-                        PlazmaDebug.LogError("UiCascadeCaster world object needs to have a camera attached!");
+                        PlazmaDebug.LogError("World object needs to have a camera attached!", "UiCascadeCaster");
                         return null;
                     }
                     if (!Physics.Raycast(layer.Camera.ViewportPointToRay(pos), out var hit, 4, 1 << layer.Object.layer))
@@ -80,7 +79,7 @@ namespace ColbyO.SJ26
             Camera output = _layers.Last().Camera;
             if (!output)
             {
-                PlazmaDebug.LogError("UiCascadeCaster has no output attached!");
+                PlazmaDebug.LogError("No output attached!", "UiCascadeCaster");
                 return null;
             }
             Vector2? res = Resolve(pos);

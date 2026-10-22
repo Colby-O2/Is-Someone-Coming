@@ -1,26 +1,19 @@
-using DialogueGraph.SO;
 using UnityEngine;
+
+using System.Collections.Generic;
+
+using PlazmaGames.SO;
 
 namespace ColbyO.SJ26
 {
-
-    [CreateAssetMenu(fileName = "DispatchEventDatabase", menuName = "SJ26/DispatchEventDatabase")]
-    public class DispatchEventDatabase : SODatabase<DispatchEventSO>
-    {
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSplashScreen)]
-        public static void Initialize()
-        {
-            SODatabase<DispatchEventSO> [] databases = Resources.LoadAll<SODatabase<DispatchEventSO>>("");
-            foreach (SODatabase<DispatchEventSO> database in databases) database.InitDatabase();
-        }
-    }
     
-    [CreateAssetMenu(fileName = "DispatchEventSO", menuName = "SJ26/DispatchEventSO")]
+    [CreateAssetMenu(fileName = "DispatchEventSO", menuName = "SJ26/DispatchEvents/DispatchEventSO")]
     public class DispatchEventSO : BaseSO
     {
         public string CallDialogue;
         public string SuccessDialogue;
         public string FailedDialogue;
+        public List<string> LocDescriptions = new List<string>();
         public int RequiredPolice;
         public int RequiredEMS;
         public int RequiredFire;

@@ -7,13 +7,16 @@ using PlazmaGames.Attribute;
 using PlazmaGames.Core.Debugging;
 
 using ColbyO.SJ26.Street;
-using Unity.VisualScripting;
 
 namespace ColbyO.SJ26.Map
 {
     public abstract class MapObject : MonoBehaviour
     {
         protected static readonly List<MapObject> ActiveMapObjects = new List<MapObject>();
+
+        private static readonly int BaseMapId = Shader.PropertyToID("_BaseMap");
+        private static readonly int MainTexId = Shader.PropertyToID("_MainTex");
+        private static readonly int BaseColorId = Shader.PropertyToID("_BaseColor");
 
         [Header("Map Object Data")]
         [SerializeField] protected MapObjectSO _mapObjectData;
@@ -26,6 +29,7 @@ namespace ColbyO.SJ26.Map
         [SerializeField] protected float _stackDetectionRadius = 3.0f;
         [SerializeField] protected float _iconSpreadRadius = 2.0f;
         [SerializeField] protected float _iconOffsetSmoothSpeed = 10f;
+        [SerializeField] protected float _renderOrderHeightStep = 0.05f;
 
         [Header("Map Positioning")]
         [SerializeField] protected bool _snapToRoadOnStart = true;
@@ -33,15 +37,60 @@ namespace ColbyO.SJ26.Map
         [SerializeField, ReadOnly] protected string _currentLocationLabel = "Unknown";
 
         protected GameObject _spawnedIcon;
+        protected Renderer _iconRenderer;
+        protected Renderer _selectionRenderer;
+        protected MaterialPropertyBlock _propBlock;
+        protected MaterialPropertyBlock _selectionPropBlock;
+
         protected Vector3 _currentVisualSpreadOffset = Vector3.zero;
         protected IStreetMonoSystem _streetSystem;
 
         public string CurrentLocation => _currentLocationLabel;
         public Vector3 VisualSpreadOffset => _currentVisualSpreadOffset;
+        public int RenderOrder => _mapObjectData != null ? _mapObjectData.renderOrder : 0;
 
-        public void SetSelected(bool value)
+        public void SetSelected(bool value, Color? color = null)
         {
-            _spawnedIcon.transform.GetChild(0).gameObject.SetActive(value);
+            if (_spawnedIcon == null || _spawnedIcon.transform.childCount == 0) return;
+
+            Transform child = _spawnedIcon.transform.GetChild(0);
+            if (child == null) return;
+
+            child.gameObject.SetActive(value);
+
+            if (color.HasValue)
+            {
+                if (_selectionRenderer == null)
+                {
+                    _selectionRenderer = child.GetComponent<Renderer>();
+                }
+
+                if (_selectionRenderer != null)
+                {
+                    _selectionPropBlock ??= new MaterialPropertyBlock();
+                    _selectionRenderer.GetPropertyBlock(_selectionPropBlock);
+                    _selectionPropBlock.SetColor(BaseColorId, color.Value);
+                    _selectionRenderer.SetPropertyBlock(_selectionPropBlock);
+                }
+            }
+        }
+
+        public void SetIconColor(Color color)
+        {
+            if (_spawnedIcon == null) return;
+
+            if (_iconRenderer == null)
+            {
+                _iconRenderer = _spawnedIcon.GetComponent<Renderer>();
+            }
+
+            if (_iconRenderer != null)
+            {
+                _propBlock ??= new MaterialPropertyBlock();
+                _iconRenderer.GetPropertyBlock(_propBlock);
+                _propBlock.SetColor(BaseColorId, color);
+                _iconRenderer.SetPropertyBlock(_propBlock);
+            }
         }
 
         protected virtual void OnEnable()
@@ -92,40 +141,84 @@ namespace ColbyO.SJ26.Map
                 return;
             }
 
-            if (_spawnedIcon == null && _iconPrefab != null)
+            if (_spawnedIcon == null)
             {
-                _spawnedIcon = Instantiate(_iconPrefab, transform);
+                if (_iconPrefab == null)
+                {
+                    _iconPrefab = Resources.Load<GameObject>("Prefabs/MapObjectIconPrefab");
+                }
+
+                if (_iconPrefab != null)
+                {
+                    _spawnedIcon = Instantiate(_iconPrefab, transform);
+                    _iconRenderer = _spawnedIcon.GetComponent<Renderer>();
+                    if (_spawnedIcon.transform.childCount > 0)
+                    {
+                        _selectionRenderer = _spawnedIcon.transform.GetChild(0).GetComponent<Renderer>();
+                    }
+                }
             }
 
             if (_spawnedIcon == null) return;
 
-            _spawnedIcon.transform.position = transform.position + _iconOffset;
+            _spawnedIcon.transform.position = transform.position + GetEffectiveIconOffset();
             _spawnedIcon.transform.localScale = new Vector3(_iconSize.x, _iconSize.y, 1f);
 
-            float zRot = 90;
-            float xRot = 0;
-            if (_faceUpward)
-            {
-                xRot = 90;
-            }
-            _spawnedIcon.transform.rotation = Quaternion.Euler(xRot, zRot, 0f);
+            float xRot = _faceUpward ? 90f : 0f;
+            _spawnedIcon.transform.rotation = Quaternion.Euler(xRot, 90f, 0f);
 
+            ApplyRenderOrder(RenderOrder);
             ApplyIconTexture(targetTexture, _mapObjectData.color);
+        }
+
+        public void ApplyRenderOrder(int order)
+        {
+            if (_spawnedIcon == null) return;
+
+            if (_iconRenderer == null)
+            {
+                _iconRenderer = _spawnedIcon.GetComponent<Renderer>();
+            }
+
+            if (_iconRenderer != null)
+            {
+                _iconRenderer.sortingOrder = order;
+            }
+
+            if (_selectionRenderer == null && _spawnedIcon.transform.childCount > 0)
+            {
+                _selectionRenderer = _spawnedIcon.transform.GetChild(0).GetComponent<Renderer>();
+            }
+
+            if (_selectionRenderer != null)
+            {
+                _selectionRenderer.sortingOrder = order - 1;
+            }
         }
 
         public void ApplyIconTexture(Texture targetTexture, Color color)
         {
             if (_spawnedIcon == null || targetTexture == null) return;
 
-            if (_spawnedIcon.TryGetComponent<Renderer>(out var renderer))
+            if (_iconRenderer == null)
             {
-                MaterialPropertyBlock block = new MaterialPropertyBlock();
-                renderer.GetPropertyBlock(block);
-                block.SetTexture("_BaseMap", targetTexture);
-                block.SetTexture("_MainTex", targetTexture);
-                block.SetColor("_BaseColor", color);
-                renderer.SetPropertyBlock(block);
+                _iconRenderer = _spawnedIcon.GetComponent<Renderer>();
             }
+
+            if (_iconRenderer != null)
+            {
+                _propBlock ??= new MaterialPropertyBlock();
+                _iconRenderer.GetPropertyBlock(_propBlock);
+                _propBlock.SetTexture(BaseMapId, targetTexture);
+                _propBlock.SetTexture(MainTexId, targetTexture);
+                _propBlock.SetColor(BaseColorId, color);
+                _iconRenderer.SetPropertyBlock(_propBlock);
+            }
+        }
+
+        protected Vector3 GetEffectiveIconOffset()
+        {
+            return _iconOffset + new Vector3(0f, RenderOrder * _renderOrderHeightStep, 0f);
         }
 
         protected virtual void UpdateIconSpreadOffset()
@@ -173,15 +266,10 @@ namespace ColbyO.SJ26.Map
                 _iconOffsetSmoothSpeed * Time.deltaTime
             );
 
-            _spawnedIcon.transform.position = transform.position + _iconOffset + _currentVisualSpreadOffset;
+            _spawnedIcon.transform.position = transform.position + GetEffectiveIconOffset() + _currentVisualSpreadOffset;
 
-            float zRot = 90;
-            float xRot = 0;
-            if (_faceUpward)
-            {
-                xRot = 90;
-            }
-            _spawnedIcon.transform.rotation = Quaternion.Euler(xRot, zRot, 0f);
+            float xRot = _faceUpward ? 90f : 0f;
+            _spawnedIcon.transform.rotation = Quaternion.Euler(xRot, 90f, 0f);
         }
 
         protected virtual bool AreObjectsStacked(MapObject other)

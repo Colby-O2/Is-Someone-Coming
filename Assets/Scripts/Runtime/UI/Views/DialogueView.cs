@@ -137,7 +137,7 @@ namespace ColbyO.SJ26.UI
 
             _isPassive = passive;
             _fullCurrentMessage = GameManager.GetMonoSystem<IDialogueMonoSystem>().ParaseMsgForVariables(message);
-            _dialogueAvatarName.text = actor;
+            _dialogueAvatarName.text = GameManager.GetMonoSystem<IDialogueMonoSystem>().ParaseMsgForVariables(actor);
 
             _timeWaitingForInput = 0.0f;
 

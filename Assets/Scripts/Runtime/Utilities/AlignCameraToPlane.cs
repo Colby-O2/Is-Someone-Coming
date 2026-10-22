@@ -10,6 +10,7 @@ namespace ColbyO.SJ26.Utilities
         [SerializeField] private Transform _targetPlane;
         [SerializeField] private float _cameraDistance = 10f;
         [SerializeField] private bool _fitEntirePlane = true;
+        [SerializeField, Min(0f)] private float _margin = 1f;
 
         private void Reset()
         {
@@ -30,8 +31,8 @@ namespace ColbyO.SJ26.Utilities
 
             _targetCamera.orthographic = true;
 
-            float planeWorldWidth = 10f * _targetPlane.lossyScale.x;
-            float planeWorldHeight = 10f * _targetPlane.lossyScale.z;
+            float planeWorldWidth = 10f * _targetPlane.lossyScale.x + _margin * 2f; ;
+            float planeWorldHeight = 10f * _targetPlane.lossyScale.z + _margin * 2f; ;
 
             Vector3 planeNormal = _targetPlane.up;
             Vector3 planeUp = _targetPlane.forward;

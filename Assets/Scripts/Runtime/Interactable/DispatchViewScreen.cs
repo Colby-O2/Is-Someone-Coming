@@ -20,14 +20,21 @@ namespace ColbyO.SJ26
         {
             _ucc = new UICascadeCaster(_rects);
         }
-            
+
         public void OnClick()
         {
-            Vector2 p = VirtualCaster.GetVirtualMousePosition() / (VirtualCaster.Instance._canvas.transform as RectTransform).rect.size;
-            Debug.Log(_ucc.Resolve(p));
-            if (_ucc.Raycast(p)?.transform is Transform hit && hit.parent?.TryGetComponent<MapObject>(out var mo) != null)
+            Vector2 screenPosition = VirtualCaster.GetVirtualMousePosition();
+
+            Vector2 p = new Vector2(
+                screenPosition.x / Screen.width,
+                screenPosition.y / Screen.height
+            );
+
+            if (_ucc.Raycast(p)?.transform is Transform hit &&
+                hit.parent?.TryGetComponent<MapObject>(out var mo) == true)
             {
-                GameManager.GetMonoSystem<IDispatchMonoSystem>().HandleMapObjectClick(mo);
+                GameManager.GetMonoSystem<IDispatchMonoSystem>()
+                    .HandleMapObjectClick(mo);
             }
         }
 

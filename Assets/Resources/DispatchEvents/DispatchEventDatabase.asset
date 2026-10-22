@@ -9,11 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 622ccfac9d48d5448bc14876d58b376d, type: 3}
   m_Name: DispatchEventDatabase
   m_EditorClassIdentifier: Assembly-CSharp:ColbyO.SJ26:DispatchEventDatabase
   _useRawSO: 1
-  _database:
-  - {fileID: 11400000, guid: dd4521119a85fa6a9aa205090304116b, type: 2}
-  _initDatabase: 1
+  _database: []
+  _initDatabase: 0
   _clearDatabase: 0

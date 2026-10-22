@@ -1,0 +1,543 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dde6bf8a896c98c48b27db112dac91a0, type: 3}
+  m_Name: GoodFireCall
+  m_EditorClassIdentifier: DialogueGraph::DialogueGraph.Data.DialogueGraphSO
+  id: -1
+  includeInDatabase: 1
+  Name: GoodFireCall
+  Nodes:
+  - Guid: 1ab216e6-5295-451d-a687-5e7f51b12d33
+    ActorName: 
+    GroupName: 
+    Type: 2
+    Text: 
+    EventID: 
+    position: {x: 1576, y: -200}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: So what's on fire?
+      Next: 3a7bf1ff-8e81-473a-865c-9cb1caacbdc5
+    - Text: Is there any one injured?
+      Next: eb256fe9-d015-4add-86b9-1d65161671d2
+    - Text: Bye
+      Next: 3ab27d99-2f02-46fc-baa7-d278b84d9e4b
+  - Guid: 6773b7f6-9a53-4d7d-9209-e51bdc47a3c5
+    ActorName: 
+    GroupName: 
+    Type: 2
+    Text: 
+    EventID: 
+    position: {x: 2338, y: -30}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: So what's on fire?
+      Next: ef7c5467-e048-41b4-8ccc-77da61c2e789
+    - Text: Bye
+      Next: 3ab27d99-2f02-46fc-baa7-d278b84d9e4b
+  - Guid: 3ab27d99-2f02-46fc-baa7-d278b84d9e4b
+    ActorName: You
+    GroupName: 
+    Type: 1
+    Text: 'Ok, I''m sending emergency to your location now. '
+    EventID: 
+    position: {x: 3395, y: -114}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 
+  - Guid: 39ccb7d9-3bb8-4bbe-bdd3-c8424b7a8ee8
+    ActorName: 
+    GroupName: 
+    Type: 2
+    Text: 
+    EventID: 
+    position: {x: 2336, y: -432}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: Is there any one injured?
+      Next: a1641fbc-200a-43e9-818f-51e7936b4bb9
+    - Text: Bye
+      Next: 3ab27d99-2f02-46fc-baa7-d278b84d9e4b
+  - Guid: 64661cec-ac0a-4edd-8ac4-3c4341ad45d0
+    ActorName: 
+    GroupName: 
+    Type: 0
+    Text: 
+    EventID: 
+    position: {x: -534, y: -32}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 7fdd2484-f512-4047-a0ed-2553ea0342df
+  - Guid: 7fdd2484-f512-4047-a0ed-2553ea0342df
+    ActorName: You
+    GroupName: 
+    Type: 1
+    Text: 911, what's your emergency?
+    EventID: 
+    position: {x: -288, y: -33}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: c90e6e5f-48f1-4dbd-bb19-72d447ca321c
+  - Guid: f9058f2c-446f-4f29-bfb7-9450ebff96d9
+    ActorName: 
+    GroupName: 
+    Type: 2
+    Text: 
+    EventID: 
+    position: {x: 402, y: -57}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: Where are you located?
+      Next: 43fcb8d2-ec98-4a1a-8419-0da702a9271a
+    - Text: What's on fire?
+      Next: 15866884-87e1-4b96-a3bd-1017db0f0c08
+  - Guid: 3ec55cb0-2585-4520-adc2-983cca8ebf32
+    ActorName: 
+    GroupName: 
+    Type: 3
+    Text: 
+    EventID: 
+    position: {x: 1248, y: -177}
+    PropertyType: Bool
+    PropertyBooleanValue: 1
+    PropertyIntValue: 0
+    PropertyName: StartDispatching
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 1ab216e6-5295-451d-a687-5e7f51b12d33
+  - Guid: 09b2ab54-dc70-4e74-a770-32dc7f75d698
+    ActorName: You
+    GroupName: 
+    Type: 1
+    Text: Where are you located?
+    EventID: 
+    position: {x: 2243, y: 833}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 314997ce-87fd-4177-9dc0-f7a0fe1f4b11
+  - Guid: 314997ce-87fd-4177-9dc0-f7a0fe1f4b11
+    ActorName: Caller <CallID>
+    GroupName: 
+    Type: 1
+    Text: In front of <Address>.
+    EventID: 
+    position: {x: 2624, y: 839}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: ba102f0f-2242-4929-b8c2-eb265b4292be
+  - Guid: ba102f0f-2242-4929-b8c2-eb265b4292be
+    ActorName: 
+    GroupName: 
+    Type: 3
+    Text: 
+    EventID: 
+    position: {x: 3144, y: 840}
+    PropertyType: Bool
+    PropertyBooleanValue: 1
+    PropertyIntValue: 0
+    PropertyName: StartDispatching
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 3ab27d99-2f02-46fc-baa7-d278b84d9e4b
+  - Guid: dc0fef84-06b0-4ff8-8a42-540b0f3d061b
+    ActorName: 
+    GroupName: 
+    Type: 2
+    Text: 
+    EventID: 
+    position: {x: 1490, y: 209}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: Where are you located?
+      Next: a5ec64e5-c37f-4c2f-86b7-f14aa17ec542
+    - Text: How bug is the fire?
+      Next: a9522260-aee1-4b26-ad47-278fd0753426
+  - Guid: 43fcb8d2-ec98-4a1a-8419-0da702a9271a
+    ActorName: Caller <CallID>
+    GroupName: 
+    Type: 1
+    Text: In front of <Address>.
+    EventID: 
+    position: {x: 886, y: -176}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 3ec55cb0-2585-4520-adc2-983cca8ebf32
+  - Guid: eb256fe9-d015-4add-86b9-1d65161671d2
+    ActorName: Caller <CallID>
+    GroupName: 
+    Type: 1
+    Text: "No, nobody\u2019s hurt. Everyone\u2019s okay."
+    EventID: 
+    position: {x: 1923, y: -5}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 6773b7f6-9a53-4d7d-9209-e51bdc47a3c5
+  - Guid: a5ec64e5-c37f-4c2f-86b7-f14aa17ec542
+    ActorName: 
+    GroupName: 
+    Type: 3
+    Text: 
+    EventID: 
+    position: {x: 1844, y: 314}
+    PropertyType: Bool
+    PropertyBooleanValue: 1
+    PropertyIntValue: 0
+    PropertyName: StartDispatching
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 31d424d0-c08c-4bc6-b7f6-586ad113cd9a
+  - Guid: 0a10ce44-6117-4eb9-859f-d220ed70c7b0
+    ActorName: 
+    GroupName: 
+    Type: 2
+    Text: 
+    EventID: 
+    position: {x: 2534, y: 301}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: Is there any one injured?
+      Next: a240f453-94e8-46b2-a8ff-54a4196b596a
+    - Text: Bye
+      Next: 3ab27d99-2f02-46fc-baa7-d278b84d9e4b
+  - Guid: 15866884-87e1-4b96-a3bd-1017db0f0c08
+    ActorName: Caller <CallID>
+    GroupName: 
+    Type: 1
+    Text: '<EventLocDes>. '
+    EventID: 
+    position: {x: 902, y: 196}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: dc0fef84-06b0-4ff8-8a42-540b0f3d061b
+  - Guid: ef7c5467-e048-41b4-8ccc-77da61c2e789
+    ActorName: Caller <CallID>
+    GroupName: 
+    Type: 1
+    Text: '<EventLocDes>. '
+    EventID: 
+    position: {x: 2759, y: -85}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 3ab27d99-2f02-46fc-baa7-d278b84d9e4b
+  - Guid: 31d424d0-c08c-4bc6-b7f6-586ad113cd9a
+    ActorName: Caller <CallID>
+    GroupName: 
+    Type: 1
+    Text: In front of <Address>.
+    EventID: 
+    position: {x: 2173, y: 319}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 0a10ce44-6117-4eb9-859f-d220ed70c7b0
+  - Guid: a9522260-aee1-4b26-ad47-278fd0753426
+    ActorName: Caller <CallID>
+    GroupName: 
+    Type: 1
+    Text: "There\u2019s some smoke, I don't think it has spread anywhere yet."
+    EventID: 
+    position: {x: 1872, y: 840}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 09b2ab54-dc70-4e74-a770-32dc7f75d698
+  - Guid: 3a7bf1ff-8e81-473a-865c-9cb1caacbdc5
+    ActorName: Caller <CallID>
+    GroupName: 
+    Type: 1
+    Text: <EventLocDes>.
+    EventID: 
+    position: {x: 1921, y: -397}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 39ccb7d9-3bb8-4bbe-bdd3-c8424b7a8ee8
+  - Guid: a1641fbc-200a-43e9-818f-51e7936b4bb9
+    ActorName: Caller <CallID>
+    GroupName: 
+    Type: 1
+    Text: "No, nobody\u2019s hurt. Everyone\u2019s okay."
+    EventID: 
+    position: {x: 2717, y: -541}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 3ab27d99-2f02-46fc-baa7-d278b84d9e4b
+  - Guid: a240f453-94e8-46b2-a8ff-54a4196b596a
+    ActorName: Caller <CallID>
+    GroupName: 
+    Type: 1
+    Text: "No, nobody\u2019s hurt. Everyone\u2019s okay."
+    EventID: 
+    position: {x: 2913, y: 326}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 3ab27d99-2f02-46fc-baa7-d278b84d9e4b
+  - Guid: c90e6e5f-48f1-4dbd-bb19-72d447ca321c
+    ActorName: Caller <CallID>
+    GroupName: 
+    Type: 1
+    Text: I want to report a fire.
+    EventID: 
+    position: {x: 49, y: -33}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: f9058f2c-446f-4f29-bfb7-9450ebff96d9
+  Groups: []
+  Properties:
+  - Name: StartDispatching
+    Type: Bool
+    BooleanValue: 0
+    IntValue: 0
+    StringValue: 

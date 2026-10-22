@@ -10,15 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0b62678a248d8d67cb73ec869848fca9, type: 3}
-  m_Name: HouseFire
+  m_Name: GoodFire
   m_EditorClassIdentifier: Assembly-CSharp::ColbyO.SJ26.DispatchEventSO
-  id: 0
+  id: -1
   includeInDatabase: 1
-  CallDialogue: HouseFireCall
-  SuccessDialogue: HouseFireSuccess
-  FailedDialogue: HouseFireFailed
+  CallDialogue: GoodFireCall
+  SuccessDialogue: GoodFireSuccess
+  FailedDialogue: GoodFireFailed
+  LocDescriptions:
+  - Some firewood beside my house caught fire
+  - My outdoor Christmas decorations caught fire
+  - "There\u2019s a small fire in my backyard"
+  - A pile of cardboard caught fire in my garage
+  - I left something on the stove, and it started burning
+  - I put a fork in the microwave and it started smoking
   RequiredPolice: 0
-  RequiredEMS: 1
+  RequiredEMS: 0
   RequiredFire: 1
   RequiredRescue: 0
   TimeToRespond: 40

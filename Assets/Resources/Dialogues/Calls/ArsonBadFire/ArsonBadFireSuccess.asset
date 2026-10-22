@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dde6bf8a896c98c48b27db112dac91a0, type: 3}
-  m_Name: HouseFireFailed
+  m_Name: ArsonBadFireSuccess
   m_EditorClassIdentifier: DialogueGraph::DialogueGraph.Data.DialogueGraphSO
   id: -1
   includeInDatabase: 1
-  Name: HouseFireFailed
+  Name: ArsonBadFireSuccess
   Nodes:
   - Guid: 22a0af60-8670-40ae-ad1b-120fe9199355
     ActorName: 
@@ -41,7 +41,7 @@ MonoBehaviour:
     ActorName: 
     GroupName: 
     Type: 1
-    Text: <i>Not enough units responded to the fire and the entire house with everyone inside burned down...</i>
+    Text: <i>The firemen manage to quench the flames and save everyone!</i>
     EventID: 
     position: {x: 297, y: -12}
     PropertyType: 
