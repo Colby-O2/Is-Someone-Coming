@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b62678a248d8d67cb73ec869848fca9, type: 3}
+  m_Name: ArsonGoodFire
+  m_EditorClassIdentifier: Assembly-CSharp::ColbyO.SJ26.DispatchEventSO
+  id: 1
+  includeInDatabase: 1
+  CallDialogue: ArsonGoodFireCall
+  SuccessDialogue: ArsonGoodFireSuccess
+  FailedDialogue: ArsonGoodFireFailed
+  LocDescriptions:
+  - Some firewood beside my house caught fire
+  - My outdoor Christmas decorations caught fire
+  - "There\u2019s a small fire in my backyard"
+  - A pile of cardboard caught fire in my garage
+  - I left something on the stove, and it started burning
+  - I put a fork in the microwave and it started smoking
+  - It's my apartment building
+  - Someone's garage is on fire
+  - The public school is on fire
+  - 'Friggin Walmart is on fire man '
+  - it's my neighbours house
+  RequiredPolice: 1
+  RequiredEMS: 0
+  RequiredFire: 1
+  RequiredRescue: 0
+  TimeToRespond: 40
+  TimeToResolve: 5

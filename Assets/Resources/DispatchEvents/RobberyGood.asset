@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b62678a248d8d67cb73ec869848fca9, type: 3}
+  m_Name: RobberyGood
+  m_EditorClassIdentifier: Assembly-CSharp::ColbyO.SJ26.DispatchEventSO
+  id: -1
+  includeInDatabase: 1
+  CallDialogue: RobberyGoodCall
+  SuccessDialogue: RobberyGoodSuccess
+  FailedDialogue: RobberyGoodFailed
+  LocDescriptions:
+  - Someone just attacked another person
+  - A couple is fighting
+  - Someone just threatened me and took my wallet
+  - I just saw someone force another person into a car
+  - Someone is trying to kill another person
+  - Someone is threatening people
+  - Someone is stealing things from the store and threatening staff
+  - I just saw someone stealing a bike
+  - Someone said they were going to hurt someone
+  - "Someone\u2019s robbing the store right now"
+  - "Someone\u2019s robbing the bank right now"
+  RequiredPolice: 1
+  RequiredEMS: 0
+  RequiredFire: 0
+  RequiredRescue: 0
+  TimeToRespond: 40
+  TimeToResolve: 5

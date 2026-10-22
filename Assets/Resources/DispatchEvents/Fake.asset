@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b62678a248d8d67cb73ec869848fca9, type: 3}
+  m_Name: Fake
+  m_EditorClassIdentifier: Assembly-CSharp::ColbyO.SJ26.DispatchEventSO
+  id: 3
+  includeInDatabase: 1
+  CallDialogue: RobberyGoodCall
+  SuccessDialogue: RobberyGoodSuccess
+  FailedDialogue: RobberyGoodFailed
+  LocDescriptions:
+  - 'I can I order a extra large pepperoni pizza? '
+  - I can I order a large boneless pizza?
+  - "I\u2019d like to report a stolen sandwich."
+  - My brother ate the last slice of pizza. I want him arrested.
+  - Someone stole the batteries out of my remote.
+  RequiredPolice: 0
+  RequiredEMS: 0
+  RequiredFire: 0
+  RequiredRescue: 0
+  TimeToRespond: 0
+  TimeToResolve: 0

@@ -18,6 +18,12 @@ MonoBehaviour:
   SuccessDialogue: BadFireSuccess
   FailedDialogue: BadFireFailed
   LocDescriptions:
+  - Some firewood beside my house caught fire
+  - My outdoor Christmas decorations caught fire
+  - "There\u2019s a small fire in my backyard"
+  - A pile of cardboard caught fire in my garage
+  - I left something on the stove, and it started burning
+  - I put a fork in the microwave and it started smoking
   - It's my apartment building
   - Someone's garage is on fire
   - The public school is on fire

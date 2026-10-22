@@ -12,12 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b62678a248d8d67cb73ec869848fca9, type: 3}
   m_Name: ArsonBadFire
   m_EditorClassIdentifier: Assembly-CSharp::ColbyO.SJ26.DispatchEventSO
-  id: -1
+  id: 0
   includeInDatabase: 1
   CallDialogue: ArsonBadFireCall
   SuccessDialogue: ArsonBadFireSuccess
   FailedDialogue: ArsonBadFireFailed
   LocDescriptions:
+  - Some firewood beside my house caught fire
+  - My outdoor Christmas decorations caught fire
+  - "There\u2019s a small fire in my backyard"
+  - A pile of cardboard caught fire in my garage
+  - I left something on the stove, and it started burning
+  - I put a fork in the microwave and it started smoking
   - It's my apartment building
   - Someone's garage is on fire
   - The public school is on fire

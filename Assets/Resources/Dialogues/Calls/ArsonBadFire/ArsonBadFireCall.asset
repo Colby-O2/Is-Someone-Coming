@@ -106,7 +106,7 @@ MonoBehaviour:
     ActorName: You
     GroupName: 
     Type: 1
-    Text: 'Ok, I''m sending emergency to your location now. '
+    Text: 'Ok, I''m sending emergency services to your location now. '
     EventID: 
     position: {x: 3776, y: -80}
     PropertyType: 
@@ -165,7 +165,7 @@ MonoBehaviour:
     Choices:
     - Text: Where are you located?
       Next: a5ec64e5-c37f-4c2f-86b7-f14aa17ec542
-    - Text: How bug is the fire?
+    - Text: How big is the fire?
       Next: a9522260-aee1-4b26-ad47-278fd0753426
     - Text: What started the fire?
       Next: e1021166-22f5-4974-8f74-6c7f9d4eb5ba
@@ -213,10 +213,10 @@ MonoBehaviour:
     Choices:
     - Text: Is there any one injured?
       Next: a240f453-94e8-46b2-a8ff-54a4196b596a
-    - Text: Is the suspect on scene?
-      Next: 3ab27d99-2f02-46fc-baa7-d278b84d9e4b
+    - Text: What started the fire?
+      Next: ea2da6a4-a7b5-41b0-86a8-85b120b012d0
     - Text: Bye
-      Next: 
+      Next: 3ab27d99-2f02-46fc-baa7-d278b84d9e4b
   - Guid: 080440be-6c32-4a1f-bd2e-04921a8a4653
     ActorName: 
     GroupName: 
@@ -281,27 +281,6 @@ MonoBehaviour:
     - Text: Is there any one injured?
       Next: a21ca33f-c52c-4d10-a665-b5d9820f7d72
     - Text: Bye
-      Next: 3ab27d99-2f02-46fc-baa7-d278b84d9e4b
-  - Guid: a240f453-94e8-46b2-a8ff-54a4196b596a
-    ActorName: Caller <CallID>
-    GroupName: 
-    Type: 1
-    Text: "Yes, someone\u2019s been hurt."
-    EventID: 
-    position: {x: 2812, y: 696}
-    PropertyType: 
-    PropertyBooleanValue: 0
-    PropertyIntValue: 0
-    PropertyName: 
-    IncrementAmount: 0
-    ComparisonType: 0
-    ComparsionCondition: 0
-    CameraFromLocationTag: 
-    CameraToLocationTag: 
-    CameraLookAtTag: 
-    Duration: 0
-    Choices:
-    - Text: 
       Next: 3ab27d99-2f02-46fc-baa7-d278b84d9e4b
   - Guid: 31c6aad2-fc33-4662-b7f5-48502e921a34
     ActorName: Caller <CallID>
@@ -947,7 +926,7 @@ MonoBehaviour:
     CameraLookAtTag: 
     Duration: 0
     Choices:
-    - Text: Is the suspect on scene?
+    - Text: What started the fire?
       Next: 1a889140-8f42-4de8-bbdd-773d77c45cc5
     - Text: Bye
       Next: 3ab27d99-2f02-46fc-baa7-d278b84d9e4b
@@ -955,7 +934,7 @@ MonoBehaviour:
     ActorName: Caller <CallID>
     GroupName: 
     Type: 1
-    Text: Yes, I think I see them in the crowd.
+    Text: I noticed someone carrying a small container shortly before the fire started.
     EventID: 
     position: {x: 4739, y: 1168}
     PropertyType: 
@@ -1281,7 +1260,7 @@ MonoBehaviour:
     Duration: 0
     Choices:
     - Text: 
-      Next: 
+      Next: 84553053-03e0-43d9-862c-16059bc9c757
   - Guid: ef7c5467-e048-41b4-8ccc-77da61c2e789
     ActorName: Caller <CallID>
     GroupName: 
@@ -1739,6 +1718,136 @@ MonoBehaviour:
     Choices:
     - Text: 
       Next: 97bbe1d2-ef6c-4b31-8f31-cc3c2cd18cc8
+  - Guid: 69548b05-c523-4f55-a17f-afcf50ff4e9c
+    ActorName: 
+    GroupName: 
+    Type: 2
+    Text: 
+    EventID: 
+    position: {x: 3100, y: 540}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: What started the fire?
+      Next: 3451f4bc-bead-4c55-8fb9-6aedbebc8410
+    - Text: Bye
+      Next: 3ab27d99-2f02-46fc-baa7-d278b84d9e4b
+  - Guid: 3451f4bc-bead-4c55-8fb9-6aedbebc8410
+    ActorName: Caller <CallID>
+    GroupName: 
+    Type: 1
+    Text: I heard someone arguing shortly before the fire started.
+    EventID: 
+    position: {x: 3451, y: 563}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 3ab27d99-2f02-46fc-baa7-d278b84d9e4b
+  - Guid: a240f453-94e8-46b2-a8ff-54a4196b596a
+    ActorName: Caller <CallID>
+    GroupName: 
+    Type: 1
+    Text: "Yes, someone\u2019s been hurt."
+    EventID: 
+    position: {x: 2709, y: 538}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 69548b05-c523-4f55-a17f-afcf50ff4e9c
+  - Guid: ea2da6a4-a7b5-41b0-86a8-85b120b012d0
+    ActorName: Caller <CallID>
+    GroupName: 
+    Type: 1
+    Text: 
+    EventID: 
+    position: {x: 2727, y: 787}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: f762204f-c632-45a2-b4ee-b7a0fcc56c2a
+  - Guid: f762204f-c632-45a2-b4ee-b7a0fcc56c2a
+    ActorName: 
+    GroupName: 
+    Type: 2
+    Text: 
+    EventID: 
+    position: {x: 3097, y: 771}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: Is there any one injured?
+      Next: 83030e1b-7f9b-4479-930b-566ad37e3cfe
+    - Text: Bye
+      Next: 3ab27d99-2f02-46fc-baa7-d278b84d9e4b
+  - Guid: 83030e1b-7f9b-4479-930b-566ad37e3cfe
+    ActorName: Caller <CallID>
+    GroupName: 
+    Type: 1
+    Text: I saw a few people get hurt.
+    EventID: 
+    position: {x: 3481, y: 782}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 3ab27d99-2f02-46fc-baa7-d278b84d9e4b
   Groups: []
   Properties:
   - Name: StartDispatching

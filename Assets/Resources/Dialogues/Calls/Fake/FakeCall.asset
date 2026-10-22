@@ -1,0 +1,239 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dde6bf8a896c98c48b27db112dac91a0, type: 3}
+  m_Name: FakeCall
+  m_EditorClassIdentifier: DialogueGraph::DialogueGraph.Data.DialogueGraphSO
+  id: -1
+  includeInDatabase: 1
+  Name: FakeCall
+  Nodes:
+  - Guid: 64661cec-ac0a-4edd-8ac4-3c4341ad45d0
+    ActorName: 
+    GroupName: 
+    Type: 0
+    Text: 
+    EventID: 
+    position: {x: -534, y: -32}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 7fdd2484-f512-4047-a0ed-2553ea0342df
+  - Guid: 7fdd2484-f512-4047-a0ed-2553ea0342df
+    ActorName: You
+    GroupName: 
+    Type: 1
+    Text: 911, what's your emergency?
+    EventID: 
+    position: {x: -288, y: -33}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: c90e6e5f-48f1-4dbd-bb19-72d447ca321c
+  - Guid: 3ab27d99-2f02-46fc-baa7-d278b84d9e4b
+    ActorName: You
+    GroupName: 
+    Type: 1
+    Text: 'Ok, I''m sending emergency services to your location now. '
+    EventID: 
+    position: {x: 1925, y: -313}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 
+  - Guid: bb339600-2132-41cd-9c46-5b20a4c5a7b9
+    ActorName: 
+    GroupName: 
+    Type: 3
+    Text: 
+    EventID: 
+    position: {x: 793, y: 49}
+    PropertyType: Bool
+    PropertyBooleanValue: 1
+    PropertyIntValue: 0
+    PropertyName: StartDispatching
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 3ab27d99-2f02-46fc-baa7-d278b84d9e4b
+  - Guid: 1765f0da-b211-4fbd-a692-ed469fb564b2
+    ActorName: 
+    GroupName: 
+    Type: 3
+    Text: 
+    EventID: 
+    position: {x: 800, y: -110}
+    PropertyType: Bool
+    PropertyBooleanValue: 1
+    PropertyIntValue: 0
+    PropertyName: StartDispatching
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: b7b53ad8-88b3-4421-aaf8-1e68e10425cd
+  - Guid: c90e6e5f-48f1-4dbd-bb19-72d447ca321c
+    ActorName: Caller <CallID>
+    GroupName: 
+    Type: 1
+    Text: <EventLocDes>
+    EventID: 
+    position: {x: 49, y: -34}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: f9058f2c-446f-4f29-bfb7-9450ebff96d9
+  - Guid: f9058f2c-446f-4f29-bfb7-9450ebff96d9
+    ActorName: 
+    GroupName: 
+    Type: 2
+    Text: 
+    EventID: 
+    position: {x: 392, y: -66}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: Where are you located?
+      Next: cbc53015-3ee3-46e3-8284-cb0eea9f6686
+    - Text: Sir, this is 911.
+      Next: 1765f0da-b211-4fbd-a692-ed469fb564b2
+    - Text: Bye
+      Next: bb339600-2132-41cd-9c46-5b20a4c5a7b9
+  - Guid: cbc53015-3ee3-46e3-8284-cb0eea9f6686
+    ActorName: 
+    GroupName: 
+    Type: 3
+    Text: 
+    EventID: 
+    position: {x: 797, y: -332}
+    PropertyType: Bool
+    PropertyBooleanValue: 1
+    PropertyIntValue: 0
+    PropertyName: StartDispatching
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: d2fff0f9-6f5e-4209-8ef0-d3cce63061e9
+  - Guid: b7b53ad8-88b3-4421-aaf8-1e68e10425cd
+    ActorName: Caller <CallID>
+    GroupName: 
+    Type: 1
+    Text: LOL who cares loser.
+    EventID: 
+    position: {x: 1129, y: -180}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 3ab27d99-2f02-46fc-baa7-d278b84d9e4b
+  - Guid: d2fff0f9-6f5e-4209-8ef0-d3cce63061e9
+    ActorName: Caller <CallID>
+    GroupName: 
+    Type: 1
+    Text: I'm at 101 Dumbass Drive.
+    EventID: 
+    position: {x: 1138, y: -430}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 3ab27d99-2f02-46fc-baa7-d278b84d9e4b
+  Groups: []
+  Properties:
+  - Name: StartDispatching
+    Type: Bool
+    BooleanValue: 0
+    IntValue: 0
+    StringValue: 
