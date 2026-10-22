@@ -37,6 +37,7 @@ namespace DialogueGraph.Data
         public string Type;
         public bool BooleanValue;
         public int IntValue;
+        public string StringValue;
 
     }
 

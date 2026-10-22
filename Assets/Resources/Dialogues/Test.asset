@@ -58,29 +58,6 @@ MonoBehaviour:
     Choices:
     - Text: 
       Next: cb20d537-866b-4f45-a9a6-8e2e47399913
-  - Guid: cb20d537-866b-4f45-a9a6-8e2e47399913
-    ActorName: You
-    GroupName: 
-    Type: 2
-    Text: 
-    EventID: 
-    position: {x: 821, y: 62}
-    PropertyType: 
-    PropertyBooleanValue: 0
-    PropertyIntValue: 0
-    PropertyName: 
-    IncrementAmount: 0
-    ComparisonType: 0
-    ComparsionCondition: 0
-    CameraFromLocationTag: 
-    CameraToLocationTag: 
-    CameraLookAtTag: 
-    Duration: 0
-    Choices:
-    - Text: GTFO
-      Next: f056d4cb-aaf3-473a-8323-4fe60ba817b1
-    - Text: No
-      Next: 3ebd7e69-de7e-4bde-b4fa-26b0d5d185a6
   - Guid: 3ebd7e69-de7e-4bde-b4fa-26b0d5d185a6
     ActorName: Coworker
     GroupName: 
@@ -123,5 +100,33 @@ MonoBehaviour:
     Choices:
     - Text: 
       Next: 
+  - Guid: cb20d537-866b-4f45-a9a6-8e2e47399913
+    ActorName: You
+    GroupName: 
+    Type: 2
+    Text: 
+    EventID: 
+    position: {x: 821, y: 62}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: GTFO
+      Next: f056d4cb-aaf3-473a-8323-4fe60ba817b1
+    - Text: No
+      Next: 3ebd7e69-de7e-4bde-b4fa-26b0d5d185a6
   Groups: []
-  Properties: []
+  Properties:
+  - Name: YO
+    Type: String
+    BooleanValue: 0
+    IntValue: 0
+    StringValue: Yo My Man

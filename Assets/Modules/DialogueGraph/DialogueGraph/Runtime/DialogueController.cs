@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -111,6 +112,49 @@ namespace DialogueGraph
             }
         }
 
+        public string GetVariable(string name)
+        {
+            if (_exposedVariables.ContainsKey(name))
+            {
+                if (_exposedVariables[name].Type == "String") return _exposedVariables[name].StringValue;
+            }
+            else if (_currentDialogue != null && _currentDialogue.Properties.Select(e => e.Name).Contains(name))
+            {
+                DialogueExposedPropertiesData property = _currentDialogue.Properties.First(e => e.Name == name);
+                if (property.Type == "String") return property.StringValue;
+            }
+
+            return null;
+        }
+
+        public string ParaseMsgForVariables(string msg)
+        {
+            if (string.IsNullOrEmpty(msg)) return msg;
+
+            return Regex.Replace(msg, @"<([^<>]+)>", match =>
+            {
+                string varName = match.Groups[1].Value;
+                string val = GetVariable(varName);
+
+                return val != null ? val : match.Value;
+            });
+        }
+
+        public void SetVariable(string name, string value)
+        {
+            if (_exposedVariables.ContainsKey(name))
+            {
+                if (_exposedVariables[name].Type == "String") _exposedVariables[name].StringValue = value;
+            }
+            else
+            {
+                DialogueExposedPropertiesData property = new DialogueExposedPropertiesData();
+                property.Name = name;
+                property.StringValue = value;
+                property.Type = "String";
+                _exposedVariables.Add(name, property);
+            }
+        }
 
         public virtual void StartDialogue(string dialogueName, System.Action finishCallback = null)
         {

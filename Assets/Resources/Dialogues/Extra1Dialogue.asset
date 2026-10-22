@@ -81,27 +81,6 @@ MonoBehaviour:
       Next: bffadcc8-c613-4037-9206-2884912a371a
     - Text: 
       Next: db512882-38b0-4535-b192-db708b04703b
-  - Guid: db512882-38b0-4535-b192-db708b04703b
-    ActorName: Dispatch Worker
-    GroupName: 
-    Type: 1
-    Text: 'Excuse me buddy i''m busy here. '
-    EventID: 
-    position: {x: 695, y: -1}
-    PropertyType: 
-    PropertyBooleanValue: 0
-    PropertyIntValue: 0
-    PropertyName: 
-    IncrementAmount: 0
-    ComparisonType: 0
-    ComparsionCondition: 0
-    CameraFromLocationTag: 
-    CameraToLocationTag: 
-    CameraLookAtTag: 
-    Duration: 0
-    Choices:
-    - Text: 
-      Next: c72be69d-8b75-4757-86dd-0fb013d7e1e9
   - Guid: c72be69d-8b75-4757-86dd-0fb013d7e1e9
     ActorName: 
     GroupName: 
@@ -123,9 +102,31 @@ MonoBehaviour:
     Choices:
     - Text: 
       Next: 
+  - Guid: db512882-38b0-4535-b192-db708b04703b
+    ActorName: Dispatch Worker
+    GroupName: 
+    Type: 1
+    Text: 'Excuse me buddy i''m busy here. '
+    EventID: 
+    position: {x: 707, y: 3}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: c72be69d-8b75-4757-86dd-0fb013d7e1e9
   Groups: []
   Properties:
   - Name: Extra1_NumberOfTalks
     Type: Int
     BooleanValue: 0
     IntValue: 0
+    StringValue: 

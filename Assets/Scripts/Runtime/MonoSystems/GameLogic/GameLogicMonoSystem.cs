@@ -51,7 +51,6 @@ namespace ColbyO.SJ26.GameLogic
             _visualEffectMs = GameManager.GetMonoSystem<IVisualEffectMonoSystem>();
             _taskMonoSystem = GameManager.GetMonoSystem<ITaskMonoSystem>();
             _actorMonoSystem = GameManager.GetMonoSystem<IActorMonoSystem>();
-
             Refs.Elevator = FindAnyObjectByType<Elevator>();
             Refs.PlayerSeat = GameObject.FindWithTag("PlayerSeat").GetComponent<Interactable>().GetAction<SitAction>();
         }

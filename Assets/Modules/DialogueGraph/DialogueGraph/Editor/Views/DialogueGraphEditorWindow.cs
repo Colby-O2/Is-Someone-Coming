@@ -122,6 +122,16 @@ namespace DialogueGraph.Editor.Views
                     };
                     _graphView.AddPropertyToBlackBoard(property);
                 });
+                menu.AddItem(new GUIContent("String"), false, () =>
+                {
+                    var property = new ExposedProperty()
+                    {
+                        Name = "New String",
+                        Type = "String",
+                        Value = ""
+                    };
+                    _graphView.AddPropertyToBlackBoard(property);
+                });
                 menu.ShowAsContext();
             };
 
@@ -191,7 +201,7 @@ namespace DialogueGraph.Editor.Views
                 ExposedProperty property = new ExposedProperty();
                 property.Name = propertyData.Name;
                 property.Type = propertyData.Type;
-                property.Value = (propertyData.Type == "Bool") ? propertyData.BooleanValue : propertyData.IntValue;
+                property.Value = (propertyData.Type == "Bool") ? propertyData.BooleanValue : ((propertyData.Type == "String") ? propertyData.StringValue : propertyData.IntValue);
                 _graphView.AddPropertyToBlackBoard(property);
             }
 
@@ -343,6 +353,7 @@ namespace DialogueGraph.Editor.Views
                 dialogueExposedPropertiesData.Name = property.Name;
                 dialogueExposedPropertiesData.Type = property.Type;
                 if (property.Type == "Bool") dialogueExposedPropertiesData.BooleanValue = (bool)property.Value;
+                else if (property.Type == "String") dialogueExposedPropertiesData.StringValue = (string)property.Value;
                 else dialogueExposedPropertiesData.IntValue = (int)property.Value;
                 graphSO.Properties.Add(dialogueExposedPropertiesData);
             }

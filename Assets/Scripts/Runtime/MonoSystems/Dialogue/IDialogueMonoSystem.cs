@@ -12,6 +12,10 @@ namespace ColbyO.SJ26.Dialogue
         public void SetFlag(string name, bool value);
         public int? GetInt(string name);
         public void SetInt(string name, int value);
+
+        public string GetVariable(string name);
+        public void SetVariable(string name, string value);
+        public string ParaseMsgForVariables(string msg);
         public void AddListener(string eventTag, UnityAction<int> callback);
         public void StartDialogue(string dialogueName, System.Action finishCallback = null);
         public Promise StartDialoguePromise(string dialogueName, bool passive = false);

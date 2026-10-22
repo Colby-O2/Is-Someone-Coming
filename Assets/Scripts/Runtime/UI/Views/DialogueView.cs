@@ -136,7 +136,7 @@ namespace ColbyO.SJ26.UI
             _canAutoAdvance = false;
 
             _isPassive = passive;
-            _fullCurrentMessage = message;
+            _fullCurrentMessage = GameManager.GetMonoSystem<IDialogueMonoSystem>().ParaseMsgForVariables(message);
             _dialogueAvatarName.text = actor;
 
             _timeWaitingForInput = 0.0f;
@@ -150,7 +150,7 @@ namespace ColbyO.SJ26.UI
                 StopCoroutine(_typeRoutine);
             }
 
-            _typeRoutine = StartCoroutine(TypewriterRoutine(message));
+            _typeRoutine = StartCoroutine(TypewriterRoutine(_fullCurrentMessage));
         }
 
         public void DisplayChoices(List<DialogueChoiceData> choices)
@@ -167,7 +167,7 @@ namespace ColbyO.SJ26.UI
                 _choiceTexts[i].gameObject.SetActive(isActive);
                 if (isActive)
                 {
-                    _choiceTexts[i].text = choices[i].Text;
+                    _choiceTexts[i].text = GameManager.GetMonoSystem<IDialogueMonoSystem>().ParaseMsgForVariables(choices[i].Text);
                     _choiceIcons[i].SetActive(true);
                     _choiceActions[i].Enable();
                 }

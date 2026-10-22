@@ -281,6 +281,19 @@ namespace DialogueGraph.Editor.Views
                 });
                 propertyEditor.Add(intField);
             }
+            else if (property.Type == "String")
+            {
+                var intField = new TextField("")
+                {
+                    value = property.Value as string ?? string.Empty
+                };
+                intField.RegisterValueChangedCallback(evt =>
+                {
+                    int propertyIndex = ExposedProperties.FindIndex(e => e.Name == property.Name);
+                    ExposedProperties[propertyIndex].Value = evt.newValue;
+                });
+                propertyEditor.Add(intField);
+            }
 
             BlackboardRow row = new BlackboardRow(blackboardField, propertyEditor);
 
