@@ -9,6 +9,7 @@ TagManager:
   - SnowFallController
   - Location
   - PlayerSeat
+  - Phone
   layers:
   - Default
   - TransparentFX

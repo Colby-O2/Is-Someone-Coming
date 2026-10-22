@@ -198,13 +198,16 @@ namespace ColbyO.SJ26.Map
 
         public void ApplyIconTexture(Texture targetTexture, Color color)
         {
+            Debug.Log("111111");
             if (_spawnedIcon == null || targetTexture == null) return;
 
+            Debug.Log("222222");
             if (_iconRenderer == null)
             {
                 _iconRenderer = _spawnedIcon.GetComponent<Renderer>();
             }
 
+            Debug.Log("3333333");
             if (_iconRenderer != null)
             {
                 _propBlock ??= new MaterialPropertyBlock();
@@ -213,6 +216,7 @@ namespace ColbyO.SJ26.Map
                 _propBlock.SetTexture(MainTexId, targetTexture);
                 _propBlock.SetColor(BaseColorId, color);
                 _iconRenderer.SetPropertyBlock(_propBlock);
+                Debug.Log("444444");
             }
         }
 

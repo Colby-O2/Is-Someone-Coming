@@ -16,5 +16,6 @@ namespace ColbyO.SJ26.Dispatch
         void HandleMapObjectClick(MapObject mo);
         void StartTheCalls();
         void StopTheCalls();
+        void AnswerPhone();
     }
 }
