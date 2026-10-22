@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: PoliceUnit
   m_EditorClassIdentifier: Assembly-CSharp::ColbyO.SJ26.Dispatch.FieldUnitSO
   icon: {fileID: 2800000, guid: 1fd4f10e37a30ffc2939a2010b4d077c, type: 3}
+  color: {r: 0, g: 0.45235014, b: 1, a: 1}
   callsignSymbol: P
   unitType: 0
-  moveSpeed: 2
+  moveSpeed: 6
   rotationSpeed: 8
   autoPatrolWhenAvailable: 1
   patrolSpeed: 1

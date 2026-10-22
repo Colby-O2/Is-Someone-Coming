@@ -104,10 +104,10 @@ namespace ColbyO.SJ26.Map
             }
             _spawnedIcon.transform.rotation = Quaternion.Euler(xRot, zRot, 0f);
 
-            ApplyIconTexture(targetTexture);
+            ApplyIconTexture(targetTexture, _mapObjectData.color);
         }
 
-        public void ApplyIconTexture(Texture targetTexture)
+        public void ApplyIconTexture(Texture targetTexture, Color color)
         {
             if (_spawnedIcon == null || targetTexture == null) return;
 
@@ -117,6 +117,7 @@ namespace ColbyO.SJ26.Map
                 renderer.GetPropertyBlock(block);
                 block.SetTexture("_BaseMap", targetTexture);
                 block.SetTexture("_MainTex", targetTexture);
+                block.SetColor("_BaseColor", color);
                 renderer.SetPropertyBlock(block);
             }
         }

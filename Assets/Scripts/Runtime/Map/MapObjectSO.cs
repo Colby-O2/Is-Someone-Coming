@@ -7,5 +7,6 @@ namespace ColbyO.SJ26.Map
     {
         [Header("Icon")]
         public Texture2D icon;
+        public Color color;
     }
 }
