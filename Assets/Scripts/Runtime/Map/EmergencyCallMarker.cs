@@ -92,6 +92,7 @@ namespace ColbyO.SJ26.Map
 
         public void SetSuccess(ActiveDispatchEvent e)
         {
+            Debug.Log("ECM SET SUCCESS");
             _finishedEvent = e;
             _isEnded = true;
             _isSuccess = true;
@@ -102,6 +103,7 @@ namespace ColbyO.SJ26.Map
 
         public void SetFailed(ActiveDispatchEvent e)
         {
+            Debug.Log("ECM SET FAILED");
             _finishedEvent = e;
             _isEnded = true;
             _isSuccess = false;

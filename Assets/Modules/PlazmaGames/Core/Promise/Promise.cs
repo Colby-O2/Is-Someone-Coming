@@ -53,6 +53,31 @@ namespace PlazmaGames.Core
             
             return chained;
         }
+        
+        public static Promise<U> Any<U>(params Promise<U>[] promises)
+        {
+            Promise<U> combined = new Promise<U>();
+
+            if (promises == null || promises.Length == 0)
+            {
+                combined.Resolve(default);
+                return combined;
+            }
+
+            bool anyDone = false;
+
+            foreach (Promise<U> p in promises)
+            {
+                p.Then(_ =>
+                {
+                    if (anyDone != false) return;
+                    anyDone = true;
+                    combined.Resolve(default);
+                });
+            }
+
+            return combined;
+        }
 
         public static Promise<U> All<U>(params Promise<U>[] promises)
         {

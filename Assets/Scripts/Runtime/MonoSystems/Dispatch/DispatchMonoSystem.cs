@@ -11,7 +11,8 @@ using ColbyO.SJ26.GameLogic;
 using ColbyO.SJ26.GPS;
 using ColbyO.SJ26.Map;
 using ColbyO.SJ26.Street;
-
+using InteractionSystem;
+using PlazmaGames.Audio;
 using Random = UnityEngine.Random;
 
 #if UNITY_EDITOR
@@ -51,6 +52,7 @@ namespace ColbyO.SJ26.Dispatch
             Marker = marker;
             CallId = callId;
             LocDescription = Event.LocDescriptions[Random.Range(0, Event.LocDescriptions.Count)];
+            Resolving = false;
         }
 
         public float ActiveTime() => Resolving
@@ -58,6 +60,8 @@ namespace ColbyO.SJ26.Dispatch
             : (Time.time - StartTime);
 
         public float TimeLeft() => Event.TimeToRespond - ActiveTime();
+
+        public bool IsFailed() => !IsResolving() && TimeLeft() < 0;
 
         public bool IsResolving() => Resolving;
 
@@ -128,12 +132,16 @@ namespace ColbyO.SJ26.Dispatch
         private FieldUnit _selectedFieldUnit;
         private bool _takingCalls = true;
         private bool _inCall;
-        private float _newCallCountDown = -1f;
+        private float _newCallCountDown = 4f;
 
         private IGPSMonoSystem GpsSystem => _gpsSystem ??= GameManager.GetMonoSystem<IGPSMonoSystem>();
         private IStreetMonoSystem StreetSystem => _streetSystem ??= GameManager.GetMonoSystem<IStreetMonoSystem>();
         private IDialogueMonoSystem DialogueSystem => _dialogueSystem ??= GameManager.GetMonoSystem<IDialogueMonoSystem>();
         private IGameLogicMonoSystem GameLogicSystem => _gameLogicSystem ??= GameManager.GetMonoSystem<IGameLogicMonoSystem>();
+
+        private PhoneAction _phone;
+        private AudioSource _phoneRinger;
+        private ActiveDispatchEvent _stagedEvent = null;
 
         private void Start()
         {
@@ -141,6 +149,12 @@ namespace ColbyO.SJ26.Dispatch
             {
                 SpawnInitialUnits();
             }
+
+            Transform phone = GameObject.FindWithTag("Phone").transform;
+            _phone = phone.GetComponent<Interactable>().GetAction<PhoneAction>();
+            _phone.IsEnabled = false;
+            _phoneRinger = phone.GetComponent<AudioSource>();
+            _phoneRinger.Pause();
         }
 
         private void Update()
@@ -196,6 +210,7 @@ namespace ColbyO.SJ26.Dispatch
                 StartCall();
             }
         }
+        
 
         private ActiveDispatchEvent CreateActiveDispatchEvent(DispatchEventSO e)
         {
@@ -228,7 +243,7 @@ namespace ColbyO.SJ26.Dispatch
 
             EmergencyCallMarker marker = markerGO.AddComponent<EmergencyCallMarker>();
             marker.InitializeCall(_testCall, callId, address);
-            marker.gameObject.SetActive(false);
+            StartCoroutine(Utils.DisableNextFrame(marker.gameObject));
 
             return new ActiveDispatchEvent(e, address, marker, callId);
         }
@@ -238,7 +253,18 @@ namespace ColbyO.SJ26.Dispatch
             if (e?.Marker == null) return;
 
             e.Marker.gameObject.SetActive(true);
-            _events.Add(e);
+            if (e.IsFailed())
+            {
+                FailEvent(e);
+            }
+            else if (e.IsResolved())
+            {
+                SuccessEvent(e);
+            }
+            else
+            {
+                _events.Add(e);
+            }
         }
 
         private void FailEvent(ActiveDispatchEvent e)
@@ -275,24 +301,36 @@ namespace ColbyO.SJ26.Dispatch
 
         private void StartCall()
         {
-            if (_inCall || DialogueSystem == null || DialogueSystem.IsPlayingDialogue())
+            if (_stagedEvent != null || DialogueSystem == null)
+            {
+                _newCallCountDown = 3;
                 return;
-
+            }
+            
             DispatchEventSO eventSO = RandomDispatchEvent();
             if (eventSO == null) return;
 
-            ActiveDispatchEvent activeEvent = CreateActiveDispatchEvent(eventSO);
-            if (activeEvent == null) return;
+            _stagedEvent = CreateActiveDispatchEvent(eventSO);
+            if (_stagedEvent == null) return;
+            
+            Promise.Any(
+                SJ26GameManager.GlobalScheduler.When(() => _stagedEvent == null),
+                SJ26GameManager.GlobalScheduler.When(() => _stagedEvent?.IsFailed() == true)
+            ).Then(_ =>
+            {
+                if (_stagedEvent == null) return;
+                _phone.IsEnabled = false;
+                _phoneRinger.Pause();
+                StartEvent(_stagedEvent);
+                if (!DialogueSystem.IsPlayingDialogue())
+                {
+                    DialogueSystem.StartDialoguePromise("CallEnded", true);
+                }
+                _stagedEvent = null;
+            });
 
-            SetDialogueContext(activeEvent);
-            _inCall = true;
-
-            DialogueSystem.StartDialoguePromise(eventSO.CallDialogue, true)
-                .Then(_ => _inCall = false);
-
-            SJ26GameManager.GlobalScheduler
-                .When(() => DialogueSystem.GetFlag("StartDispatching"))
-                .Then(_ => StartEvent(activeEvent));
+            _phone.IsEnabled = true;
+            _phoneRinger.UnPause();
         }
 
         private void SpawnInitialUnits()
@@ -496,6 +534,7 @@ namespace ColbyO.SJ26.Dispatch
         {
             if (marker.IsEnded())
             {
+                Debug.Log("ECM ENDED");
                 ActiveDispatchEvent finishedEvent = marker.FinishedEvent();
 
                 ReleaseAssignedUnits(finishedEvent);
@@ -530,6 +569,51 @@ namespace ColbyO.SJ26.Dispatch
         public void StopTheCalls()
         {
             _takingCalls = false;
+        }
+
+        public void AnswerPhone()
+        {
+            if (DialogueSystem == null || DialogueSystem.IsPlayingDialogue()) return;
+            _phone.IsEnabled = false;
+            _phoneRinger.Pause();
+
+            ActiveDispatchEvent activeEvent = _stagedEvent;
+            _stagedEvent = null;
+
+            SetDialogueContext(activeEvent);
+            _inCall = true;
+
+            DialogueSystem.StartDialoguePromise(activeEvent.Event.CallDialogue, true)
+                .Then(_ => _inCall = false);
+
+            Promise.Any(
+                SJ26GameManager.GlobalScheduler.When(() => _inCall == false),
+                SJ26GameManager.GlobalScheduler.When(() => activeEvent.IsFailed()),
+                SJ26GameManager.GlobalScheduler.When(() => activeEvent.IsResolved())
+            ).Then(_ =>
+            {
+                if (_inCall)
+                {
+                    _inCall = false;
+                    DialogueSystem.FinishDialogue();
+                    if (activeEvent.IsResolved())
+                    {
+                        DialogueSystem.StartDialoguePromise("CallResolved", true);
+                    }
+                    else
+                    {
+                        DialogueSystem.StartDialoguePromise("CallEnded", true);
+                    }
+                }
+            });
+                
+
+            Promise.Any(
+                SJ26GameManager.GlobalScheduler
+                    .When(() => DialogueSystem.GetFlag("StartDispatching")),
+                SJ26GameManager.GlobalScheduler
+                    .When(() => _inCall == false)
+            ).Then(_ => StartEvent(activeEvent));
         }
     }
 
