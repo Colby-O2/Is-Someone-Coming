@@ -10,5 +10,10 @@ namespace ColbyO.SJ26
         public float DetachedHeadTransitionTime = 1f;
         public Texture2D SuccessMapIcon;
         public Texture2D FailedMapIcon;
+        public DispatchEventDatabase DispatchEvents;
+        public float MinCallTime = 10;
+        public float MaxCallTime = 20;
+
+        public float RandomCallTime() => Random.Range(MinCallTime, MaxCallTime);
     }
 }

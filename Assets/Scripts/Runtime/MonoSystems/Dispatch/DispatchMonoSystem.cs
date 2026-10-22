@@ -1,19 +1,16 @@
 using UnityEngine;
 
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Linq;
+using ColbyO.SJ26.Dialogue;
+using ColbyO.SJ26.GameLogic;
 using PlazmaGames.Core;
 using PlazmaGames.Core.Debugging;
 
 using ColbyO.SJ26.Street;
 using ColbyO.SJ26.GPS;
 using ColbyO.SJ26.Map;
-using DialogueGraph.Data;
-using Unity.U2D.Physics;
 using Unity.VisualScripting;
-using static UnityEngine.Rendering.STP;
-
 
 
 #if UNITY_EDITOR
@@ -33,25 +30,10 @@ namespace ColbyO.SJ26.Dispatch
         }
     }
     
-    public class DispatchEvent
-    {
-        public DialogueGraphSO Dialogue;
-        public string Address;
-        public int RequiredPolice;
-        public int RequiredEMS;
-        public int RequiredFire;
-        public int RequiredRescue;
-        public float TimeToRespond;
-        public float TimeToResolve;
-    }
-    
-
-    public class DispatchMonoSystem : MonoBehaviour, IDispatchMonoSystem
-    {
-
-        private class ActiveDispatchEvent
+        public class ActiveDispatchEvent
         {
-            public DispatchEvent Event;
+            public DispatchEventSO Event;
+            public string Address;
             public float StartTime;
             public EmergencyCallMarker Marker;
             public string CallId;
@@ -59,9 +41,10 @@ namespace ColbyO.SJ26.Dispatch
             public float ResolveStartTime = 0;
             public bool Resolving = false;
 
-            public ActiveDispatchEvent(DispatchEvent e, EmergencyCallMarker marker, string callId)
+            public ActiveDispatchEvent(DispatchEventSO e, string address, EmergencyCallMarker marker, string callId)
             {
                 Event = e;
+                Address = address;
                 StartTime = Time.time;
                 Marker = marker;
                 CallId = callId;
@@ -93,6 +76,10 @@ namespace ColbyO.SJ26.Dispatch
             }
 
         }
+
+    public class DispatchMonoSystem : MonoBehaviour, IDispatchMonoSystem
+    {
+
         
         [Header("Testing & Auto-Spawn")]
         [SerializeField] private bool _autoSpawnUnitsOnStart = true;
@@ -108,6 +95,9 @@ namespace ColbyO.SJ26.Dispatch
         [SerializeField] private string _testTargetAddress = "";
         [SerializeField] private string _testCallId = "#1047";
 
+        private bool _takingCalls = true;
+        private float _newCallCountDown = -1;
+
         private FieldUnit _selectedFieldUnit = null;
 
         private List<ActiveDispatchEvent> _events = new();
@@ -115,6 +105,7 @@ namespace ColbyO.SJ26.Dispatch
 
         private IGPSMonoSystem _gpsSystem;
         private IStreetMonoSystem _streetSystem;
+        private bool _inCall = false;
 
         private void Start()
         {
@@ -146,24 +137,12 @@ namespace ColbyO.SJ26.Dispatch
             Vector3 spawnPos = (spawnPoints.Count > 0)
             ? spawnPoints[0]
             : Vector3.zero;
-
-            
-            StartEvent(new DispatchEvent()
-            {
-                Address="fsad",
-                RequiredFire = 1,
-                RequiredPolice = 0,
-                RequiredRescue = 0,
-                RequiredEMS = 1,
-                TimeToRespond = 40,
-                TimeToResolve = 5,
-            });
         }
 
-        public void StartEvent(DispatchEvent e)
+        private ActiveDispatchEvent CreateActiveDispatchEvent(DispatchEventSO e)
         {
             var streets = _streetSystem.GetNamedStreets();
-            List<Vector3> spawnPoints = new List<Vector3>();
+            List<AddressMarker> spawnPoints = new ();
 
             if (streets != null)
             {
@@ -171,34 +150,41 @@ namespace ColbyO.SJ26.Dispatch
                 {
                     if (street.addresses.Count > 0)
                     {
-                        spawnPoints.Add(street.addresses[0].position);
+                        spawnPoints.AddRange(street.addresses);
                     }
                 }
             }
-            
-            Vector3 spawnPos = (spawnPoints.Count > 0)
-            ? spawnPoints[Random.Range(0, spawnPoints.Count)]
-            : Vector3.zero;
+            AddressMarker addr = spawnPoints[Random.Range(0, spawnPoints.Count)];
+
+            Vector3 spawnPos = addr.position;
             
             var unitGO = new GameObject("Maker_Test");
             unitGO.transform.position = spawnPos;
             var marker = unitGO.AddComponent<EmergencyCallMarker>();
             var callId = "#" + Random.Range(0, 9999).ToString();
-            e.Address = streets[0].addresses[0].addressLabel;
-            marker.InitializeCall(_testCall, callId, e.Address);
+            var address = addr.addressLabel;
+            marker.InitializeCall(_testCall, callId, address);
+            marker.gameObject.SetActive(false);
             
-            _events.Add(new ActiveDispatchEvent(e, marker, callId));
+            return new ActiveDispatchEvent(e, address, marker, callId);
+        }
+
+        public void StartEvent(ActiveDispatchEvent e)
+        {
+            e.Marker.gameObject.SetActive(true);
+            _events.Add(e);
         }
 
         private void FailEvent(ActiveDispatchEvent e)
         {
-            e.Marker.SetFailed(e.Event);
+            e.Marker.SetFailed(e);
             EndEvent(e);
         }
 
         private void SuccessEvent(ActiveDispatchEvent e)
         {
-            e.Marker.SetSuccess(e.Event);
+            GameManager.GetMonoSystem<IGameLogicMonoSystem>().IncrementCounter("CallsCompleted");
+            e.Marker.SetSuccess(e);
             EndEvent(e);
         }
 
@@ -208,7 +194,7 @@ namespace ColbyO.SJ26.Dispatch
             {
                 if (u.ActiveCallId == e.CallId)
                 {
-                    u.TakeOffCall();
+                    u.SetAvailable();
                 }
             }
             _eventsToRemove.Add(e);
@@ -233,13 +219,11 @@ namespace ColbyO.SJ26.Dispatch
                 {
                     if (e.IsResolved())
                     {
-                        Debug.Log("SUCCESSSS!!!!!!!!!");
                         SuccessEvent(e);
                     }
                 }
-                else if (e.HasRequiredUnits(GetUnitsAtAddress(e.Event.Address)))
+                else if (e.HasRequiredUnits(GetUnitsAtAddress(e.Address)))
                 {
-                    Debug.Log("On Scene!!!!!!!!!!");
                     e.StartResolving();
                 }
                 
@@ -253,6 +237,38 @@ namespace ColbyO.SJ26.Dispatch
             {
                 _events.Remove(e);
             }
+
+            if (_takingCalls)
+            {
+                _newCallCountDown -= Time.deltaTime;
+                if (_newCallCountDown <= 0)
+                {
+                    _newCallCountDown = SJ26GameManager.Preferences.RandomCallTime();
+                    StartCall();
+                }
+            }
+        }
+
+        private void StartCall()
+        {
+            if (GameManager.GetMonoSystem<IDialogueMonoSystem>().IsPlayingDialogue())
+                return;
+            if (_inCall) return;
+            DispatchEventSO e = RandomDispatchEvent();
+            ActiveDispatchEvent ae = CreateActiveDispatchEvent(e);
+            SetDialogueContext(ae);
+            _inCall = true;
+            GameManager.GetMonoSystem<IDialogueMonoSystem>().StartDialoguePromise(e.CallDialogue, true)
+                .Then(_ =>
+                {
+                    _inCall = false;
+                });
+            SJ26GameManager.GlobalScheduler.When(() =>
+                GameManager.GetMonoSystem<IDialogueMonoSystem>().GetFlag("StartDispatching")
+            ).Then(_ =>
+            {
+                StartEvent(ae);
+            });
         }
 
         private void SpawnInitialUnits()
@@ -405,26 +421,76 @@ namespace ColbyO.SJ26.Dispatch
             return numOfUnits;
         }
 
+        public DispatchEventSO RandomDispatchEvent()
+        {
+            var es = SJ26GameManager.Preferences.DispatchEvents.GetAllEntries();
+            return es[Random.Range(0, es.Count)];
+        }
+
+        private void SetDialogueContext(ActiveDispatchEvent e)
+        {
+            GameManager.GetMonoSystem<IDialogueMonoSystem>().SetFlag("StartDispatching", false);
+            GameManager.GetMonoSystem<IDialogueMonoSystem>().SetVariable("Address", e.Address);
+        }
+
         public void HandleMapObjectClick(MapObject mo)
         {
             Debug.Log(mo);
             if (mo is FieldUnit fu)
             {
                 Debug.Log("SELECT");
-                _selectedFieldUnit = fu == _selectedFieldUnit ? null : fu;
+                if (fu == _selectedFieldUnit)
+                {
+                    _selectedFieldUnit = null;
+                    fu.SetSelected(false);
+                }
+                else
+                {
+                    if (_selectedFieldUnit != null)
+                    {
+                        _selectedFieldUnit.SetSelected(false);
+                    }
+                    _selectedFieldUnit = fu;
+                    fu.SetSelected(true);
+                }
             }
             else if (mo is EmergencyCallMarker ecm)
             {
                 Debug.Log("TRY SEND");
                 if (ecm.IsEnded())
                 {
+                    if (GameManager.GetMonoSystem<IDialogueMonoSystem>().IsPlayingDialogue())
+                        return;
+                    ActiveDispatchEvent e = ecm.FinishedEvent();
+                    SetDialogueContext(e);
+                    if (ecm.IsSuccess())
+                    {
+                        GameManager.GetMonoSystem<IDialogueMonoSystem>().StartDialoguePromise(e.Event.SuccessDialogue, true);
+                    }
+                    else
+                    {
+                        GameManager.GetMonoSystem<IDialogueMonoSystem>().StartDialoguePromise(e.Event.FailedDialogue, true);
+                    }
                     GameObject.Destroy(ecm.gameObject);
                 }
                 else if (_selectedFieldUnit)
                 {
-                    DispatchUnitToAddress(_selectedFieldUnit, ecm.CurrentLocation);
+                    DispatchUnitToAddress(_selectedFieldUnit, ecm.CurrentLocation, ecm.CallId());
+                    _selectedFieldUnit.SetSelected(false);
+                    _selectedFieldUnit = null;
                 }
             }
+        }
+
+        public void StartTheCalls()
+        {
+            _newCallCountDown = SJ26GameManager.Preferences.RandomCallTime();
+            _takingCalls = true;
+        }
+
+        public void StopTheCalls()
+        {
+            _takingCalls = false;
         }
     }
 

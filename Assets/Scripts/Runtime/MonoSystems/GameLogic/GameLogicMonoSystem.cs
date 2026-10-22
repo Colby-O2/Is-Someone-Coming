@@ -18,6 +18,7 @@ namespace ColbyO.SJ26.GameLogic
     {
         private Scheduler _scheduler = new Scheduler();
         private HashSet<string> _inRange = new HashSet<string>();
+        private Dictionary<string, int> _counters = new(); 
         private HashSet<string> _triggers = new HashSet<string>();
         private bool _started = false;
 
@@ -145,5 +146,16 @@ namespace ColbyO.SJ26.GameLogic
         private bool IsTriggered(string triggerName) => _triggers.Remove(triggerName);
 
         public bool IsInRange(string rangeName) => _inRange.Contains(rangeName);
+        public void IncrementCounter(string counterName, int count = 1)
+        {
+            _counters.TryAdd(counterName, 0);
+            _counters[counterName] += 1;
+        }
+
+        public void DecrementCounter(string counterName, int count = 1)
+        {
+            _counters.TryAdd(counterName, 0);
+            _counters[counterName] -= 1;
+        }
     }
 }

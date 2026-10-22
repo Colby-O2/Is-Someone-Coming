@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: DispatchEventDatabase
+  m_EditorClassIdentifier: Assembly-CSharp:ColbyO.SJ26:DispatchEventDatabase
+  _useRawSO: 1
+  _database:
+  - {fileID: 11400000, guid: dd4521119a85fa6a9aa205090304116b, type: 2}
+  _initDatabase: 1
+  _clearDatabase: 0

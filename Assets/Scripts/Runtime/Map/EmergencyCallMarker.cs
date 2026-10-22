@@ -9,9 +9,14 @@ namespace ColbyO.SJ26.Map
 
         private bool _isEnded = false;
         private bool _isSuccess = false;
+        private ActiveDispatchEvent _finishedEvent = null;
+
+        public string CallId() => _callId;
 
         public bool IsEnded() => _isEnded;
         public bool IsSuccess() => IsEnded() && _isSuccess;
+
+        public ActiveDispatchEvent FinishedEvent() => _finishedEvent;
 
         public void InitializeCall(MapObjectSO callIconData, string callId, string targetAddress)
         {
@@ -23,15 +28,17 @@ namespace ColbyO.SJ26.Map
             SetupIcon();
         }
         
-        public void SetSuccess(DispatchEvent e)
+        public void SetSuccess(ActiveDispatchEvent e)
         {
+            _finishedEvent = e;
             _isEnded = true;
             _isSuccess = true;
             ApplyIconTexture(SJ26GameManager.Preferences.SuccessMapIcon, Color.white);
         }
 
-        public void SetFailed(DispatchEvent e)
+        public void SetFailed(ActiveDispatchEvent e)
         {
+            _finishedEvent = e;
             _isEnded = true;
             ApplyIconTexture(SJ26GameManager.Preferences.FailedMapIcon, Color.white);
         }

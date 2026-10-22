@@ -7,6 +7,7 @@ using PlazmaGames.Attribute;
 using PlazmaGames.Core.Debugging;
 
 using ColbyO.SJ26.Street;
+using Unity.VisualScripting;
 
 namespace ColbyO.SJ26.Map
 {
@@ -37,6 +38,11 @@ namespace ColbyO.SJ26.Map
 
         public string CurrentLocation => _currentLocationLabel;
         public Vector3 VisualSpreadOffset => _currentVisualSpreadOffset;
+
+        public void SetSelected(bool value)
+        {
+            _spawnedIcon.transform.GetChild(0).gameObject.SetActive(value);
+        }
 
         protected virtual void OnEnable()
         {

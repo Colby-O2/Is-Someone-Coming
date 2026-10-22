@@ -1,0 +1,172 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dde6bf8a896c98c48b27db112dac91a0, type: 3}
+  m_Name: HouseFireCall
+  m_EditorClassIdentifier: DialogueGraph::DialogueGraph.Data.DialogueGraphSO
+  id: -1
+  includeInDatabase: 1
+  Name: HouseFireCall
+  Nodes:
+  - Guid: 22a0af60-8670-40ae-ad1b-120fe9199355
+    ActorName: 
+    GroupName: 
+    Type: 0
+    Text: 
+    EventID: 
+    position: {x: 0, y: 0}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: ada6d6d7-8a4d-4b53-8124-34f967fc6de7
+  - Guid: ada6d6d7-8a4d-4b53-8124-34f967fc6de7
+    ActorName: Caller
+    GroupName: 
+    Type: 1
+    Text: Hi :), my house is currently, as we speak, encroached in flames.
+    EventID: 
+    position: {x: 297, y: -12}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 613539a2-5a68-438c-af5d-6fabb4f90ced
+  - Guid: 220152e1-914c-46ab-a9c6-800c0928e717
+    ActorName: You
+    GroupName: 
+    Type: 2
+    Text: 
+    EventID: 
+    position: {x: 1027, y: -18}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: What is your address
+      Next: 8034dff5-64f1-4fa3-a2c1-1d664787881e
+  - Guid: 613539a2-5a68-438c-af5d-6fabb4f90ced
+    ActorName: You
+    GroupName: 
+    Type: 1
+    Text: That sure is a shame...
+    EventID: 
+    position: {x: 667, y: 6}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 220152e1-914c-46ab-a9c6-800c0928e717
+  - Guid: 80827509-662b-41d5-93f4-3abf22528929
+    ActorName: 
+    GroupName: 
+    Type: 3
+    Text: 
+    EventID: 
+    position: {x: 1791, y: 68}
+    PropertyType: Bool
+    PropertyBooleanValue: 1
+    PropertyIntValue: 0
+    PropertyName: StartDispatching
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 8157b2a5-99cf-4317-ad36-f582360d3087
+  - Guid: 8034dff5-64f1-4fa3-a2c1-1d664787881e
+    ActorName: Caller
+    GroupName: 
+    Type: 1
+    Text: 'It is <Address>. '
+    EventID: 
+    position: {x: 1431, y: 4}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 80827509-662b-41d5-93f4-3abf22528929
+  - Guid: 8157b2a5-99cf-4317-ad36-f582360d3087
+    ActorName: Caller
+    GroupName: 
+    Type: 1
+    Text: Please hurry!
+    EventID: 
+    position: {x: 2131, y: 37}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 
+  Groups: []
+  Properties:
+  - Name: StartDispatching
+    Type: Bool
+    BooleanValue: 0
+    IntValue: 0
+    StringValue: 

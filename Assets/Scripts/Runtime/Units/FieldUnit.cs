@@ -376,11 +376,5 @@ namespace ColbyO.SJ26.Dispatch
             Handles.Label(gizmoPos + Vector3.up * 2.2f, $"[{_callsign}] {_status}{callInfo}\nLoc: {_currentLocationLabel}");
         }
 #endif
-        public void TakeOffCall()
-        {
-            _isIdleCruising = true;
-            _activeCallId = "";
-            _status = UnitStatus.Available;
-        }
     }
 }

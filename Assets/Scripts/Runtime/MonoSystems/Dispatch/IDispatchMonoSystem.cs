@@ -14,5 +14,7 @@ namespace ColbyO.SJ26.Dispatch
         FieldUnit GetUnitByCallsign(string callsign);
         int GetNumberOfRegisteredUnits(UnitType? unitType = null, string callsignSymbol = null);
         void HandleMapObjectClick(MapObject mo);
+        void StartTheCalls();
+        void StopTheCalls();
     }
 }
