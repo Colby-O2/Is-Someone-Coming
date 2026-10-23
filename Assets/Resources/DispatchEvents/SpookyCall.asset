@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b62678a248d8d67cb73ec869848fca9, type: 3}
+  m_Name: SpookyCall
+  m_EditorClassIdentifier: Assembly-CSharp::ColbyO.SJ26.DispatchEventSO
+  id: 9
+  includeInDatabase: 1
+  CallDialogue: SpookyCall
+  SuccessDialogue: GoodFireSuccess
+  FailedDialogue: GoodFireFailed
+  LocDescriptions:
+  - Nowhere
+  RequiredPolice: 0
+  RequiredEMS: 0
+  RequiredFire: 100000
+  RequiredRescue: 0
+  TimeToRespond: 400000
+  TimeToResolve: 500000000

@@ -84,6 +84,11 @@ namespace PlazmaGames.SO
         {
             return _database.Find(e => e.id == id);
         }
+        
+        public TBase GetEntry(string pname)
+        {
+            return _database.Find(e => e.name == pname);
+        }
 
         public TBase GetEntry<T>(int id) where T : TBase
         {

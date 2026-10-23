@@ -47,7 +47,7 @@ namespace InteractionSystem.Handlers
         public bool DisabledHintsOnMove = true;
     }
 
-    internal sealed class MoveableHandler
+    public sealed class MoveableHandler
     {
         private enum MoveState { None, Starting, Moving, Ending }
 
@@ -63,7 +63,7 @@ namespace InteractionSystem.Handlers
 
         public bool IsMoving => _profile != null;
 
-        public MoveableHandler(InteractorController controller, MoveSettings settings)
+        internal MoveableHandler(InteractorController controller, MoveSettings settings)
         {
             _controller = controller;
             _settings = settings;
@@ -74,7 +74,7 @@ namespace InteractionSystem.Handlers
                 LayerMask.GetMask("Interactable");
         }
 
-        public void Move(Transform from, Transform obj, MoveableSettings settings)
+        internal void Move(Transform from, Transform obj, MoveableSettings settings)
         {
             if (IsMoving || _state == MoveState.Ending) return;
 

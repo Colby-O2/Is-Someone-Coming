@@ -138,5 +138,14 @@ namespace ColbyO.SJ26
         {
             SJ26GameManager.LockMovement = false;
         }
+
+        public Promise LookAt(Vector3 pos, float duration = 0.4f)
+        {
+            Transform head = _viewController.transform;
+            return Utils.Animate(r => head.rotation = r,
+                head.rotation,
+                Quaternion.LookRotation((pos - head.position).normalized, Vector3.up),
+                duration);
+        }
     }
 }

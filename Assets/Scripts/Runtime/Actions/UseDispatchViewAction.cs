@@ -1,6 +1,8 @@
 using InteractionSystem;
 using InteractionSystem.Actions;
+using InteractionSystem.Controls;
 using InteractionSystem.UI;
+using PlazmaGames.Core;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -11,10 +13,24 @@ namespace ColbyO.SJ26
     {
         public override string ActionName => "Start Dispatching";
 
+        private Promise _promise;
+
+        public Promise WaitForEnter()
+        {
+            return Promise.CreateExisting(ref _promise);
+        }
+
+        public override bool IsEnabled { get => SJ26GameManager.PlayerSit.HasDetachedHead();
+            set
+        {
+            
+        } }
+
         public override void Execute(InteractorController interactor)
         {
             base.Execute(interactor);
             VirtualCaster.ShowCursor();
+            Promise.ResolveExisting(ref _promise);
         }
     }
 }

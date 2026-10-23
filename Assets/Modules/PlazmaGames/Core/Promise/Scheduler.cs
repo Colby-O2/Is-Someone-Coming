@@ -84,20 +84,20 @@ namespace PlazmaGames.Core
                 _conditionalEvents.AddRange(_queuedConditionalEvents);
                 _queuedConditionalEvents.Clear();
             }
-            
+
             if (_queuedTimedEvents.Count > 0)
             {
                 _timedEvents.AddRange(_queuedTimedEvents);
                 _queuedTimedEvents.Clear();
                 Sort();
             }
-            
+
             if (_queuedIntervals.Count > 0)
             {
                 _intervals.AddRange(_queuedIntervals);
                 _queuedIntervals.Clear();
             }
-            
+
             _time += deltaTime;
             for (int i = _timedEvents.Count - 1; i >= 0; i--)
             {
@@ -121,14 +121,13 @@ namespace PlazmaGames.Core
             for (int i = _intervals.Count - 1; i >= 0; i--)
             {
                 IntervalEvent ie = _intervals[i];
-                if (Mathf.FloorToInt(prevTime / ie.interval) < Mathf.FloorToInt(_time / ie.interval))
-                {
-                    if (!ie.func.Invoke())
-                    {
-                        ie.promise.Resolve();
-                        _intervals.RemoveAt(i);
-                    }
-                }
+                if (!(
+                        ie.interval <= 0.001 ||
+                        Mathf.FloorToInt(prevTime / ie.interval) < Mathf.FloorToInt(_time / ie.interval)
+                    )) continue;
+                if (ie.func.Invoke()) continue;
+                ie.promise.Resolve();
+                _intervals.RemoveAt(i);
             }
         }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 namespace InteractionSystem.Actions
 {
     [System.Serializable]
-    public sealed class MoveAction : InteractionAction
+    public class MoveAction : InteractionAction
     {
         [SerializeField] private string _actionNameOverride;
         [SerializeField] private MoveableSettings _settings;

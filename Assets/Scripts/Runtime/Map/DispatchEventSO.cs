@@ -20,5 +20,7 @@ namespace ColbyO.SJ26
         public int RequiredRescue;
         public float TimeToRespond;
         public float TimeToResolve;
+
+        public int TotalUnits() => RequiredFire + RequiredPolice + RequiredEMS + RequiredRescue;
     }
 }

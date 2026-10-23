@@ -19,3 +19,5 @@ MonoBehaviour:
   DispatchEvents: {fileID: 11400000, guid: 435ebf5f633234de1970f49c4847f428, type: 2}
   MinCallTime: 30
   MaxCallTime: 40
+  CoffeeColor: {r: 0.2784314, g: 0.21176471, b: 0.105882354, a: 1}
+  CoffeeBrewTime: 8

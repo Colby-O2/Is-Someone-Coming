@@ -1,0 +1,171 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dde6bf8a896c98c48b27db112dac91a0, type: 3}
+  m_Name: SpookyCallContinue
+  m_EditorClassIdentifier: DialogueGraph::DialogueGraph.Data.DialogueGraphSO
+  id: -1
+  includeInDatabase: 1
+  Name: SpookyCallContinue
+  Nodes:
+  - Guid: c213e75c-9b47-42f7-9d68-1c3295b405ee
+    ActorName: 
+    GroupName: 
+    Type: 0
+    Text: 
+    EventID: 
+    position: {x: 0, y: 0}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: d130e173-d501-45ef-a36e-11be7aeb31d9
+  - Guid: d130e173-d501-45ef-a36e-11be7aeb31d9
+    ActorName: Caller <CallID>
+    GroupName: 
+    Type: 1
+    Text: Help
+    EventID: 
+    position: {x: 313, y: -86}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: aa014f9c-cfdf-4f07-a3f2-456c159b28fb
+  - Guid: e8aad7bd-41eb-448c-a7ba-935c98f30cc6
+    ActorName: You
+    GroupName: 
+    Type: 1
+    Text: I need you to tell me hwere you are.
+    EventID: 
+    position: {x: 1104, y: -65}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: e9c1312b-1602-4233-9c35-31c10c3410ca
+  - Guid: aa014f9c-cfdf-4f07-a3f2-456c159b28fb
+    ActorName: 
+    GroupName: 
+    Type: 3
+    Text: 
+    EventID: 
+    position: {x: 741, y: -58}
+    PropertyType: Bool
+    PropertyBooleanValue: 1
+    PropertyIntValue: 0
+    PropertyName: Spooky2
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: e8aad7bd-41eb-448c-a7ba-935c98f30cc6
+  - Guid: e9c1312b-1602-4233-9c35-31c10c3410ca
+    ActorName: Caller <CallID>
+    GroupName: 
+    Type: 1
+    Text: They're coming
+    EventID: 
+    position: {x: 1580, y: 99}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 121c745c-6987-442f-89a7-cf6c4c6218b2
+  - Guid: 121c745c-6987-442f-89a7-cf6c4c6218b2
+    ActorName: 
+    GroupName: 
+    Type: 3
+    Text: 
+    EventID: 
+    position: {x: 1971, y: 163}
+    PropertyType: Bool
+    PropertyBooleanValue: 1
+    PropertyIntValue: 0
+    PropertyName: Spooky3
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 
+  Groups: []
+  Properties:
+  - Name: YO
+    Type: String
+    BooleanValue: 0
+    IntValue: 0
+    StringValue: Yo My Man
+  - Name: Spooky1
+    Type: Bool
+    BooleanValue: 0
+    IntValue: 0
+    StringValue: 
+  - Name: Spooky2
+    Type: Bool
+    BooleanValue: 0
+    IntValue: 0
+    StringValue: 
+  - Name: Spooky3
+    Type: Bool
+    BooleanValue: 0
+    IntValue: 0
+    StringValue: 
+  - Name: HideUnits
+    Type: Bool
+    BooleanValue: 0
+    IntValue: 0
+    StringValue: 
