@@ -77,7 +77,6 @@ namespace InteractionSystem
             {
                 if (_as && _actions[actionIndex].Clip != null)
                 {
-                    Debug.Log("Yo!");
                     _as.PlayOneShot(_actions[actionIndex].Clip);
                 }
                 _actions[actionIndex].Execute(interactor);

@@ -55,6 +55,7 @@ namespace ColbyO.SJ26.GameLogic
             public static DoorAction Door1;
             public static DoorAction Door2;
             public static DoorAction Door3;
+            public static DoorAction Door4;
         }
 
         private void OnEnable()
@@ -82,6 +83,7 @@ namespace ColbyO.SJ26.GameLogic
             Refs.Door1 = GameObject.FindWithTag("Door1").GetComponent<Interactable>().GetAction<DoorAction>();
             Refs.Door2 = GameObject.FindWithTag("Door2").GetComponent<Interactable>().GetAction<DoorAction>();
             Refs.Door3 = GameObject.FindWithTag("Door3").GetComponent<Interactable>().GetAction<DoorAction>();
+            Refs.Door4 = GameObject.FindWithTag("Door4").GetComponent<Interactable>().GetAction<DoorAction>();
             Refs.Radio = GameObject.FindWithTag("Radio").GetComponent<Interactable>();
 
             Refs.Radio.GetAction<RadioAction>().IsEnabled = false;
@@ -123,7 +125,12 @@ namespace ColbyO.SJ26.GameLogic
             switch (eventName)
             {
                 case "Act1":
-                    _actorMonoSystem.SendActorTo("Coworker", "Loc_BreakRoom", 5f);
+                    _actorMonoSystem.SendActorTo("Coworker", "Loc_BreakRoom", 5f)
+                    .Then(_ =>
+                    {
+                        Refs.Door4.RequestClose(true);
+                        Refs.Door4.IsLocked = false;
+                    });
                     _actorMonoSystem.TellActorToSitAt("Extra1", "SitPoint_Office1", 5f);
                     _actorMonoSystem.TellActorToSitAt("Extra2", "SitPoint_Office2", 5f);
 
@@ -279,6 +286,8 @@ namespace ColbyO.SJ26.GameLogic
                     })
                     .Then(_ =>
                     {
+                        Refs.Door4.RequestClose(true);
+                        Refs.Door4.IsLocked = false;
                         SJ26GameManager.PlayerSit.CanUnSit = true;
                         _actorMonoSystem.TellActorToSitAt("Coworker", "SitPoint_CoworkerOffice", 1f);
                     })
@@ -350,6 +359,7 @@ namespace ColbyO.SJ26.GameLogic
                 })
                 .Then(_ =>
                 {
+                    Refs.Door1.IsLocked = false;
                     _taskMonoSystem.EndTask();
                     SJ26GameManager.Player.EnableFlashlight();
                     SJ26GameManager.PlayerAnimator.HoldingLight = true;
@@ -384,6 +394,9 @@ namespace ColbyO.SJ26.GameLogic
                     Refs.Door3.RequestOpen();
                     Refs.Door3.OnLockedDialogueName = string.Empty;
                     Refs.Door3.IsLocked = true;
+
+                    Refs.Door4.RequestClose(true);
+                    Refs.Door4.IsLocked = true;
 
                     Refs.FireHallway.SetActive(true);
 
