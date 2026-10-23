@@ -28,7 +28,7 @@ namespace ColbyO.SJ26
         [SerializeField] private AudioClip _lockedClip;
 
         [Header("Dialogue")]
-        [SerializeField] private string OnLockedDialogueName;
+        public string OnLockedDialogueName;
 
         [Header("Settings")]
         [SerializeField] private float _openAngle;

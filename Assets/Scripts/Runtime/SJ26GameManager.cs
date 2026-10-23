@@ -58,7 +58,6 @@ namespace ColbyO.SJ26
         private void Update()
         {
             GlobalScheduler.Tick(Time.deltaTime);
-
             if (Keyboard.current.jKey.wasPressedThisFrame) GetMonoSystem<IDialogueMonoSystem>().StartDialoguePromise("Test");
         }
 

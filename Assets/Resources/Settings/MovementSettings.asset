@@ -17,7 +17,7 @@ MonoBehaviour:
   YLookLimit: {x: -80, y: 80}
   InvertLookY: 0
   InvertLookX: 0
-  Speed: 8
+  Speed: 2
   CrouchedMultiplier: 0.5
   BackwardSpeedMul: 0.5
   StrafingSpeedMul: 1

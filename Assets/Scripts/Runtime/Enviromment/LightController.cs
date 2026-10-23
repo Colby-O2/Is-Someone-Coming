@@ -53,6 +53,11 @@ namespace ColbyO.SJ26.Enviroment
             }
         }
 
+        public void Mute(bool state)
+        {
+            _audioSource.mute = state;
+        }
+
         public void SetIntensityMultiplier(float multiplier)
         {
             multiplier = Mathf.Max(0f, multiplier);

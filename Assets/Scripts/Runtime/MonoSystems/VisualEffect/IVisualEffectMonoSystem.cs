@@ -13,5 +13,7 @@ namespace ColbyO.Sj26.Effects
         public Promise FadeIn(float duration);
         public Promise FadeOut(float duration);
         public Promise WriteFadeOutText(string textToType, float typeSpeed, float duration);
+        public void ResetPSXSettings();
+        public void ResetCRTSettings();
     }
 }

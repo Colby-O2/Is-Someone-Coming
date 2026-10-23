@@ -12,18 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b62678a248d8d67cb73ec869848fca9, type: 3}
   m_Name: TrafficBad
   m_EditorClassIdentifier: Assembly-CSharp::ColbyO.SJ26.DispatchEventSO
-  id: -1
+  id: 11
   includeInDatabase: 1
+  UseInRandom: 1
   CallDialogue: TrafficBadCall
   SuccessDialogue: TrafficBadSuccess
   FailedDialogue: TrafficBadFailed
   LocDescriptions:
-  - Two cars just bumped into each other
-  - "There\u2019s been a bad crash, and the cars are badly damaged"
-  - A car just hit someone crossing the road. They are pinned down
-  - A cyclist was hit by a car
-  - A car went off the road into a ditch
-  - A car went off bridge into the water
+  - accident. Two cars just bumped into each other
+  - bad crash, and the cars are badly damaged
+  - accident. A car just hit someone crossing the road. They are pinned down
+  - accident. A cyclist was hit by a car
+  - accident. A car went off the road into a ditch
+  - accident. A car went off bridge into the water
   RequiredPolice: 0
   RequiredEMS: 1
   RequiredFire: 0

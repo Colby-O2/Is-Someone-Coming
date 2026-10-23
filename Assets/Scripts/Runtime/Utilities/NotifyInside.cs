@@ -13,7 +13,7 @@ namespace ColbyO.SJ26
 
         private void OnTriggerEnter(Collider other)
         {
-            Debug.Log("Enter");
+            Debug.Log($"Enter {_id} from {other.tag}");
             if (other.CompareTag(_targetTag))
             {
                 GameManager.GetMonoSystem<IGameLogicMonoSystem>().SetInRange(_id, true);
@@ -22,7 +22,7 @@ namespace ColbyO.SJ26
 
         private void OnTriggerExit(Collider other)
         {
-            Debug.Log("Exit");
+            Debug.Log($"Exit {_id} from {other.tag}");
             if (other.CompareTag(_targetTag))
             {
                 GameManager.GetMonoSystem<IGameLogicMonoSystem>().SetInRange(_id, false);

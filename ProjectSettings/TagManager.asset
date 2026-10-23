@@ -20,6 +20,13 @@ TagManager:
   - Test
   - MyDesk
   - SpookLookAtLoc
+  - Door1
+  - Door2
+  - Door3
+  - FireHallway
+  - FireGirl
+  - CallElevator
+  - Door4
   layers:
   - Default
   - TransparentFX

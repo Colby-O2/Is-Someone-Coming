@@ -31,6 +31,11 @@ namespace ColbyO.SJ26.Enviroment
             }
         }
 
+        public void Mute(bool state)
+        {
+            foreach (var light in _lights) light.Mute(state);
+        }
+
         public void SetLightIntensity(float intensity, Color? color = null)
         {
             foreach (var light in _lights)

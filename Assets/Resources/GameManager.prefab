@@ -263,6 +263,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ColbyO.SJ26.Lighting.LightMonoSystem
   _lightTag: OffceLight
+  _brownoutColor: {r: 1, g: 0.45, b: 0.15, a: 1}
+  _emergencyColor: {r: 0.8, g: 0.05, b: 0.05, a: 1}
 --- !u!1 &2802246564892062731
 GameObject:
   m_ObjectHideFlags: 0
@@ -550,7 +552,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: PlazmaGames.Runtime::PlazmaGames.UI.UIMonoSystem
   _preserveUIAcrossScenes: 1
-  _startingView: ColbyO.SJ26.GameView, Assembly-CSharp
+  _startingView: ColbyO.SJ26.UI.MainMenuView, Assembly-CSharp
   _views: []
   _currentView: {fileID: 0}
   _hasInitialized: 0
@@ -653,7 +655,10 @@ MonoBehaviour:
   _musicSound: 1
   _musicSounds: []
   _ambientSounds: []
-  _sfxSounds: []
+  _sfxSounds:
+  - id: 0
+    name: UIClick
+    audio: {fileID: 8300000, guid: bf446cdaa12b3d045bf3c0228b872598, type: 3}
   _musicSource: {fileID: 3638539756700429000}
   _ambientSource: {fileID: 77089400581636699}
   _sfxMainSource: {fileID: 2490435349908403537}

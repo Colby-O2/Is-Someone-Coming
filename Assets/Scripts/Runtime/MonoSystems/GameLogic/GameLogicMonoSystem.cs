@@ -46,6 +46,13 @@ namespace ColbyO.SJ26.GameLogic
             public static CryingGirlEncounter CryingGirlEncounter;
             public static Transform PlayerChaseStart; 
             public static UseDispatchViewAction DispatchMonitor;
+            public static GameObject FireGirl;
+            public static GameObject FireHallway;
+            public static OpenElevatorAction CallElevator;
+
+            public static DoorAction Door1;
+            public static DoorAction Door2;
+            public static DoorAction Door3;
         }
 
         private void OnEnable()
@@ -69,25 +76,28 @@ namespace ColbyO.SJ26.GameLogic
             _taskMonoSystem = GameManager.GetMonoSystem<ITaskMonoSystem>();
             _actorMonoSystem = GameManager.GetMonoSystem<IActorMonoSystem>();
             _lightMs = GameManager.GetMonoSystem<ILightMonoSystem>();
+
+            Refs.Door1 = GameObject.FindWithTag("Door1").GetComponent<Interactable>().GetAction<DoorAction>();
+            Refs.Door2 = GameObject.FindWithTag("Door2").GetComponent<Interactable>().GetAction<DoorAction>();
+            Refs.Door3 = GameObject.FindWithTag("Door3").GetComponent<Interactable>().GetAction<DoorAction>();
+
             Refs.Elevator = FindAnyObjectByType<Elevator>();
             Refs.PlayerSeat = GameObject.FindWithTag("PlayerSeat").GetComponent<Interactable>().GetAction<SitAction>();
 
             Refs.FlashlightPickup = GameObject.FindWithTag("Flashlight").GetComponentInChildren<Interactable>();
             Refs.CryingGirlEncounter = FindAnyObjectByType<CryingGirlEncounter>();
             Refs.PlayerChaseStart = GameObject.FindWithTag("PlayerChaseStart").transform;
+            Refs.FireGirl = GameObject.FindWithTag("FireGirl");
+            Refs.FireHallway = GameObject.FindWithTag("FireHallway");
+            Refs.CallElevator = GameObject.FindWithTag("CallElevator").GetComponent<Interactable>().GetAction<OpenElevatorAction>();
 
             Refs.CryingGirlEncounter.gameObject.SetActive(false);
             Refs.FlashlightPickup.gameObject.SetActive(false);
-            Refs.DispatchMonitor = GameObject.FindWithTag("DispatchMonitor").GetComponent<Interactable>().GetAction<UseDispatchViewAction>();
-        }
+            Refs.FireGirl.SetActive(false);
+            Refs.FireHallway.SetActive(false);
 
-        private void Update()
-        {
-            if (!_started)
-            {
-                _started = true;
-                TriggerEvent("Act1");
-            }
+
+            Refs.DispatchMonitor = GameObject.FindWithTag("DispatchMonitor").GetComponent<Interactable>().GetAction<UseDispatchViewAction>();
         }
 
         private void OnSceneLoad(Scene scene, LoadSceneMode mode)
@@ -111,11 +121,16 @@ namespace ColbyO.SJ26.GameLogic
                     _actorMonoSystem.TellActorToSitAt("Extra1", "SitPoint_Office1", 5f);
                     _actorMonoSystem.TellActorToSitAt("Extra2", "SitPoint_Office2", 5f);
 
-                    /*
-                    _visualEffectMs.FadeOut(0.01f)
+                    CRTSettings crt;
+
+                    _sch.Wait(0.5f)
                     .Then(_ => Promise.All(
                         _visualEffectMs.WriteFadeOutText("October 23rd 22:54\nMississauga, Ontario", 0.1f, 2f)
-                            .Then(_ => _visualEffectMs.FadeIn(1f)),
+                            .Then(_ => _visualEffectMs.FadeIn(1f))
+                            .Then(_ =>
+                            {
+                                SJ26GameManager.LockMovement = false;
+                            }),
                         Refs.Elevator.StartMoving())
                     )
                     .Then(_ => Refs.Elevator.StopMoving(2.5f))
@@ -145,162 +160,213 @@ namespace ColbyO.SJ26.GameLogic
                         SJ26GameManager.PlayerSit.RestoreHeadLook();
                         SJ26GameManager.PlayerSit.LockHead = false;
                         _actorMonoSystem.TellActorToSitAt("Coworker", "SitPoint_CoworkerOffice", 1f);
-                    })*/
-                    Debug.Log("------------------------------------------------------------------------");
-                    CRTSettings crt = null;
-                    _sch.Wait(0.1f)
-                        .Then(_ => _sch.When(() => GetCounter("CallsCompleted") >= 1))
-                        .Then(_ =>
-                        {
-                            //crt = _visualEffectMs.GetCRTSettings();
-                            _dispatchMs.StopTheCalls();
-
-                            _dialogueMs.SetFlag("HideUnits", false);
-                            _dialogueMs.SetFlag("Spooky1", false);
-                            _dialogueMs.SetFlag("Spooky2", false);
-                            _dialogueMs.SetFlag("Spooky3", false);
-                            _dispatchMs.RemoveAllEvents();
-                            _dispatchMs.StartCallWith(SJ26GameManager.Preferences.DispatchEvents.GetEntry("SpookyCall"));
-
-                            Refs.DispatchMonitor.WaitForEnter()
-                                .Then(_ =>
-                                {
-                                    SJ26GameManager.PlayerInteractor.Controls.InspectionBackAction.Disable();
-                                    SJ26GameManager.PlayerInteractor.Controls.InspectionLeaveAction.Disable();
-                                    _actorMonoSystem.SendActorTo("Coworker", "SpookAtDesk", 8)
-                                        .Then(_ =>
-                                        {
-                                            _actorMonoSystem.GetActor("Coworker").LookAt(SJ26GameManager.PlayerInteractor.gameObject.transform, 0.1f);
-                                        });
-                                })
-                                .Then(_ => _sch.When(() => _dialogueMs.GetFlag("Spooky1")))
-                                .Then(_ => _sch.When(() => !_dialogueMs.IsPlayingDialogue()))
-                                .Then(_ => _sch.Wait(3))
-                                .Then(_ =>
-                                {
-                                    return _dialogueMs.StartDialoguePromise("SpookyCallContinue", true);
-                                });
-
-                            _sch.When(() => _dialogueMs.GetFlag("HideUnits"))
-                                .Then(_ =>
-                                {
-                                    _dispatchMs.HideAllUnits();
-                                });
-
-                            _sch.When(() => _dialogueMs.GetFlag("Spooky1"))
-                                .Then(_ =>
-                                {
-                                    //crt.EnableNoise.value = true;
-                                    //Utils.Animate(v => crt.NoiseFade.value = v,
-                                    //   0, 0.2f, 3);
-                                });
-                            _sch.When(() => _dialogueMs.GetFlag("Spooky2"))
-                                .Then(_ =>
-                                {
-                                    //Utils.Animate(v => crt.NoiseFade.value = v, 
-                                    //   crt.NoiseFade.value, 0.4f, 3);
-                                });
-
-
-                            return _sch.When(() => _dialogueMs.GetFlag("Spooky3"))
-                                /*.Then(_ => Utils.Animate(v => crt.NoiseFade.value = v,
-                                        crt.NoiseFade.value, 0.8f, 5)
-                                )*/
-                                .Then(_ => _sch.Wait(3))
-                                .Then(_ =>
-                                {
-                                    _dispatchMs.MakeFailActiveEvents();
-                                })
-                                .Then(_ =>
-                                {
-                                    return SJ26GameManager.Player.LookAt(GameObject.FindWithTag("SpookLookAtLoc").transform.position, 0.2f);
-                                })
-                                .Then(_ => _sch.Wait(0.3f))
-                                .Then(_ =>
-                                {
-                                    _dialogueMs.StartDialoguePromise("SpookAtDesk", true);
-                                })
-                                .Then(_ => _sch.Wait(1.5f))
-                                .Then(_ =>
-                                {
-                                    SJ26GameManager.PlayerInteractor.Controls.InspectionBackAction.Enable();
-                                    SJ26GameManager.PlayerInteractor.Controls.InspectionLeaveAction.Enable();
-                                    SJ26GameManager.PlayerInteractor.GetInspectorHandler().StopInspecting(SJ26GameManager.Player.transform);
-                                    _dispatchMs.UnHideAllUnits();
-                                })
-                                .Then(_ => _dialogueMs.StartDialoguePromise("SpookAtDeskAfter"));
-                        })
-                        .Then(_ =>
-                        {
-                            _actorMonoSystem.SendActorTo("Coworker", "Loc_BreakRoom", 5f);
-                        })
-                        .Then(_ =>
-                        {
-                            _taskMonoSystem.StartTask("Go get a coffee");
-                        })
-                        .Then(_ => _sch.When(() => IsInRange("CoffeeBrewed")))
-                        .Then(_ =>
-                        {
-                            _taskMonoSystem.EndTask();
-                            _taskMonoSystem.StartTask("Bring coffee back to desk");
-                        })
-                        .Then(_ => _sch.When(() => IsInRange("Mug")))
-                        .Then(_ =>
-                        {
-                            _taskMonoSystem.EndTask();
-                            _dispatchMs.StartTheCalls();
-                        })
-                        .Then(_ => _sch.When(() => GetCounter("CallsCompleted") >= 2))
-                        .Then(_ =>
-                        {
-                            _dispatchMs.StopTheCalls();
-                            _dispatchMs.RemoveAllEvents();
-                            _dialogueMs.SetFlag("LightsOut", false);
-                            _dialogueMs.SetFlag("HideUnits", false);
-                            _dispatchMs.StartCallWith(SJ26GameManager.Preferences.DispatchEvents.GetEntry("SpookyCall2"));
-                            _sch.When(() => _dialogueMs.GetFlag("HideUnits"))
-                                .Then(_ =>
-                                {
-                                    _dispatchMs.HideAllUnits();
-                                });
-
-                            return _sch.When(() => _dialogueMs.GetFlag("LightsOut"));
-                        })
-                        .Then(_ =>
-                        {
-                            Debug.Log("THE REST OF THE GAME");
-                        });
-                    break;
-
-                case "Act3":
-                    Refs.FlashlightPickup.gameObject.SetActive(true);
-
-                    SJ26GameManager.GlobalScheduler.Wait(5f)
+                    })
+                    .Then(_ => _sch.When(() => GetCounter("CallsCompleted") >= 1))
                     .Then(_ =>
                     {
-                        _lightMs.TriggerOutageWithEmergencyBackup(waveOrigin: SJ26GameManager.Player.transform.position);
+                        crt = _visualEffectMs.GetCRTSettings();
+                        _dispatchMs.StopTheCalls();
+
+                        _dialogueMs.SetFlag("HideUnits", false);
+                        _dialogueMs.SetFlag("Spooky1", false);
+                        _dialogueMs.SetFlag("Spooky2", false);
+                        _dialogueMs.SetFlag("Spooky3", false);
+                        _dispatchMs.RemoveAllEvents();
+                        _dispatchMs.StartCallWith(SJ26GameManager.Preferences.DispatchEvents.GetEntry("SpookyCall"));
+
+                        Refs.DispatchMonitor.WaitForEnter()
+                            .Then(_ =>
+                            {
+                                SJ26GameManager.PlayerInteractor.Controls.InspectionBackAction.Disable();
+                                SJ26GameManager.PlayerInteractor.Controls.InspectionLeaveAction.Disable();
+                                _actorMonoSystem.SendActorTo("Coworker", "SpookAtDesk", 8)
+                                    .Then(_ =>
+                                    {
+                                        _actorMonoSystem.GetActor("Coworker").LookAt(SJ26GameManager.PlayerInteractor.gameObject.transform, 0.1f);
+                                    });
+                            })
+                            .Then(_ => _sch.When(() => _dialogueMs.GetFlag("Spooky1")))
+                            .Then(_ => _sch.When(() => !_dialogueMs.IsPlayingDialogue()))
+                            .Then(_ => _sch.Wait(3))
+                            .Then(_ =>
+                            {
+                                return _dialogueMs.StartDialoguePromise("SpookyCallContinue", true);
+                            });
+
+                        _sch.When(() => _dialogueMs.GetFlag("HideUnits"))
+                            .Then(_ =>
+                            {
+                                _dispatchMs.HideAllUnits();
+                            });
+
+                        _sch.When(() => _dialogueMs.GetFlag("Spooky1"))
+                            .Then(_ =>
+                            {
+                                crt.EnableNoise.value = true;
+                                Utils.Animate(v => crt.NoiseFade.value = v,
+                                    0, 0.2f, 3);
+                            });
+                        _sch.When(() => _dialogueMs.GetFlag("Spooky2"))
+                            .Then(_ =>
+                            {
+                                Utils.Animate(v => crt.NoiseFade.value = v,
+                                    crt.NoiseFade.value, 0.4f, 3);
+                            });
+
+
+                        return _sch.When(() => _dialogueMs.GetFlag("Spooky3"))
+                            .Then(_ => Utils.Animate(v => crt.NoiseFade.value = v,
+                                    crt.NoiseFade.value, 0.8f, 5)
+                            )
+                            .Then(_ => _sch.Wait(3))
+                            .Then(_ =>
+                            {
+                                _dispatchMs.MakeFailActiveEvents();
+                            })
+                            .Then(_ =>
+                            {
+                                _visualEffectMs.ResetCRTSettings();
+                                return SJ26GameManager.Player.LookAt(GameObject.FindWithTag("SpookLookAtLoc").transform.position, 0.2f);
+                            })
+                            .Then(_ => _sch.Wait(0.3f))
+                            .Then(_ =>
+                            {
+                                _dialogueMs.StartDialoguePromise("SpookAtDesk", true);
+                            })
+                            .Then(_ => _sch.Wait(1.5f))
+                            .Then(_ =>
+                            {
+                                SJ26GameManager.PlayerInteractor.Controls.InspectionBackAction.Enable();
+                                SJ26GameManager.PlayerInteractor.Controls.InspectionLeaveAction.Enable();
+                                SJ26GameManager.PlayerInteractor.GetInspectorHandler().StopInspecting(SJ26GameManager.Player.transform);
+                                _dispatchMs.UnHideAllUnits();
+                            })
+                            .Then(_ => _dialogueMs.StartDialoguePromise("SpookAtDeskAfter"));
                     })
                     .Then(_ =>
                     {
-                        _taskMonoSystem.StartTask("Find Flashlight in Office Area");
+                        _actorMonoSystem.SendActorTo("Coworker", "Loc_BreakRoom", 5f);
                     })
-                    .Then(_ => Refs.FlashlightPickup.GetAction<PickupAction>().WaitForPickup())
+                    .Then(_ =>
+                    {
+                        _taskMonoSystem.StartTask("Go get a coffee");
+                    })
+                    .Then(_ => _sch.When(() => IsInRange("CoffeeBrewed")))
                     .Then(_ =>
                     {
                         _taskMonoSystem.EndTask();
-                        SJ26GameManager.Player.EnableFlashlight();
-                        SJ26GameManager.PlayerAnimator.HoldingLight = true;
-                        _taskMonoSystem.StartTask("Restore The Power");
-                        Refs.CryingGirlEncounter.gameObject.SetActive(true);
-                        Refs.CryingGirlEncounter.ResetEncounter();
-                        Refs.CryingGirlEncounter.OnJumpscareFinished.AddListener(ResetChase);
-                        return Refs.CryingGirlEncounter.WaitForEvent();
+                        _taskMonoSystem.StartTask("Bring coffee back to desk");
                     })
-                    .Then(_ => Promise.All(_dialogueMs.StartDialoguePromise("CryingGirlEncounter"), SJ26GameManager.GlobalScheduler.When(() => Refs.CryingGirlEncounter.Phase == CryingGirlEncounter.EncounterPhase.WaitingToChase)))
-                    .Then(_ => SJ26GameManager.GlobalScheduler.Wait(1f))
-                    .Then(_ => Refs.CryingGirlEncounter.TriggerChase());
+                    .Then(_ => _sch.When(() => IsInRange("Mug")))
+                    .Then(_ =>
+                    {
+                        _taskMonoSystem.EndTask();
+                        _dispatchMs.StartTheCalls();
+                    })
+                    .Then(_ => _sch.When(() => GetCounter("CallsCompleted") >= 2))
+                    .Then(_ =>
+                    {
+                        _dispatchMs.StopTheCalls();
+                        _dispatchMs.RemoveAllEvents();
+                        _dialogueMs.SetFlag("LightsOut", false);
+                        _dialogueMs.SetFlag("HideUnits", false);
+                        _dispatchMs.StartCallWith(SJ26GameManager.Preferences.DispatchEvents.GetEntry("SpookyCall2"));
+                        _sch.When(() => _dialogueMs.GetFlag("HideUnits"))
+                            .Then(_ =>
+                            {
+                                _dispatchMs.HideAllUnits();
+                            });
 
-                    break;
+                        return _sch.When(() => _dialogueMs.GetFlag("LightsOut"));
+                    })
+                .Then(_ =>
+                {
+                    Refs.FlashlightPickup.gameObject.SetActive(true);
+                })
+                .Then(_ =>
+                {
+                    _lightMs.TriggerOutageWithEmergencyBackup(waveOrigin: SJ26GameManager.Player.transform.position);
+                })
+                .Then(_ =>
+                {
+                    _taskMonoSystem.StartTask("Find Flashlight in Office Area");
+
+                    Refs.Door2.RequestClose(true);
+                    Refs.Door2.OnLockedDialogueName = "NeedToFindKey";
+                    Refs.Door2.IsLocked = true;
+
+                    Refs.Door3.RequestClose(true);
+                    Refs.Door3.OnLockedDialogueName = "NeedToFindKey";
+                    Refs.Door3.IsLocked = true;
+                })
+                .Then(_ => Refs.FlashlightPickup.GetAction<PickupAction>().WaitForPickup())
+                .Then(_ =>
+                {
+                    Refs.Door2.IsLocked = false;
+                    Refs.Door3.IsLocked = false;
+                })
+                .Then(_ =>
+                {
+                    _taskMonoSystem.EndTask();
+                    SJ26GameManager.Player.EnableFlashlight();
+                    SJ26GameManager.PlayerAnimator.HoldingLight = true;
+                    _taskMonoSystem.StartTask("Restore The Power");
+                    Refs.CryingGirlEncounter.gameObject.SetActive(true);
+                    Refs.CryingGirlEncounter.ResetEncounter();
+                    Refs.CryingGirlEncounter.OnJumpscareFinished.AddListener(ResetChase);
+                    Refs.FireGirl.SetActive(true);
+                    Debug.Log("Waiting for Range");
+                    return SJ26GameManager.GlobalScheduler.When(() => IsInRange("InRangeCryingGirl"));
+                })
+                .Then(_ =>
+                {
+                    Refs.Door1.RequestClose(true);
+                    Refs.Door1.IsLocked = true;
+                })
+                .Then(_ => Refs.CryingGirlEncounter.WaitForEvent())
+                .Then(_ =>
+                {
+                    SJ26GameManager.LockMovement = true;
+                    SJ26GameManager.Player.LookAt(Refs.CryingGirlEncounter.transform.position);
+
+                    Refs.Door1.IsLocked = false;
+
+                    Refs.Door1.RequestOpen();
+                    Refs.Door1.IsLocked = true;
+
+                    Refs.Door2.RequestOpen();
+                    Refs.Door2.OnLockedDialogueName = string.Empty;
+                    Refs.Door2.IsLocked = true;
+
+                    Refs.Door3.RequestOpen();
+                    Refs.Door3.OnLockedDialogueName = string.Empty;
+                    Refs.Door3.IsLocked = true;
+
+                    Refs.FireHallway.SetActive(true);
+
+                    Refs.CallElevator.IsEnabled = true;
+                })
+                .Then(_ => Promise.All(_dialogueMs.StartDialoguePromise("CryingGirlEncounter"), SJ26GameManager.GlobalScheduler.When(() => Refs.CryingGirlEncounter.Phase == CryingGirlEncounter.EncounterPhase.WaitingToChase)))
+                .Then(_ =>
+                {
+                    SJ26GameManager.LockMovement = false;
+                    Refs.CryingGirlEncounter.Force = true;
+                })
+                .Then(_ => Refs.CryingGirlEncounter.TriggerChase())
+                .Then(_ => SJ26GameManager.GlobalScheduler.When(() => IsInRange("InsideElevatorNotify")))
+                .Then(_ =>
+                {
+                    Refs.CryingGirlEncounter.Stop();
+                    return Refs.Elevator.Close(1.5f);
+                })
+                .Then(_ =>
+                {
+                    Refs.FireHallway.SetActive(false);
+                })
+                .Then(_ => Refs.Elevator.StartMoving())
+                .Then(_ => Refs.Elevator.StopMoving(2.5f));
+
+                break;
 
             }
         }
@@ -308,7 +374,10 @@ namespace ColbyO.SJ26.GameLogic
         private void ResetChase()
         {
             Refs.CryingGirlEncounter.ResetEncounter();
+            Refs.CryingGirlEncounter.ForceEvent();
             SJ26GameManager.Player.MoveTo(Refs.PlayerChaseStart.position);
+            Refs.Elevator.Close();
+            Refs.CallElevator.IsEnabled = true;
 	}
 
         private int GetCounter(string name)

@@ -12,17 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b62678a248d8d67cb73ec869848fca9, type: 3}
   m_Name: TrafficGood
   m_EditorClassIdentifier: Assembly-CSharp::ColbyO.SJ26.DispatchEventSO
-  id: -1
+  id: 12
   includeInDatabase: 1
+  UseInRandom: 1
   CallDialogue: TrafficGoodCall
   SuccessDialogue: TrafficGoodSuccess
   FailedDialogue: TrafficGoodFailed
   LocDescriptions:
-  - A tree has fallen across the road
-  - Power lines have fallen across the road
-  - Two cars just bumped into each other
-  - "The traffic lights are out, and cars don\u2019t know who should go"
-  - A car went off the road into a ditch
+  - safety hazard. A tree has fallen across the road
+  - safety hazard. A power line that fallen across the road
+  - accident. Two cars just bumped into each other
+  - "safety issue. The traffic lights are out, and cars don\u2019t know who should go"
+  - accident. car went off the road into a ditch
   RequiredPolice: 0
   RequiredEMS: 0
   RequiredFire: 0

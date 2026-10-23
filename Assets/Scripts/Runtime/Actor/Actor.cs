@@ -69,6 +69,7 @@ namespace ColbyO.SJ26.Entities
         private Quaternion _meshSavedLocalRot;
 
         public string ActorName => _actorName;
+        public MoveState State => _state;
 
         private void Awake()
         {
@@ -149,11 +150,9 @@ namespace ColbyO.SJ26.Entities
 
                     MoveState nextState = _sitPromise != null ? MoveState.Idle : MoveState.Waiting;
 
-                    Debug.Log("About to resolve A goto promise");
                     UpdateState(nextState)
                     .Then(_ =>
                     {
-                        Debug.Log("Resolving A goto promise");
                         Promise.ResolveExisting(ref _gotoPromise);
                     });
                 }

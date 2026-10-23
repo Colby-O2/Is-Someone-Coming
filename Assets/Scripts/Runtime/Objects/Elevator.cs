@@ -80,6 +80,7 @@ namespace ColbyO.SJ26
 
             _blockage.SetActive(false);
 
+            _doorPromise = null;
             _doorPromise = Promise.CreateExisting(ref _doorPromise);
 
             if (_as != null && _openClip != null)
@@ -104,6 +105,7 @@ namespace ColbyO.SJ26
 
             _blockage.SetActive(true);
 
+            _doorPromise = null;
             _doorPromise = Promise.CreateExisting(ref _doorPromise);
 
             if (_as != null && _closeClip != null)

@@ -4,10 +4,10 @@ using UnityEngine.Events;
 using PlazmaGames.Core;
 using PlazmaGames.Attribute;
 using PlazmaGames.Math;
+using ColbyO.SJ26.GameLogic;
 
 namespace ColbyO.SJ26.Entities
 {
-    [RequireComponent(typeof(Collider))]
     public class CryingGirlEncounter : MonoBehaviour
     {
         public enum EncounterPhase
@@ -17,7 +17,8 @@ namespace ColbyO.SJ26.Entities
             Staring,
             WaitingToChase,
             Chasing,
-            CaughtPlayer
+            CaughtPlayer,
+            Stopped
         }
 
         [Header("Actor Settings")]
@@ -63,6 +64,8 @@ namespace ColbyO.SJ26.Entities
 
         public EncounterPhase Phase => _phase;
         public UnityEvent OnJumpscareFinished => _onJumpscareFinished;
+
+        public bool Force { get; set; }
 
         private void Awake()
         {
@@ -155,25 +158,20 @@ namespace ColbyO.SJ26.Entities
             }
         }
 
-        private void OnTriggerEnter(Collider other)
-        {
-            if (_phase != EncounterPhase.CryingInFetus) return;
-
-            if (_playerTransform == null && SJ26GameManager.Player != null)
-            {
-                _playerTransform = SJ26GameManager.Player.transform;
-                _playerView = SJ26GameManager.Player.GetComponentInChildren<ViewController>();
-            }
-
-            if (_playerTransform != null && (other.transform == _playerTransform || other.transform.IsChildOf(_playerTransform)))
-            {
-                TriggerEncounter();
-            }
-        }
-
         public Promise WaitForEvent()
         {
+            SJ26GameManager.GlobalScheduler.When(() => GameManager.GetMonoSystem<IGameLogicMonoSystem>().IsInRange("InCryingGirlRoom"))
+            .Then(_ =>
+            {
+                TriggerEncounter();
+            });
+
             return Promise.CreateExisting(ref _promise);
+        }
+
+        public void ForceEvent()
+        {
+            TriggerEncounter();
         }
 
         public void TriggerEncounter()
@@ -190,24 +188,13 @@ namespace ColbyO.SJ26.Entities
                 if (_phase != EncounterPhase.GettingUp) return;
                 _phase = EncounterPhase.Staring;
                 StartCoroutine(StareThenChaseRoutine());
-                _promise.Resolve();
+                Promise.ResolveExisting(ref _promise);
             });
         }
 
         public void TriggerChase()
         {
-            _phase = EncounterPhase.Chasing;
-        }
-
-        private IEnumerator StareThenChaseRoutine()
-        {
-            float timer = 0f;
-            while (timer < _stareDuration)
-            {
-                timer += Time.deltaTime;
-                RotateTowardsPlayer();
-                yield return null;
-            }
+            if (!_girlActor) return;
 
             if (_audioSource != null && _screamLoopClip != null)
             {
@@ -216,29 +203,60 @@ namespace ColbyO.SJ26.Entities
                 _audioSource.Play();
             }
 
-            float windupTimer = 0f;
-            while (windupTimer < 1f)
-            {
-                windupTimer += Time.deltaTime;
-                RotateTowardsPlayer();
-                yield return null;
-            }
-
             _girlActor.SetMoveSpeed(_chaseSpeed);
             _girlActor.SetChasingMode(true);
-            _girlActor.SetState(MoveState.Moving, 0.2f)
+            SJ26GameManager.GlobalScheduler.Wait(0.5f)
+            .Then(_ => _girlActor.SetState(MoveState.Moving, 0.2f))
             .Then(_ =>
             {
-                if (_phase != EncounterPhase.Staring) return;
-                _phase = EncounterPhase.WaitingToChase;
+                if (_phase != EncounterPhase.WaitingToChase) return;
+                _phase = EncounterPhase.Chasing;
             });
+        }
+
+        public void Stop()
+        {
+            _phase = EncounterPhase.Stopped;
+        }
+
+        private IEnumerator StareThenChaseRoutine()
+        {
+            if (!Force)
+            {
+                float timer = 0f;
+                while (timer < _stareDuration)
+                {
+                    timer += Time.deltaTime;
+                    RotateTowardsPlayer();
+                    yield return null;
+                }
+
+                float windupTimer = 0f;
+                while (windupTimer < 1f)
+                {
+                    windupTimer += Time.deltaTime;
+                    RotateTowardsPlayer();
+                    yield return null;
+                }
+            }
+
+            _phase = EncounterPhase.WaitingToChase;
+
+            if (Force) TriggerChase();
         }
 
         private void Update()
         {
             if (_girlActor == null || _playerTransform == null) return;
 
-            if (_phase == EncounterPhase.Chasing)
+            if (_phase == EncounterPhase.Stopped)
+            {
+                if (_audioSource != null && _audioSource.isPlaying) _audioSource.Stop();
+                _girlActor.SetChasingMode(false);
+                _girlActor.StopMoving(disableAgent: true);
+                if (_girlActor.State != MoveState.Idle) _girlActor.SetState(MoveState.Idle, 0.05f);
+            }
+            else if (_phase == EncounterPhase.Chasing)
             {
                 _girlActor.ChaseTarget(_playerTransform.position);
 

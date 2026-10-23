@@ -1,16 +1,20 @@
-using UnityEngine;
-
-using System.Collections;
-
+using ColbyO.SJ26.UI;
+using InteractionSystem.UI;
 using PlazmaGames.Core;
 using PlazmaGames.UI;
-
+using System.Collections;
 using TMPro;
+using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace ColbyO.SJ26
 {
     public class GameView : View
     {
+        [Header("Pause Settings")]
+        [SerializeField] private InputAction _pauseAction;
+        [SerializeField] private UIIcon _cameraHintIcon;
+
         [Header("Task Settings")]
         [SerializeField] private GameObject _taskHolder;
         [SerializeField] private TMP_Text _taskText;
@@ -18,6 +22,8 @@ namespace ColbyO.SJ26
         private Coroutine _taskTypingRoutine;
 
         [SerializeField] private AudioSource _as;
+
+        public InputAction Action { get => _pauseAction; }
 
         private IEnumerator WriteText(string textToType, float typeSpeed)
         {
@@ -48,7 +54,9 @@ namespace ColbyO.SJ26
 
         public override void Init()
         {
-            
+            _pauseAction.performed -= HandlePause;
+            _pauseAction.performed += HandlePause;
+            _pauseAction.Enable();
         }
 
         public override void Hide()
@@ -80,6 +88,21 @@ namespace ColbyO.SJ26
             if (_taskTypingRoutine != null) StopCoroutine(_taskTypingRoutine);
             _taskHolder.SetActive(false);
             _taskText.text = string.Empty;
+        }
+
+        private void HandlePause(InputAction.CallbackContext e)
+        {
+            if (!SJ26GameManager.HasStarted || GameManager.GetMonoSystem<IUIMonoSystem>().GetCurrentViewIs<InspectionView>()) return;
+
+            if (SJ26GameManager.IsPaused)
+            {
+                if (GameManager.GetMonoSystem<IUIMonoSystem>().GetCurrentViewIs<PauseMenuView>()) GameManager.GetMonoSystem<IUIMonoSystem>().GetView<PauseMenuView>().Resume();
+                else GameManager.GetMonoSystem<IUIMonoSystem>().ShowLast();
+            }
+            else
+            {
+                GameManager.GetMonoSystem<IUIMonoSystem>().Show<PauseMenuView>();
+            }
         }
     }
 }

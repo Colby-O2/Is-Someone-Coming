@@ -1,18 +1,15 @@
-using UnityEngine;
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 using PlazmaGames.Core;
 using PlazmaGames.Core.Debugging;
-
 using ColbyO.SJ26.Dialogue;
 using ColbyO.SJ26.GameLogic;
 using ColbyO.SJ26.GPS;
 using ColbyO.SJ26.Map;
 using ColbyO.SJ26.Street;
 using InteractionSystem;
-using PlazmaGames.Audio;
 using Random = UnityEngine.Random;
 
 #if UNITY_EDITOR
@@ -36,7 +33,7 @@ namespace ColbyO.SJ26.Dispatch
     {
         public DispatchEventSO Event { get; }
         public string Address { get; }
-        public float StartTime { get; }
+        public float StartTime { get; private set; }
         public EmergencyCallMarker Marker { get; }
         public string CallId { get; }
         public string LocDescription { get; }
@@ -44,7 +41,6 @@ namespace ColbyO.SJ26.Dispatch
         public float ResolveStartTime { get; private set; }
         public bool Resolving { get; private set; }
         public bool Answered = false;
-
         public bool Cancel = false;
 
         public ActiveDispatchEvent(DispatchEventSO e, string address, EmergencyCallMarker marker, string callId)
@@ -54,8 +50,15 @@ namespace ColbyO.SJ26.Dispatch
             StartTime = Time.time;
             Marker = marker;
             CallId = callId;
-            LocDescription = Event.LocDescriptions[Random.Range(0, Event.LocDescriptions.Count)];
+            LocDescription = (Event.LocDescriptions != null && Event.LocDescriptions.Count > 0)
+                ? Event.LocDescriptions[Random.Range(0, Event.LocDescriptions.Count)]
+                : string.Empty;
             Resolving = false;
+        }
+
+        public void ResetTimer()
+        {
+            StartTime = Time.time;
         }
 
         public float ActiveTime() => Resolving
@@ -64,7 +67,7 @@ namespace ColbyO.SJ26.Dispatch
 
         public float TimeLeft() => Event.TimeToRespond - ActiveTime();
 
-        public bool IsFailed() => !IsResolving() && TimeLeft() < 0;
+        public bool IsFailed() => !IsResolving() && TimeLeft() < 0f;
 
         public bool IsResolving() => Resolving;
 
@@ -153,11 +156,18 @@ namespace ColbyO.SJ26.Dispatch
                 SpawnInitialUnits();
             }
 
-            Transform phone = GameObject.FindWithTag("Phone").transform;
-            _phone = phone.GetComponent<Interactable>().GetAction<PhoneAction>();
-            _phone.IsEnabled = false;
-            _phoneRinger = phone.GetComponent<AudioSource>();
-            _phoneRinger.Pause();
+            GameObject phoneObj = GameObject.FindWithTag("Phone");
+            if (phoneObj != null)
+            {
+                if (phoneObj.TryGetComponent<Interactable>(out var interactable))
+                {
+                    _phone = interactable.GetAction<PhoneAction>();
+                    if (_phone != null) _phone.IsEnabled = false;
+                }
+
+                _phoneRinger = phoneObj.GetComponent<AudioSource>();
+                if (_phoneRinger != null) _phoneRinger.Pause();
+            }
         }
 
         private void Update()
@@ -204,7 +214,8 @@ namespace ColbyO.SJ26.Dispatch
 
         private void UpdateCallTimer()
         {
-            if (!_takingCalls) return;
+            if (!_takingCalls || _stagedEvent != null || _inCall) return;
+            if (DialogueSystem != null && DialogueSystem.IsPlayingDialogue()) return;
 
             _newCallCountDown -= Time.deltaTime;
             if (_newCallCountDown <= 0f)
@@ -213,7 +224,6 @@ namespace ColbyO.SJ26.Dispatch
                 StartCall();
             }
         }
-        
 
         private ActiveDispatchEvent CreateActiveDispatchEvent(DispatchEventSO e)
         {
@@ -246,35 +256,40 @@ namespace ColbyO.SJ26.Dispatch
 
             EmergencyCallMarker marker = markerGO.AddComponent<EmergencyCallMarker>();
             marker.InitializeCall(_testCall, callId, address);
-            StartCoroutine(Utils.DisableNextFrame(marker.gameObject));
+
+            marker.gameObject.SetActive(false);
 
             return new ActiveDispatchEvent(e, address, marker, callId);
         }
 
         public void StartEvent(ActiveDispatchEvent e)
         {
-            Debug.Log("START EVENT");
+            Debug.Log($"START EVENT: {e?.CallId} at {e?.Address}");
             if (e?.Marker == null) return;
 
-            e.Marker.gameObject.SetActive(true);
             if (e.Cancel || e.Event.TotalUnits() == 0)
             {
-            Debug.Log("CANCEL");
-                if (e.Marker.gameObject) GameObject.Destroy(e.Marker.gameObject);
+                Debug.Log("CANCEL OR 0 UNITS REQUIRED");
+                if (e.Marker.gameObject != null) Destroy(e.Marker.gameObject);
+                return;
             }
-            else if (e.IsFailed())
+
+            e.Marker.gameObject.SetActive(true);
+            e.Marker.SetupIcon();
+
+            if (e.IsFailed())
             {
-            Debug.Log("FAILED");
+                Debug.Log("FAILED BEFORE DISPATCH");
                 FailEvent(e);
             }
             else if (e.IsResolved())
             {
-            Debug.Log("RESOVL");
+                Debug.Log("RESOLVED");
                 SuccessEvent(e);
             }
-            else
+            else if (!_events.Contains(e))
             {
-            Debug.Log("ADD");
+                Debug.Log("ADDED TO ACTIVE EVENTS");
                 _events.Add(e);
             }
         }
@@ -313,45 +328,52 @@ namespace ColbyO.SJ26.Dispatch
 
         public void StartCallWith(DispatchEventSO eventSO)
         {
-            //if (_stagedEvent != null || DialogueSystem == null)
-            //{
-            //    _newCallCountDown = 3;
-            //    return;
-            //}
+            if (eventSO == null) return;
 
             if (_stagedEvent != null)
             {
                 _stagedEvent.Cancel = true;
+                if (_stagedEvent.Marker != null)
+                {
+                    Destroy(_stagedEvent.Marker.gameObject);
+                }
             }
 
             ActiveDispatchEvent activeEvent = CreateActiveDispatchEvent(eventSO);
             _stagedEvent = activeEvent;
             if (_stagedEvent == null) return;
-            
+
             Promise.Any(
-                SJ26GameManager.GlobalScheduler.When(() => _stagedEvent == null || activeEvent == null || activeEvent.Cancel),
-                SJ26GameManager.GlobalScheduler.When(() => activeEvent?.IsFailed() == true)
+                SJ26GameManager.GlobalScheduler.When(() => _stagedEvent != activeEvent || activeEvent.Cancel),
+                SJ26GameManager.GlobalScheduler.When(() => activeEvent.IsFailed())
             ).Then(_ =>
             {
-                if (activeEvent.Answered) return;
-                if (activeEvent == null) return;
+                if (activeEvent == null || activeEvent.Answered) return;
+
                 if (activeEvent.Cancel)
                 {
-                    if (activeEvent.Marker) GameObject.Destroy(activeEvent.Marker.gameObject);
+                    if (activeEvent.Marker != null) Destroy(activeEvent.Marker.gameObject);
                     return;
                 }
-                _phone.IsEnabled = false;
-                _phoneRinger.Pause();
+
+                if (_stagedEvent == activeEvent)
+                {
+                    _stagedEvent = null;
+                }
+
+                if (_phone != null) _phone.IsEnabled = false;
+                if (_phoneRinger != null) _phoneRinger.Pause();
+
                 StartEvent(activeEvent);
-                activeEvent = null;
-                if (!DialogueSystem.IsPlayingDialogue())
+
+                if (DialogueSystem != null && !DialogueSystem.IsPlayingDialogue())
                 {
                     DialogueSystem.StartDialoguePromise("CallEnded", true);
                 }
             });
 
-            _phone.IsEnabled = true;
-            _phoneRinger.UnPause();
+            if (_phone != null) _phone.IsEnabled = true;
+            if (_phoneRinger != null) _phoneRinger.UnPause();
         }
 
         public void MakeFailActiveEvents()
@@ -369,7 +391,10 @@ namespace ColbyO.SJ26.Dispatch
             {
                 ActiveDispatchEvent e = _events[i];
                 e.Cancel = true;
-                if (e.Marker.gameObject) GameObject.Destroy(e.Marker.gameObject);
+                if (e.Marker != null && e.Marker.gameObject != null)
+                {
+                    Destroy(e.Marker.gameObject);
+                }
                 _events.RemoveAt(i);
             }
         }
@@ -381,12 +406,12 @@ namespace ColbyO.SJ26.Dispatch
 
         private void StartCall()
         {
-            if (_stagedEvent != null || DialogueSystem == null)
+            if (_stagedEvent != null || _inCall || DialogueSystem == null || DialogueSystem.IsPlayingDialogue())
             {
-                _newCallCountDown = 3;
+                _newCallCountDown = 3f;
                 return;
             }
-            
+
             DispatchEventSO eventSO = RandomDispatchEvent();
             if (eventSO == null) return;
             StartCallWith(eventSO);
@@ -609,7 +634,7 @@ namespace ColbyO.SJ26.Dispatch
                     DialogueSystem?.StartDialoguePromise(dialogue, true);
                 }
 
-                if (marker.gameObject) GameObject.Destroy(marker.gameObject);
+                if (marker.gameObject != null) Destroy(marker.gameObject);
             }
             else if (_selectedFieldUnit != null)
             {
@@ -632,14 +657,16 @@ namespace ColbyO.SJ26.Dispatch
 
         public void AnswerPhone()
         {
-            if (DialogueSystem == null || DialogueSystem.IsPlayingDialogue()) return;
-            _phone.IsEnabled = false;
-            _phoneRinger.Pause();
+            if (_stagedEvent == null || DialogueSystem == null || DialogueSystem.IsPlayingDialogue()) return;
+
+            if (_phone != null) _phone.IsEnabled = false;
+            if (_phoneRinger != null) _phoneRinger.Pause();
 
             ActiveDispatchEvent activeEvent = _stagedEvent;
             _stagedEvent = null;
 
             activeEvent.Answered = true;
+            activeEvent.ResetTimer();
 
             SetDialogueContext(activeEvent);
             _inCall = true;
@@ -667,33 +694,30 @@ namespace ColbyO.SJ26.Dispatch
                     }
                 }
             });
-                
 
             Promise.Any(
-                SJ26GameManager.GlobalScheduler
-                    .When(() => DialogueSystem.GetFlag("StartDispatching")),
-                SJ26GameManager.GlobalScheduler
-                    .When(() => _inCall == false)
+                SJ26GameManager.GlobalScheduler.When(() => DialogueSystem.GetFlag("StartDispatching")),
+                SJ26GameManager.GlobalScheduler.When(() => _inCall == false)
             ).Then(_ => StartEvent(activeEvent));
         }
 
         public void HideAllUnits()
         {
-            foreach (var ecm in GameObject.FindObjectsByType<EmergencyCallMarker>())
+            foreach (var ecm in FindObjectsByType<EmergencyCallMarker>(FindObjectsSortMode.None))
             {
-                if (ecm.gameObject) GameObject.Destroy(ecm.gameObject);
+                if (ecm != null && ecm.gameObject != null) Destroy(ecm.gameObject);
             }
             foreach (FieldUnit unit in _registeredUnits)
             {
-                unit.gameObject.SetActive(false);
+                if (unit != null) unit.gameObject.SetActive(false);
             }
         }
-        
+
         public void UnHideAllUnits()
         {
             foreach (FieldUnit unit in _registeredUnits)
             {
-                unit.gameObject.SetActive(true);
+                if (unit != null) unit.gameObject.SetActive(true);
             }
         }
     }

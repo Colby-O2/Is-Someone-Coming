@@ -137,7 +137,7 @@ MonoBehaviour:
     m_Value: 0.1
   NoiseFade:
     m_OverrideState: 1
-    m_Value: 0.264
+    m_Value: 0.4
   EnableVhs:
     m_OverrideState: 1
     m_Value: 1
