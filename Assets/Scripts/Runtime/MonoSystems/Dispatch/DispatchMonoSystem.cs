@@ -725,6 +725,11 @@ namespace ColbyO.SJ26.Dispatch
                 if (unit != null) unit.gameObject.SetActive(true);
             }
         }
+
+        public ActiveDispatchEvent InCall()
+        {
+            return _inCall;
+        }
     }
 
 #if UNITY_EDITOR

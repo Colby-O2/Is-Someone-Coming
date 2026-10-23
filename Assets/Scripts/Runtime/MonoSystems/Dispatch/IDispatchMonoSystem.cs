@@ -23,5 +23,6 @@ namespace ColbyO.SJ26.Dispatch
         void MakeFailActiveEvents();
         void RemoveAllEvents();
         bool PhoneIsRinging();
+        ActiveDispatchEvent InCall();
     }
 }

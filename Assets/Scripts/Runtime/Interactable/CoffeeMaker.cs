@@ -9,6 +9,7 @@ namespace ColbyO.SJ26
     {
         [SerializeField] private Transform _mugSpot;
         [SerializeField] private GameObject _drip;
+        [SerializeField] private AudioSource _dripSound;
 
         private void Awake()
         {
@@ -25,6 +26,7 @@ namespace ColbyO.SJ26
             mug.transform.position = _mugSpot.position;
             mug.IsBrewing = true;
             _drip.SetActive(true);
+            _dripSound.Play();
             SJ26GameManager.GlobalScheduler.Every(0, () =>
             {
                 mug.transform.position = _mugSpot.position;

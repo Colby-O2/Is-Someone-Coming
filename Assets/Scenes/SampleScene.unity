@@ -3071,6 +3071,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpookAtDesk
       objectReference: {fileID: 0}
+    - target: {fileID: 8040414941732729504, guid: de269797b97f22b75a6ce57610d6253d, type: 3}
+      propertyPath: m_TagString
+      value: Location
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -14234,7 +14238,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.010437012}
+  m_AnchoredPosition: {x: 0, y: -0.010498047}
   m_SizeDelta: {x: 0, y: 17.979}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1088593968
@@ -21075,15 +21079,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5372290939580680493, guid: de269797b97f22b75a6ce57610d6253d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.756
+      value: -4.771
       objectReference: {fileID: 0}
     - target: {fileID: 5372290939580680493, guid: de269797b97f22b75a6ce57610d6253d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.989
+      value: 0.788
       objectReference: {fileID: 0}
     - target: {fileID: 5372290939580680493, guid: de269797b97f22b75a6ce57610d6253d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 9.474
+      value: 9.729
       objectReference: {fileID: 0}
     - target: {fileID: 5372290939580680493, guid: de269797b97f22b75a6ce57610d6253d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
