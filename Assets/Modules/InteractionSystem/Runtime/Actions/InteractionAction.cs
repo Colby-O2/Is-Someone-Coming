@@ -1,3 +1,4 @@
+using PlasticPipe.PlasticProtocol.Messages;
 using UnityEngine;
 
 namespace InteractionSystem.Actions
@@ -17,6 +18,8 @@ namespace InteractionSystem.Actions
             this._owner = owner;
             IsEnabled = true;
         }
+
+        public Interactable GetOwner() => _owner;
 
         public virtual bool CanExecute() => IsEnabled;
         public abstract void Execute(InteractorController interactor);

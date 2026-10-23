@@ -16,13 +16,292 @@ MonoBehaviour:
   includeInDatabase: 1
   Name: FirstMeetingWithCoworker
   Nodes:
+  - Guid: 09da9afc-0202-4b15-94c1-a49b88e91d6c
+    ActorName: Deve
+    GroupName: 
+    Type: 1
+    Text: Want me to give you a quick rundown of the job?
+    EventID: 
+    position: {x: 1083, y: -90}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 67dd778c-7efa-443e-b2c8-ecfea2c9ab41
+  - Guid: 67dd778c-7efa-443e-b2c8-ecfea2c9ab41
+    ActorName: 
+    GroupName: 
+    Type: 2
+    Text: 
+    EventID: 
+    position: {x: 1462, y: -114}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: Yes
+      Next: 4565c7fe-e6bb-4f22-b479-20b8ca35a011
+    - Text: I'm good
+      Next: 15f47a88-0780-4cbc-9530-f78af209e758
+  - Guid: 4565c7fe-e6bb-4f22-b479-20b8ca35a011
+    ActorName: David
+    GroupName: 
+    Type: 1
+    Text: Being a dispatcher is pretty simple, really. Just wait for the calls to come in and answer the phone.
+    EventID: 
+    position: {x: 1798, y: -277}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 8d7e7d6a-2ae0-425e-8c12-ea8ba1099def
+  - Guid: 8d7e7d6a-2ae0-425e-8c12-ea8ba1099def
+    ActorName: David
+    GroupName: 
+    Type: 1
+    Text: Try to get the caller's address and as much information as you can about the situation. Then, assign the appropriate units to the call.
+    EventID: 
+    position: {x: 2135, y: -445}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: d5afe3e7-8e00-47dc-90a6-86c26625396b
+  - Guid: d5afe3e7-8e00-47dc-90a6-86c26625396b
+    ActorName: David
+    GroupName: 
+    Type: 1
+    Text: Remember, police handle crimes, EMS handles medical emergencies, and fire... well, I think you can figure that one out. Rescue squad handles traffic accidents and other technical rescues.
+    EventID: 
+    position: {x: 2496, y: -446}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 72be6a0c-824a-4760-8740-e4447016fa87
+  - Guid: 72be6a0c-824a-4760-8740-e4447016fa87
+    ActorName: David
+    GroupName: 
+    Type: 1
+    Text: ' Pretty straightforward, right? Just try not to send the fire department to a cat stuck in a tree. '
+    EventID: 
+    position: {x: 2860, y: -448}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: d4d172f4-ec8a-4d69-9a12-008c200e41fe
+  - Guid: d4d172f4-ec8a-4d69-9a12-008c200e41fe
+    ActorName: David
+    GroupName: 
+    Type: 1
+    Text: Actually, no, they probably get those calls too.
+    EventID: 
+    position: {x: 3220, y: -446}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: c0ff4461-9439-4b4b-a7be-0c70f1de5d0c
+  - Guid: c0ff4461-9439-4b4b-a7be-0c70f1de5d0c
+    ActorName: 
+    GroupName: 
+    Type: 5
+    Text: 
+    EventID: 
+    position: {x: 3533, y: -470}
+    PropertyType: Int
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: Tutorial_Repeat
+    IncrementAmount: 1
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 2265e78e-4dfb-46b5-a0be-1fdbe82ee730
+  - Guid: 2265e78e-4dfb-46b5-a0be-1fdbe82ee730
+    ActorName: 
+    GroupName: 
+    Type: 2
+    Text: 
+    EventID: 
+    position: {x: 3794, y: -282}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: Sound good!
+      Next: 15f47a88-0780-4cbc-9530-f78af209e758
+    - Text: Can you repeat?
+      Next: 3b3b9578-d78d-4328-a4e9-6112a7f2924f
+  - Guid: 3b3b9578-d78d-4328-a4e9-6112a7f2924f
+    ActorName: 
+    GroupName: 
+    Type: 6
+    Text: 
+    EventID: 
+    position: {x: 4171, y: -119}
+    PropertyType: Int
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: Tutorial_Repeat
+    IncrementAmount: 0
+    ComparisonType: 2
+    ComparsionCondition: 1
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: a717a60d-5736-4b58-ac6c-2d8a895c1d62
+    - Text: 
+      Next: b478c921-91eb-48cd-9a26-64dd105b5788
+  - Guid: b478c921-91eb-48cd-9a26-64dd105b5788
+    ActorName: David
+    GroupName: 
+    Type: 1
+    Text: Bruh, I've got shit to do, man. I'm sure you'll figure it out.
+    EventID: 
+    position: {x: 4483, y: -40}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 15f47a88-0780-4cbc-9530-f78af209e758
+  - Guid: 15f47a88-0780-4cbc-9530-f78af209e758
+    ActorName: David
+    GroupName: 
+    Type: 1
+    Text: Alright, I'll leave you to it, then. Good luck on your first shift!
+    EventID: 
+    position: {x: 4865, y: 20}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 
+  - Guid: a717a60d-5736-4b58-ac6c-2d8a895c1d62
+    ActorName: David
+    GroupName: 
+    Type: 1
+    Text: Sure, no problem!
+    EventID: 
+    position: {x: 4472, y: -364}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 4565c7fe-e6bb-4f22-b479-20b8ca35a011
   - Guid: e91c79ae-d0d1-4b45-bcf2-87e470907b0b
     ActorName: 
     GroupName: 
     Type: 0
     Text: 
     EventID: 
-    position: {x: 0, y: 0}
+    position: {x: -319, y: -6}
     PropertyType: 
     PropertyBooleanValue: 0
     PropertyIntValue: 0
@@ -41,9 +320,9 @@ MonoBehaviour:
     ActorName: Deve
     GroupName: 
     Type: 1
-    Text: Hello my friend!
+    Text: Hey, you're the new guy, right? Name's Dave.
     EventID: 
-    position: {x: 282, y: -36}
+    position: {x: -37, y: -42}
     PropertyType: 
     PropertyBooleanValue: 0
     PropertyIntValue: 0
@@ -57,6 +336,55 @@ MonoBehaviour:
     Duration: 0
     Choices:
     - Text: 
-      Next: 
+      Next: 8cf92f75-4550-4f77-a09c-783d1a133891
+  - Guid: 075a1d9b-e8a2-42c1-9e7d-a88c6915ada2
+    ActorName: Deve
+    GroupName: 
+    Type: 1
+    Text: Nah, you're good! Boss man already filled me in.
+    EventID: 
+    position: {x: 754, y: 154}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 09da9afc-0202-4b15-94c1-a49b88e91d6c
+  - Guid: 8cf92f75-4550-4f77-a09c-783d1a133891
+    ActorName: 
+    GroupName: 
+    Type: 2
+    Text: 
+    EventID: 
+    position: {x: 380, y: -87}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: Nice to meet you, Dave.
+      Next: 09da9afc-0202-4b15-94c1-a49b88e91d6c
+    - Text: That obvious, huh?
+      Next: 075a1d9b-e8a2-42c1-9e7d-a88c6915ada2
   Groups: []
-  Properties: []
+  Properties:
+  - Name: Tutorial_Repeat
+    Type: Int
+    BooleanValue: 0
+    IntValue: 0
+    StringValue: 

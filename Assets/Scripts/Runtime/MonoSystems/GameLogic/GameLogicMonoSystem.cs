@@ -40,6 +40,7 @@ namespace ColbyO.SJ26.GameLogic
             /*Act 1*/
             public static Elevator Elevator;
             public static SitAction PlayerSeat;
+            public static Interactable Radio;
 
             /* Act 3 */
             public static Interactable FlashlightPickup;
@@ -80,6 +81,9 @@ namespace ColbyO.SJ26.GameLogic
             Refs.Door1 = GameObject.FindWithTag("Door1").GetComponent<Interactable>().GetAction<DoorAction>();
             Refs.Door2 = GameObject.FindWithTag("Door2").GetComponent<Interactable>().GetAction<DoorAction>();
             Refs.Door3 = GameObject.FindWithTag("Door3").GetComponent<Interactable>().GetAction<DoorAction>();
+            Refs.Radio = GameObject.FindWithTag("Radio").GetComponent<Interactable>();
+
+            Refs.Radio.GetAction<RadioAction>().IsEnabled = false;
 
             Refs.Elevator = FindAnyObjectByType<Elevator>();
             Refs.PlayerSeat = GameObject.FindWithTag("PlayerSeat").GetComponent<Interactable>().GetAction<SitAction>();
@@ -98,6 +102,7 @@ namespace ColbyO.SJ26.GameLogic
 
 
             Refs.DispatchMonitor = GameObject.FindWithTag("DispatchMonitor").GetComponent<Interactable>().GetAction<UseDispatchViewAction>();
+            Refs.DispatchMonitor.ReallyCanInteract = false;
         }
 
         private void OnSceneLoad(Scene scene, LoadSceneMode mode)
@@ -143,6 +148,7 @@ namespace ColbyO.SJ26.GameLogic
                     })
                     .Then(_ =>
                     {
+                        SJ26GameManager.PlayerSit.CanUnSit = false;
                         _taskMonoSystem.EndTask();
                     })
                     .Then(_ => _actorMonoSystem.SendActorTo("Coworker", "Loc_PlayersOffice", 2f))
@@ -160,6 +166,19 @@ namespace ColbyO.SJ26.GameLogic
                         SJ26GameManager.PlayerSit.RestoreHeadLook();
                         SJ26GameManager.PlayerSit.LockHead = false;
                         _actorMonoSystem.TellActorToSitAt("Coworker", "SitPoint_CoworkerOffice", 1f);
+                    })
+                    .Then(_ => _dialogueMs.StartDialoguePromise("TurnOnRadio", passive: true))
+                    .Then(_ =>
+                    {
+                        _taskMonoSystem.StartTask("Turn On Radio");
+                        return Refs.Radio.GetAction<RadioAction>().WaitForPlay();
+                    })
+                    .Then(_ =>
+                    {
+                        _dispatchMs.StartTheCalls();
+                        _taskMonoSystem.EndTask();
+                        Refs.DispatchMonitor.ReallyCanInteract = true;
+                        Refs.Radio.gameObject.GetComponent<AudioSource>().Play();
                     })
                     .Then(_ => _sch.When(() => GetCounter("CallsCompleted") >= 1))
                     .Then(_ =>
@@ -186,6 +205,10 @@ namespace ColbyO.SJ26.GameLogic
                                     });
                             })
                             .Then(_ => _sch.When(() => _dialogueMs.GetFlag("Spooky1")))
+                            .Then(_ =>
+                            {
+                                Refs.Radio.gameObject.GetComponent<AudioSource>().Pause();
+                            })
                             .Then(_ => _sch.When(() => !_dialogueMs.IsPlayingDialogue()))
                             .Then(_ => _sch.Wait(3))
                             .Then(_ =>
@@ -245,22 +268,31 @@ namespace ColbyO.SJ26.GameLogic
                     })
                     .Then(_ =>
                     {
-                        _actorMonoSystem.SendActorTo("Coworker", "Loc_BreakRoom", 5f);
+                        SJ26GameManager.PlayerSit.CanUnSit = true;
+                        _actorMonoSystem.TellActorToSitAt("Coworker", "SitPoint_CoworkerOffice", 1f);
                     })
                     .Then(_ =>
                     {
+                        Refs.DispatchMonitor.ReallyCanInteract = false;
                         _taskMonoSystem.StartTask("Go get a coffee");
                     })
                     .Then(_ => _sch.When(() => IsInRange("CoffeeBrewed")))
                     .Then(_ =>
                     {
+                        Refs.PlayerSeat.IsEnabled = false;
                         _taskMonoSystem.EndTask();
                         _taskMonoSystem.StartTask("Bring coffee back to desk");
                     })
                     .Then(_ => _sch.When(() => IsInRange("Mug")))
                     .Then(_ =>
                     {
+                        Refs.PlayerSeat.IsEnabled = true;
                         _taskMonoSystem.EndTask();
+                    })
+                    .Then(_ => Refs.PlayerSeat.WaitForSit())
+                    .Then(_ =>
+                    {
+                        Refs.DispatchMonitor.ReallyCanInteract = true;
                         _dispatchMs.StartTheCalls();
                     })
                     .Then(_ => _sch.When(() => GetCounter("CallsCompleted") >= 2))

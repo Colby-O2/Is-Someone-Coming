@@ -40,6 +40,9 @@ namespace ColbyO.SJ26
         [SerializeField, ReadOnly] private bool _isOverridingLook = false;
 
 
+        public bool CanUnSit { get; set; }
+        
+
         private Promise _sitPromise;
         private IInputMonoSystem _input;
 
@@ -49,6 +52,7 @@ namespace ColbyO.SJ26
 
         private void Awake()
         {
+            CanUnSit = true;
             _input = GameManager.GetMonoSystem<IInputMonoSystem>();
             if (!_animation) _animation = GetComponent<AnimationController>();
             if (!_interactor) _interactor = GetComponent<InteractorController>();
@@ -72,7 +76,7 @@ namespace ColbyO.SJ26
                 && _sitUpKey.WasPerformedThisFrame()
             )
             {
-                AttachHead();
+                if (CanUnSit) AttachHead();
             }
 
             if (_detachedHeadState != DetachedHeadState.Attached)

@@ -148,7 +148,7 @@ namespace ColbyO.SJ26.UI
                 _playerCamera.SetActive(true);
 
                 GameManager.GetMonoSystem<ILightMonoSystem>().Mute(false);
-                GameManager.GetMonoSystem<IUIMonoSystem>().Show<GameView>();
+                GameManager.GetMonoSystem<IUIMonoSystem>().Show<GameView>(remeber: false);
                 GameManager.GetMonoSystem<IGameLogicMonoSystem>().TriggerEvent("Act1");
             });
         }

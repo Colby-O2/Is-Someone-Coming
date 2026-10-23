@@ -89,7 +89,7 @@ namespace ColbyO.SJ26.UI
             VirtualCaster.HideCursor();
             SJ26GameManager.IsPaused = false;
             _backdrop.SetActive(false);
-            GameManager.GetMonoSystem<IUIMonoSystem>().ShowLast();
+            GameManager.GetMonoSystem<IUIMonoSystem>().Show<GameView>();
         }
 
         private void Settings()

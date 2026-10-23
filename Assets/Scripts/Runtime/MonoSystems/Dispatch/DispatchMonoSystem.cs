@@ -136,7 +136,7 @@ namespace ColbyO.SJ26.Dispatch
         private IGameLogicMonoSystem _gameLogicSystem;
 
         private FieldUnit _selectedFieldUnit;
-        private bool _takingCalls = true;
+        private bool _takingCalls = false;
         private bool _inCall;
         private float _newCallCountDown = 4f;
 
@@ -166,7 +166,11 @@ namespace ColbyO.SJ26.Dispatch
                 }
 
                 _phoneRinger = phoneObj.GetComponent<AudioSource>();
-                if (_phoneRinger != null) _phoneRinger.Pause();
+                if (_phoneRinger != null)
+                {
+                    _phoneRinger.Play();
+                    _phoneRinger.Pause();
+                }
             }
         }
 

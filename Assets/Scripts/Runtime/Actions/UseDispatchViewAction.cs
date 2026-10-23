@@ -15,12 +15,14 @@ namespace ColbyO.SJ26
 
         private Promise _promise;
 
+        public bool ReallyCanInteract = false;
+
         public Promise WaitForEnter()
         {
             return Promise.CreateExisting(ref _promise);
         }
 
-        public override bool IsEnabled { get => SJ26GameManager.PlayerSit.HasDetachedHead();
+        public override bool IsEnabled { get => ReallyCanInteract && SJ26GameManager.PlayerSit.HasDetachedHead();
             set
         {
             

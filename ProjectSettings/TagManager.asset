@@ -27,6 +27,7 @@ TagManager:
   - FireGirl
   - CallElevator
   - Door4
+  - Radio
   layers:
   - Default
   - TransparentFX
