@@ -91,5 +91,27 @@ namespace ColbyO.SJ26
                 StopHeadMovement();
             }
         }
+
+        public void ForceLookAt(Vector3 targetWorldPos, float lerpSpeed)
+        {
+            if (!_playerBody) _playerBody = transform.parent;
+
+            Vector3 bodyDir = (targetWorldPos.SetY(_playerBody.position.y) - _playerBody.position).normalized;
+            if (bodyDir.sqrMagnitude > 0.001f)
+            {
+                Quaternion targetBodyRot = Quaternion.LookRotation(bodyDir);
+                _playerBody.rotation = Quaternion.Slerp(_playerBody.rotation, targetBodyRot, lerpSpeed * Time.deltaTime);
+                _yaw = _playerBody.localEulerAngles.y;
+            }
+
+            Vector3 headDir = (targetWorldPos - transform.position).normalized;
+            if (headDir.sqrMagnitude > 0.001f)
+            {
+                Quaternion localLookRot = Quaternion.Inverse(_playerBody.rotation) * Quaternion.LookRotation(headDir);
+                float targetPitch = localLookRot.eulerAngles.AngleAs180().x;
+                _pitch = Mathf.Lerp(_pitch, Mathf.Clamp(targetPitch, _settings.YLookLimit.x, _settings.YLookLimit.y), lerpSpeed * Time.deltaTime);
+                transform.localEulerAngles = transform.localEulerAngles.SetX(_pitch);
+            }
+        }
     }
 }

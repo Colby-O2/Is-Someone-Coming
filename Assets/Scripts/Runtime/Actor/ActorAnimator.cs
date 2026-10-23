@@ -31,6 +31,17 @@ namespace ColbyO.SJ26.Entities
         [SerializeField] private float _hipBounce = 0.025f;
         [SerializeField] private float _hipSway = 0.03f;
 
+        [Header("Chase Mode")]
+        [SerializeField] private bool _isChasing = false;
+        [SerializeField] private bool _outstretchArmsOnChase = true;
+        [SerializeField] private float _chaseSpeedMultiplier = 2.6f;
+        [SerializeField] private float _chaseStrideMultiplier = 1.85f;
+        [SerializeField] private float _chaseStepHeightMultiplier = 2.0f;
+        [SerializeField] private float _chaseSwayMultiplier = 2.2f;
+        [SerializeField] private float _chaseHipCrouchOffset = -0.05f;
+        [SerializeField] private Vector3 _chaseArmReachOffset = new Vector3(0f, 0.28f, 0.35f);
+        [SerializeField] private float _chaseClawIntensity = 0.12f;
+
         [Header("Debug")]
         [SerializeField, ReadOnly] private float _timer;
 
@@ -44,6 +55,12 @@ namespace ColbyO.SJ26.Entities
         private Quaternion _rFootStartRot;
 
         private bool _initialized;
+
+        public bool IsChasing
+        {
+            get => _isChasing;
+            set => _isChasing = value;
+        }
 
         public void Init()
         {
@@ -75,10 +92,12 @@ namespace ColbyO.SJ26.Entities
             switch (state)
             {
                 case MoveState.Moving:
-                    Walking(deltaTime);
+                case MoveState.HoldingLightMoving:
+                    Walking(deltaTime, state);
                     break;
                 case MoveState.Idle:
-                    ReturnToRest(deltaTime);
+                case MoveState.HoldingLightIdle:
+                    ReturnToRest(deltaTime, state);
                     break;
                 case MoveState.ChangingState:
                     _timer = 0f;
@@ -86,9 +105,18 @@ namespace ColbyO.SJ26.Entities
             }
         }
 
-        private void Walking(float deltaTime)
+        private void Walking(float deltaTime, MoveState state = MoveState.Moving)
         {
-            _timer += deltaTime * _stepSpeed;
+            float activeStepSpeed = _isChasing ? _stepSpeed * _chaseSpeedMultiplier : _stepSpeed;
+            float activeStepLength = _isChasing ? _stepLength * _chaseStrideMultiplier : _stepLength;
+            float activeStepHeight = _isChasing ? _stepHeight * _chaseStepHeightMultiplier : _stepHeight;
+            float activeWidthSway = _isChasing ? _stepWidthSway * _chaseSwayMultiplier : _stepWidthSway;
+            float activeFootPitch = _isChasing ? _footPitchAmount * 1.6f : _footPitchAmount;
+            float activeHipBounce = _isChasing ? _hipBounce * 2.4f : _hipBounce;
+            float activeHipSway = _isChasing ? _hipSway * 2.0f : _hipSway;
+            float activeSmoothing = _isChasing ? _smoothing * 1.6f : _smoothing;
+
+            _timer += deltaTime * activeStepSpeed;
 
             float lPhase = _timer;
             float rPhase = _timer + Mathf.PI;
@@ -96,74 +124,99 @@ namespace ColbyO.SJ26.Entities
             float lLiftRaw = Mathf.Max(0f, Mathf.Sin(lPhase));
             float rLiftRaw = Mathf.Max(0f, Mathf.Sin(rPhase));
 
-            float lFootLift = Mathf.Pow(lLiftRaw, 1.3f) * _stepHeight;
-            float rFootLift = Mathf.Pow(rLiftRaw, 1.3f) * _stepHeight;
+            float liftPow = _isChasing ? 1.1f : 1.3f;
+            float lFootLift = Mathf.Pow(lLiftRaw, liftPow) * activeStepHeight;
+            float rFootLift = Mathf.Pow(rLiftRaw, liftPow) * activeStepHeight;
 
-            float lStride = -Mathf.Cos(lPhase) * _stepLength;
-            float rStride = -Mathf.Cos(rPhase) * _stepLength;
+            float lStride = -Mathf.Cos(lPhase) * activeStepLength;
+            float rStride = -Mathf.Cos(rPhase) * activeStepLength;
 
-            float lateralSway = Mathf.Sin(lPhase) * _stepWidthSway;
+            float lateralSway = Mathf.Sin(lPhase) * activeWidthSway;
 
             Vector3 leftFootTarget = _lFootStartPos + new Vector3(lateralSway, 0f, lStride);
             Vector3 rightFootTarget = _rFootStartPos + new Vector3(lateralSway, 0f, rStride);
 
-            float lPitch = Mathf.Sin(lPhase) * _footPitchAmount * lLiftRaw;
-            float rPitch = Mathf.Sin(rPhase) * _footPitchAmount * rLiftRaw;
+            float lPitch = Mathf.Sin(lPhase) * activeFootPitch * lLiftRaw;
+            float rPitch = Mathf.Sin(rPhase) * activeFootPitch * rLiftRaw;
 
-            SetFootPosition(_lFoot, leftFootTarget, _lFootStartRot, lFootLift, lPitch, deltaTime);
-            SetFootPosition(_rFoot, rightFootTarget, _rFootStartRot, rFootLift, rPitch, deltaTime);
+            SetFootPosition(_lFoot, leftFootTarget, _lFootStartRot, lFootLift, lPitch, activeStepHeight, activeSmoothing, deltaTime);
+            SetFootPosition(_rFoot, rightFootTarget, _rFootStartRot, rFootLift, rPitch, activeStepHeight, activeSmoothing, deltaTime);
 
-            float lArmForward = Mathf.Cos(lPhase) * _armSwingAmount;
-            float rArmForward = Mathf.Cos(rPhase) * _armSwingAmount;
+            Vector3 leftHandTarget;
+            Vector3 rightHandTarget;
 
-            float lArmLift = (1f - Mathf.Sin(lPhase)) * 0.5f * _armSwingHeight;
-            float rArmLift = (1f - Mathf.Sin(rPhase)) * 0.5f * _armSwingHeight;
+            if (_isChasing && _outstretchArmsOnChase)
+            {
+                leftHandTarget = _lHandStartPos + _chaseArmReachOffset + new Vector3(
+                    Mathf.Sin(lPhase * 1.3f) * (_chaseClawIntensity * 0.5f),
+                    Mathf.Sin(lPhase) * _chaseClawIntensity,
+                    Mathf.Cos(lPhase) * _chaseClawIntensity
+                );
 
-            Vector3 leftHandTarget = _lHandStartPos + new Vector3(
-                Mathf.Max(0f, lArmForward) * _armCrossBody,
-                lArmLift,
-                lArmForward
-            );
-            Vector3 rightHandTarget = _rHandStartPos + new Vector3(
-                -Mathf.Max(0f, rArmForward) * _armCrossBody,
-                rArmLift,
-                rArmForward
-            );
+                rightHandTarget = _rHandStartPos + _chaseArmReachOffset + new Vector3(
+                    -Mathf.Sin(rPhase * 1.3f) * (_chaseClawIntensity * 0.5f),
+                    Mathf.Sin(rPhase) * _chaseClawIntensity,
+                    Mathf.Cos(rPhase) * _chaseClawIntensity
+                );
+            }
+            else
+            {
+                float armSwingMul = _isChasing ? 1.8f : 1f;
+                float armHeightMul = _isChasing ? 2.5f : 1f;
 
-            float lerpFactor = 1f - Mathf.Exp(-_smoothing * deltaTime);
+                float lArmForward = Mathf.Cos(lPhase) * (_armSwingAmount * armSwingMul);
+                float rArmForward = Mathf.Cos(rPhase) * (_armSwingAmount * armSwingMul);
+
+                float lArmLift = (1f - Mathf.Sin(lPhase)) * 0.5f * (_armSwingHeight * armHeightMul);
+                float rArmLift = (1f - Mathf.Sin(rPhase)) * 0.5f * (_armSwingHeight * armHeightMul);
+
+                leftHandTarget = _lHandStartPos + new Vector3(
+                    Mathf.Max(0f, lArmForward) * _armCrossBody,
+                    lArmLift,
+                    lArmForward
+                );
+                rightHandTarget = _rHandStartPos + new Vector3(
+                    -Mathf.Max(0f, rArmForward) * _armCrossBody,
+                    rArmLift,
+                    rArmForward
+                );
+            }
+
+            float lerpFactor = 1f - Mathf.Exp(-activeSmoothing * deltaTime);
 
             if (_lHand) _lHand.localPosition = Vector3.Lerp(_lHand.localPosition, leftHandTarget, lerpFactor);
-            if (_rHand) _rHand.localPosition = Vector3.Lerp(_rHand.localPosition, rightHandTarget, lerpFactor);
+            if (_rHand && state != MoveState.HoldingLightMoving) _rHand.localPosition = Vector3.Lerp(_rHand.localPosition, rightHandTarget, lerpFactor);
 
             if (_pelvis)
             {
+                float crouchOffset = _isChasing ? _chaseHipCrouchOffset : 0f;
                 Vector3 pelvisOffset = new Vector3(
-                    -Mathf.Cos(lPhase) * _hipSway,
-                    Mathf.Abs(Mathf.Sin(lPhase)) * _hipBounce,
+                    -Mathf.Cos(lPhase) * activeHipSway,
+                    crouchOffset + (Mathf.Abs(Mathf.Sin(lPhase)) * activeHipBounce),
                     0f
                 );
                 _pelvis.localPosition = Vector3.Lerp(_pelvis.localPosition, _pelvisStartPos + pelvisOffset, lerpFactor);
             }
         }
 
-        private void ReturnToRest(float deltaTime)
+        private void ReturnToRest(float deltaTime, MoveState state = MoveState.Moving)
         {
             _timer = 0f;
             float lerpFactor = 1f - Mathf.Exp(-_smoothing * deltaTime);
 
-            SetFootPosition(_lFoot, _lFootStartPos, _lFootStartRot, 0f, 0f, deltaTime);
-            SetFootPosition(_rFoot, _rFootStartPos, _rFootStartRot, 0f, 0f, deltaTime);
+            SetFootPosition(_lFoot, _lFootStartPos, _lFootStartRot, 0f, 0f, _stepHeight, _smoothing, deltaTime);
+            SetFootPosition(_rFoot, _rFootStartPos, _rFootStartRot, 0f, 0f, _stepHeight, _smoothing, deltaTime);
 
             if (_lHand) _lHand.localPosition = Vector3.Lerp(_lHand.localPosition, _lHandStartPos, lerpFactor);
-            if (_rHand) _rHand.localPosition = Vector3.Lerp(_rHand.localPosition, _rHandStartPos, lerpFactor);
+            if (_rHand && state != MoveState.HoldingLightIdle) _rHand.localPosition = Vector3.Lerp(_rHand.localPosition, _rHandStartPos, lerpFactor);
             if (_pelvis) _pelvis.localPosition = Vector3.Lerp(_pelvis.localPosition, _pelvisStartPos, lerpFactor);
         }
 
-        private void SetFootPosition(Transform footTransform, Vector3 localTargetPos, Quaternion startLocalRot, float stepLift, float pitchAngle, float deltaTime)
+        private void SetFootPosition(Transform footTransform, Vector3 localTargetPos, Quaternion startLocalRot, float stepLift, float pitchAngle, float currentMaxStepHeight, float currentSmoothing, float deltaTime)
         {
             if (!footTransform) return;
 
-            float lerpFactor = 1f - Mathf.Exp(-_smoothing * deltaTime);
+            float lerpFactor = 1f - Mathf.Exp(-currentSmoothing * deltaTime);
 
             Vector3 worldTarget = footTransform.parent.TransformPoint(localTargetPos);
             Vector3 rayStart = worldTarget + Vector3.up * _footRaycastHeight;
@@ -174,7 +227,7 @@ namespace ColbyO.SJ26.Entities
                 worldTarget.y = hit.point.y + _footGroundOffset + stepLift;
 
                 Quaternion slopeRot = Quaternion.FromToRotation(footTransform.parent.up, hit.normal) * startLocalRot;
-                float groundWeight = Mathf.Clamp01(1f - (stepLift / Mathf.Max(0.001f, _stepHeight)));
+                float groundWeight = Mathf.Clamp01(1f - (stepLift / Mathf.Max(0.001f, currentMaxStepHeight)));
                 targetLocalRot = Quaternion.Slerp(targetLocalRot, slopeRot * Quaternion.Euler(pitchAngle, 0f, 0f), groundWeight);
             }
             else

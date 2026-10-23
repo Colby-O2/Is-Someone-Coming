@@ -23,6 +23,7 @@ namespace ColbyO.SJ26
         private readonly float GROUNDED_VEL = -2f;
 
         [SerializeField] private MovementSettings _settings;
+        [SerializeField] private GameObject _flashlight;
 
         [Header("Debug")]
         [SerializeField, ReadOnly] private MovementState _state;
@@ -49,6 +50,8 @@ namespace ColbyO.SJ26
             _viewController = GetComponentInChildren<ViewController>();
             _sitController = GetComponentInParent<SitController>();
             _input = GameManager.GetMonoSystem<IInputMonoSystem>();
+
+            DisableFlashlight();
         }
 
         private void Update()
@@ -121,6 +124,14 @@ namespace ColbyO.SJ26
             _controller.enabled = prev;
         }
 
+        public void MoveTo(Vector3 d)
+        {
+            bool prev = _controller.enabled;
+            _controller.enabled = false;
+            transform.position = d;
+            _controller.enabled = prev;
+        }
+
         public void MoveToY(float y)
         {
             bool prev = _controller.enabled;
@@ -137,6 +148,16 @@ namespace ColbyO.SJ26
         public void Unfreeze()
         {
             SJ26GameManager.LockMovement = false;
+        }
+
+        public void EnableFlashlight()
+        {
+            _flashlight.SetActive(true);
+        }
+
+        public void DisableFlashlight()
+        {
+            _flashlight.SetActive(false);
         }
     }
 }

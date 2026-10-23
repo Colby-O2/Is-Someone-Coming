@@ -37,6 +37,8 @@ namespace ColbyO.SJ26
         private IPoseMonoSystem _poseSystem;
         private bool _wasInited = false;
 
+        public  bool HoldingLight { get; set; }
+
         private void Awake()
         {
             _defautHeadRot = _headIK.localRotation;
@@ -64,11 +66,11 @@ namespace ColbyO.SJ26
 
             if (_vel.SpeedInPlane > 0.01f)
             {
-                LerpPose(MoveState.Moving);
+                LerpPose(HoldingLight ? MoveState.HoldingLightMoving : MoveState.Moving);
             }
             else
             {
-                LerpPose(MoveState.Idle);
+                LerpPose(HoldingLight ? MoveState.HoldingLightIdle: MoveState.Idle);
             }
 
             _animation.UpdateAnimator(_state, Time.deltaTime);
@@ -144,7 +146,7 @@ namespace ColbyO.SJ26
             .Then(_ =>
             {
                 _state = state;
-                if (!_wasInited && state == MoveState.Moving)
+                if (!_wasInited && (state == MoveState.Moving || state == MoveState.Idle))
                 {
                     _animation.Init();
                     _wasInited = true;

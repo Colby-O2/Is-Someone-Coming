@@ -1,0 +1,127 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dde6bf8a896c98c48b27db112dac91a0, type: 3}
+  m_Name: CryingGirlEncounter
+  m_EditorClassIdentifier: DialogueGraph::DialogueGraph.Data.DialogueGraphSO
+  id: -1
+  includeInDatabase: 1
+  Name: CryingGirlEncounter
+  Nodes:
+  - Guid: 629719a0-19a9-4012-9357-08bc6b4c6223
+    ActorName: 
+    GroupName: 
+    Type: 0
+    Text: 
+    EventID: 
+    position: {x: 0, y: 0}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 9610d854-a461-4358-87a1-590d93cea665
+  - Guid: 9610d854-a461-4358-87a1-590d93cea665
+    ActorName: Little Girl
+    GroupName: 
+    Type: 1
+    Text: Is anyone comeing?
+    EventID: 
+    position: {x: 328, y: 1}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 51912ede-d790-4551-b1b9-b2a16c2c7b77
+  - Guid: 51912ede-d790-4551-b1b9-b2a16c2c7b77
+    ActorName: 
+    GroupName: 
+    Type: 2
+    Text: 
+    EventID: 
+    position: {x: 715, y: -21}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: ...
+      Next: 3085a053-efd1-41e9-8e78-1e872161276b
+    - Text: Yes...
+      Next: af18b04b-7444-4da9-bec0-9c2929b873a0
+  - Guid: af18b04b-7444-4da9-bec0-9c2929b873a0
+    ActorName: Little Girl
+    GroupName: 
+    Type: 1
+    Text: Liar
+    EventID: 
+    position: {x: 1055, y: 170}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 3085a053-efd1-41e9-8e78-1e872161276b
+  - Guid: 3085a053-efd1-41e9-8e78-1e872161276b
+    ActorName: Little Girl
+    GroupName: 
+    Type: 1
+    Text: No one's coming.
+    EventID: 
+    position: {x: 1385, y: -19}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 
+  Groups: []
+  Properties: []

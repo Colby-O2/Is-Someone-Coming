@@ -64,6 +64,8 @@ namespace ColbyO.SJ26
             if (_taskTypingRoutine != null) StopCoroutine(_taskTypingRoutine);
             _taskText.text = string.Empty;
 
+            if (this == null) return;
+
             _taskTypingRoutine = StartCoroutine(WriteText(taskDesp, _typeSpeed));
         }
 

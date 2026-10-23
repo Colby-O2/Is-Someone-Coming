@@ -6,11 +6,13 @@ using System.Collections.Generic;
 using PlazmaGames.Core;
 using PlazmaGames.Core.Debugging;
 
+using InteractionSystem;
+
 using ColbyO.SJ26.Dialogue;
 using ColbyO.Sj26.Effects;
 using ColbyO.SJ26.Task;
 using ColbyO.SJ26.Entities;
-using InteractionSystem;
+using ColbyO.SJ26.Enviroment;
 
 namespace ColbyO.SJ26.GameLogic
 {
@@ -26,12 +28,18 @@ namespace ColbyO.SJ26.GameLogic
         private IVisualEffectMonoSystem _visualEffectMs;
         private ITaskMonoSystem _taskMonoSystem;
         private IActorMonoSystem _actorMonoSystem;
+        private ILightMonoSystem _lightMs;
 
         private static class Refs
         {
             /*Act 1*/
             public static Elevator Elevator;
             public static SitAction PlayerSeat;
+
+            /* Act 3 */
+            public static Interactable FlashlightPickup;
+            public static CryingGirlEncounter CryingGirlEncounter;
+            public static Transform PlayerChaseStart; 
         }
 
         private void OnEnable()
@@ -52,8 +60,16 @@ namespace ColbyO.SJ26.GameLogic
             _visualEffectMs = GameManager.GetMonoSystem<IVisualEffectMonoSystem>();
             _taskMonoSystem = GameManager.GetMonoSystem<ITaskMonoSystem>();
             _actorMonoSystem = GameManager.GetMonoSystem<IActorMonoSystem>();
+            _lightMs = GameManager.GetMonoSystem<ILightMonoSystem>();
             Refs.Elevator = FindAnyObjectByType<Elevator>();
             Refs.PlayerSeat = GameObject.FindWithTag("PlayerSeat").GetComponent<Interactable>().GetAction<SitAction>();
+
+            Refs.FlashlightPickup = GameObject.FindWithTag("Flashlight").GetComponentInChildren<Interactable>();
+            Refs.CryingGirlEncounter = FindAnyObjectByType<CryingGirlEncounter>();
+            Refs.PlayerChaseStart = GameObject.FindWithTag("PlayerChaseStart").transform;
+
+            Refs.CryingGirlEncounter.gameObject.SetActive(false);
+            Refs.FlashlightPickup.gameObject.SetActive(false);
         }
 
         private void Update()
@@ -61,7 +77,7 @@ namespace ColbyO.SJ26.GameLogic
             if (!_started)
             {
                 _started = true;
-                TriggerEvent("Act1");
+                TriggerEvent("Act3");
             }
 
             _scheduler.Tick(Time.deltaTime);
@@ -124,7 +140,43 @@ namespace ColbyO.SJ26.GameLogic
                     });
                     break;
 
+                case "Act3":
+                    Refs.FlashlightPickup.gameObject.SetActive(true);
+
+                    SJ26GameManager.GlobalScheduler.Wait(5f)
+                    .Then(_ =>
+                    {
+                        _lightMs.TriggerOutageWithEmergencyBackup(waveOrigin: SJ26GameManager.Player.transform.position);
+                    })
+                    .Then(_ =>
+                    {
+                        _taskMonoSystem.StartTask("Find Flashlight in Office Area");
+                    })
+                    .Then(_ => Refs.FlashlightPickup.GetAction<PickupAction>().WaitForPickup())
+                    .Then(_ =>
+                    {
+                        _taskMonoSystem.EndTask();
+                        SJ26GameManager.Player.EnableFlashlight();
+                        SJ26GameManager.PlayerAnimator.HoldingLight = true;
+                        _taskMonoSystem.StartTask("Restore The Power");
+                        Refs.CryingGirlEncounter.gameObject.SetActive(true);
+                        Refs.CryingGirlEncounter.ResetEncounter();
+                        Refs.CryingGirlEncounter.OnJumpscareFinished.AddListener(ResetChase);
+                        return Refs.CryingGirlEncounter.WaitForEvent();
+                    })
+                    .Then(_ => Promise.All(_dialogueMs.StartDialoguePromise("CryingGirlEncounter"), SJ26GameManager.GlobalScheduler.When(() => Refs.CryingGirlEncounter.Phase == CryingGirlEncounter.EncounterPhase.WaitingToChase)))
+                    .Then(_ => SJ26GameManager.GlobalScheduler.Wait(1f))
+                    .Then(_ => Refs.CryingGirlEncounter.TriggerChase());
+
+                    break;
+
             }
+        }
+
+        private void ResetChase()
+        {
+            Refs.CryingGirlEncounter.ResetEncounter();
+            SJ26GameManager.Player.MoveTo(Refs.PlayerChaseStart.position);
         }
 
         public void Trigger(string triggerName)

@@ -69,6 +69,15 @@ namespace ColbyO.SJ26.UI
             OnRequestNext.AddListener(OnDiagoueEnd);
         }
 
+        private void OnDestroy()
+        {
+            if (_typeRoutine != null)
+            {
+                StopCoroutine(_typeRoutine);
+                _typeRoutine = null;
+            }
+        }
+
         private void Update()
         {
             UpdateIcons();
@@ -149,6 +158,9 @@ namespace ColbyO.SJ26.UI
                 if (_as && _as.isPlaying) _as.Stop();
                 StopCoroutine(_typeRoutine);
             }
+
+            // Unity 6.6 Sucks. 
+            if (this == null) return;
 
             _typeRoutine = StartCoroutine(TypewriterRoutine(_fullCurrentMessage));
         }

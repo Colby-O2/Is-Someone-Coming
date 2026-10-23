@@ -23,7 +23,10 @@ namespace ColbyO.SJ26.Entities
         SittingIntermediate,
         Sitting,
         Reach,
-        ChangingState
+        ChangingState,
+        HoldingLightMoving,
+        HoldingLightIdle,
+        Fetus
     }
 
     [RequireComponent(typeof(NavMeshAgent))]
@@ -72,6 +75,8 @@ namespace ColbyO.SJ26.Entities
             if (!_agent) _agent = GetComponent<NavMeshAgent>();
             GameManager.GetMonoSystem<IPoseMonoSystem>().LoadPose(ActorName, Enum.GetName(typeof(MoveState), MoveState.Idle));
             _state = MoveState.Idle;
+
+            if (_animator != null) _animator.Init();
         }
 
         private void Update()
@@ -246,6 +251,10 @@ namespace ColbyO.SJ26.Entities
                 .Then(_ =>
                 {
                     _state = state;
+                    if (_animator != null && (state == MoveState.Idle || state == MoveState.Moving || state == MoveState.HoldingLightIdle || state == MoveState.HoldingLightMoving))
+                    {
+                        _animator.CacheRestPositions();
+                    }
                 });
         }
 
@@ -399,6 +408,81 @@ namespace ColbyO.SJ26.Entities
                     transform.rotation = Quaternion.Slerp(startRot, targetRot, t);
                 }
             );
+        }
+
+        public void StopMoving(bool disableAgent = false)
+        {
+            if (_agent)
+            {
+                if (_agent.isOnNavMesh)
+                {
+                    _agent.isStopped = true;
+                    _agent.ResetPath();
+                }
+                if (disableAgent)
+                {
+                    _agent.enabled = false;
+                }
+            }
+        }
+
+        public void SetChasingMode(bool isChasing)
+        {
+            if (_animator != null) _animator.IsChasing = isChasing;
+        }
+
+        public void SnapToState(MoveState state)
+        {
+            _state = state;
+            if (_agent) _agent.isStopped = true;
+            GameManager.GetMonoSystem<IPoseMonoSystem>().LoadPose(ActorName, Enum.GetName(typeof(MoveState), state));
+        }
+
+        public Promise SetState(MoveState state, float? duration = null)
+        {
+            return UpdateState(state, duration);
+        }
+
+        public void ChaseTarget(Vector3 targetPosition)
+        {
+            if (_state != MoveState.Moving) return;
+            _targetPos = targetPosition;
+            _agent.isStopped = false;
+            _agent.SetDestination(_targetPos);
+        }
+
+        public void StopMoving()
+        {
+            if (_agent)
+            {
+                _agent.isStopped = true;
+                _agent.ResetPath();
+            }
+        }
+
+        public void ResetToPosition(Vector3 position, Quaternion rotation, MoveState initialState)
+        {
+            if (_agent)
+            {
+                _agent.enabled = false;
+            }
+
+            transform.position = position;
+            transform.rotation = rotation;
+
+            if (_agent)
+            {
+                _agent.enabled = true;
+                if (_agent.isOnNavMesh)
+                {
+                    _agent.Warp(position);
+                    _agent.isStopped = true;
+                    _agent.ResetPath();
+                }
+            }
+
+            SetChasingMode(false);
+            SnapToState(initialState);
         }
     }
 }
