@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ColbyO.SJ26.DispatchEventSO
   id: 0
   includeInDatabase: 1
+  UseInRandom: 1
   CallDialogue: ArsonBadFireCall
   SuccessDialogue: ArsonBadFireSuccess
   FailedDialogue: ArsonBadFireFailed
@@ -33,5 +34,5 @@ MonoBehaviour:
   RequiredEMS: 1
   RequiredFire: 1
   RequiredRescue: 0
-  TimeToRespond: 40
-  TimeToResolve: 5
+  TimeToRespond: 45
+  TimeToResolve: 25

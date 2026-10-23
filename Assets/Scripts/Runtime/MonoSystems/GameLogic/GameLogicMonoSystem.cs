@@ -181,7 +181,7 @@ namespace ColbyO.SJ26.GameLogic
                         Refs.DispatchMonitor.ReallyCanInteract = true;
                         Refs.Radio.gameObject.GetComponent<AudioSource>().Play();
                     })
-                    .Then(_ => _sch.When(() => GetCounter("CallsCompleted") >= 1))
+                    .Then(_ => _sch.When(() => GetCounter("CallsCompleted") >= 5))
                     .Then(_ =>
                     {
                         crt = _visualEffectMs.GetCRTSettings();
@@ -306,7 +306,7 @@ namespace ColbyO.SJ26.GameLogic
                         Refs.DispatchMonitor.ReallyCanInteract = true;
                         _dispatchMs.StartTheCalls();
                     })
-                    .Then(_ => _sch.When(() => GetCounter("CallsCompleted") >= 2))
+                    .Then(_ => _sch.When(() => GetCounter("CallsCompleted") >= 10))
                     .Then(_ =>
                     {
                         _dispatchMs.StopTheCalls();
@@ -421,7 +421,7 @@ namespace ColbyO.SJ26.GameLogic
             SJ26GameManager.Player.MoveTo(Refs.PlayerChaseStart.position);
             Refs.Elevator.Close();
             Refs.CallElevator.IsEnabled = true;
-	}
+    }
 
         private int GetCounter(string name)
         {

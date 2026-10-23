@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: EMSUnit
   m_EditorClassIdentifier: Assembly-CSharp::ColbyO.SJ26.Dispatch.FieldUnitSO
   icon: {fileID: 2800000, guid: 5320052da2bf910eaa5ee28af20bc02b, type: 3}
-  color: {r: 1, g: 0.09988922, b: 0.31609875, a: 1}
+  color: {r: 1, g: 0.003921569, b: 0, a: 1}
+  renderOrder: 0
   callsignSymbol: E
   unitType: 1
   moveSpeed: 6
