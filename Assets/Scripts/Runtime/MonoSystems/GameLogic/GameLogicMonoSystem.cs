@@ -192,9 +192,11 @@ namespace ColbyO.SJ26.GameLogic
                         _dialogueMs.SetFlag("Spooky2", false);
                         _dialogueMs.SetFlag("Spooky3", false);
                         _dispatchMs.RemoveAllEvents();
-                        _dispatchMs.StartCallWith(SJ26GameManager.Preferences.DispatchEvents.GetEntry("SpookyCall"));
+                        DispatchEventSO ev = SJ26GameManager.Preferences.DispatchEvents.GetEntry("SpookyCall");
+                        _dispatchMs.StartCallWith(ev);
 
-                        Refs.DispatchMonitor.WaitForEnter()
+                        _sch.When(() => _dispatchMs.InCall().Event == ev)
+                            .Then(_ => Refs.DispatchMonitor.WaitForEnter())
                             .Then(_ =>
                             {
                                 SJ26GameManager.PlayerInteractor.Controls.InspectionBackAction.Disable();
@@ -209,18 +211,13 @@ namespace ColbyO.SJ26.GameLogic
                             .Then(_ =>
                             {
                                 Refs.Radio.gameObject.GetComponent<AudioSource>().Pause();
+                                _dispatchMs.HideAllUnits();
                             })
                             .Then(_ => _sch.When(() => !_dialogueMs.IsPlayingDialogue()))
                             .Then(_ => _sch.Wait(3))
                             .Then(_ =>
                             {
                                 return _dialogueMs.StartDialoguePromise("SpookyCallContinue", true);
-                            });
-
-                        _sch.When(() => _dialogueMs.GetFlag("HideUnits"))
-                            .Then(_ =>
-                            {
-                                _dispatchMs.HideAllUnits();
                             });
 
                         _sch.When(() => _dialogueMs.GetFlag("Spooky1"))
@@ -279,6 +276,7 @@ namespace ColbyO.SJ26.GameLogic
                     })
                     .Then(_ =>
                     {
+                        Refs.Radio.gameObject.GetComponent<AudioSource>().UnPause();
                         SJ26GameManager.PlayerSit.CanUnSit = true;
                         _actorMonoSystem.TellActorToSitAt("Coworker", "SitPoint_CoworkerOffice", 1f);
                     })
