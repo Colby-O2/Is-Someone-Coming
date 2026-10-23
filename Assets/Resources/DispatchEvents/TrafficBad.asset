@@ -29,5 +29,5 @@ MonoBehaviour:
   RequiredEMS: 1
   RequiredFire: 0
   RequiredRescue: 1
-  TimeToRespond: 40
-  TimeToResolve: 5
+  TimeToRespond: 45
+  TimeToResolve: 15

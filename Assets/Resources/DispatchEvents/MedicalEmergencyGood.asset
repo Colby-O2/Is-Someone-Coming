@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b62678a248d8d67cb73ec869848fca9, type: 3}
   m_Name: MedicalEmergencyGood
   m_EditorClassIdentifier: Assembly-CSharp::ColbyO.SJ26.DispatchEventSO
-  id: -1
+  id: 6
   includeInDatabase: 1
+  UseInRandom: 1
   CallDialogue: MedicalEmergencyGoodCall
   SuccessDialogue: MedicalEmergencyGoodSuccess
   FailedDialogue: MedicalEmergencyGoodFailed
@@ -31,5 +32,5 @@ MonoBehaviour:
   RequiredEMS: 1
   RequiredFire: 0
   RequiredRescue: 0
-  TimeToRespond: 40
-  TimeToResolve: 5
+  TimeToRespond: 45
+  TimeToResolve: 25
