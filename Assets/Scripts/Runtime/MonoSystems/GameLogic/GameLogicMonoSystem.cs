@@ -17,6 +17,7 @@ using ColbyO.SJ26.Enviroment;
 using ColbyO.VNTG.CRT;
 using InteractionSystem;
 using Unity.Hierarchy;
+using PlazmaGames.Audio;
 
 namespace ColbyO.SJ26.GameLogic
 {
@@ -228,6 +229,10 @@ namespace ColbyO.SJ26.GameLogic
                                 crt.EnableNoise.value = true;
                                 Utils.Animate(v => crt.NoiseFade.value = v,
                                     0, 0.2f, 3);
+
+                                crt.EnableColorAdjustment.value = true;
+                                Utils.Animate(v => crt.RedShift.value = v,
+                                    0f, 1f, 3f);
                             });
                         _sch.When(() => _dialogueMs.GetFlag("Spooky2"))
                             .Then(_ =>
@@ -245,6 +250,12 @@ namespace ColbyO.SJ26.GameLogic
                             .Then(_ =>
                             {
                                 _dispatchMs.MakeFailActiveEvents();
+                            })
+                            .Then(_ => _visualEffectMs.FadeOut(1f))
+                            .Then(_ =>
+                            {
+                                GameManager.GetMonoSystem<IAudioMonoSystem>().PlayAudio("DeskJumpscare", PlazmaGames.Audio.AudioType.Sfx, loop: false);
+                                return _visualEffectMs.FadeIn(0.1f);
                             })
                             .Then(_ =>
                             {

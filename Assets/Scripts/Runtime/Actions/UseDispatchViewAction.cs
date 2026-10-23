@@ -11,7 +11,7 @@ namespace ColbyO.SJ26
     [System.Serializable]
     public class UseDispatchViewAction : InspectAction
     {
-        public override string ActionName => "Start Dispatching";
+        public override string ActionName => "Dispatch Units";
 
         private Promise _promise;
 

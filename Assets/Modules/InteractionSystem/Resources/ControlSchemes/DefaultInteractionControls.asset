@@ -37,6 +37,7 @@ MonoBehaviour:
       m_Action: Slot 1 Interact
       m_Flags: 0
     m_Flags: 0
+    m_Priority: 0
   Slot2InteractAction:
     m_Name: Slot 2 Interact
     m_Type: 0
@@ -62,6 +63,7 @@ MonoBehaviour:
       m_Action: Slot 2 Interact
       m_Flags: 0
     m_Flags: 0
+    m_Priority: 0
   Slot3InteractAction:
     m_Name: Slot 3 Interact
     m_Type: 0
@@ -87,6 +89,7 @@ MonoBehaviour:
       m_Action: Slot 3 Interact
       m_Flags: 0
     m_Flags: 0
+    m_Priority: 0
   Slot4InteractAction:
     m_Name: Slot 4 Interact
     m_Type: 0
@@ -112,6 +115,7 @@ MonoBehaviour:
       m_Action: Slot 4 Interact
       m_Flags: 0
     m_Flags: 0
+    m_Priority: 0
   InspectionClickAction:
     m_Name: Inspection Click
     m_Type: 0
@@ -137,6 +141,7 @@ MonoBehaviour:
       m_Action: Inspection Click
       m_Flags: 0
     m_Flags: 0
+    m_Priority: 0
   InspectionCursorAction:
     m_Name: Inspection Cursor
     m_Type: 0
@@ -162,6 +167,7 @@ MonoBehaviour:
       m_Action: Inspection Cursor
       m_Flags: 0
     m_Flags: 0
+    m_Priority: 0
   InspectionZoomAction:
     m_Name: Inspection Zoom
     m_Type: 0
@@ -219,6 +225,7 @@ MonoBehaviour:
       m_Action: Inspection Zoom
       m_Flags: 8
     m_Flags: 0
+    m_Priority: 0
   InspectionRotateAction:
     m_Name: Inspection Rotate
     m_Type: 0
@@ -244,6 +251,7 @@ MonoBehaviour:
       m_Action: Inspection Rotate
       m_Flags: 0
     m_Flags: 0
+    m_Priority: 0
   InspectionReadAction:
     m_Name: Inspection Read
     m_Type: 0
@@ -269,6 +277,7 @@ MonoBehaviour:
       m_Action: Inspection Read
       m_Flags: 0
     m_Flags: 0
+    m_Priority: 0
   InspectionLeaveAction:
     m_Name: Inspection Leave
     m_Type: 0
@@ -301,7 +310,16 @@ MonoBehaviour:
       m_Groups: 
       m_Action: Inspection Leave
       m_Flags: 0
+    - m_Name: 
+      m_Id: 30b360d3-399a-48ad-8320-075f9ea55037
+      m_Path: <Keyboard>/space
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Inspection Leave
+      m_Flags: 0
     m_Flags: 0
+    m_Priority: 0
   InspectionNextAction:
     m_Name: Inspection Next
     m_Type: 0
@@ -327,6 +345,7 @@ MonoBehaviour:
       m_Action: Inspection Next
       m_Flags: 0
     m_Flags: 0
+    m_Priority: 0
   InspectionBackAction:
     m_Name: Inspection Back
     m_Type: 0
@@ -352,6 +371,7 @@ MonoBehaviour:
       m_Action: Inspection Back
       m_Flags: 0
     m_Flags: 0
+    m_Priority: 0
   DropAction:
     m_Name: Drop
     m_Type: 0
@@ -433,6 +453,7 @@ MonoBehaviour:
       m_Action: Drop
       m_Flags: 0
     m_Flags: 0
+    m_Priority: 0
   KeybaordMouseSensitivity: 1
   KeybaordRotateSensitivity: 1.2
   KeybaordZoomSensitivity: 0.5

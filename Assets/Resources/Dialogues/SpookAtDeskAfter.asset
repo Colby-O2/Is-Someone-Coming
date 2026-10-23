@@ -22,7 +22,7 @@ MonoBehaviour:
     Type: 0
     Text: 
     EventID: 
-    position: {x: 0, y: 0}
+    position: {x: -470, y: -65}
     PropertyType: 
     PropertyBooleanValue: 0
     PropertyIntValue: 0
@@ -36,14 +36,14 @@ MonoBehaviour:
     Duration: 0
     Choices:
     - Text: 
-      Next: 250b9b3a-ca01-4353-9266-4a80ba700f79
-  - Guid: 250b9b3a-ca01-4353-9266-4a80ba700f79
-    ActorName: Coworker
+      Next: b8d382eb-1b13-42a7-972f-89a55540d0aa
+  - Guid: b8d382eb-1b13-42a7-972f-89a55540d0aa
+    ActorName: David
     GroupName: 
     Type: 1
-    Text: You cannot be sleeping on the job, lives are at stake.
+    Text: Yo, new guy, you alright? You seriously fell asleep at your desk, man.
     EventID: 
-    position: {x: 404, y: 10}
+    position: {x: -89, y: -81}
     PropertyType: 
     PropertyBooleanValue: 0
     PropertyIntValue: 0
@@ -57,14 +57,100 @@ MonoBehaviour:
     Duration: 0
     Choices:
     - Text: 
-      Next: d8669896-5aa9-49f9-88fa-56fc4956eafa
-  - Guid: d8669896-5aa9-49f9-88fa-56fc4956eafa
+      Next: e0d302ff-7055-4514-9a77-5be8f7c664a1
+  - Guid: e0d302ff-7055-4514-9a77-5be8f7c664a1
+    ActorName: 
+    GroupName: 
+    Type: 2
+    Text: 
+    EventID: 
+    position: {x: 278, y: -96}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: Yeah, I'm fine. Just tired.
+      Next: e96c183a-3f19-41cb-90ef-1e2fb3af95db
+    - Text: Wait, I fell asleep?
+      Next: 0d6c3f74-3095-483f-a825-ff49dd951a85
+  - Guid: 0d6c3f74-3095-483f-a825-ff49dd951a85
+    ActorName: David
+    GroupName: 
+    Type: 1
+    Text: Yeah, man. I could hear you snoring all the way from my desk.
+    EventID: 
+    position: {x: 613, y: 136}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: e96c183a-3f19-41cb-90ef-1e2fb3af95db
+  - Guid: e96c183a-3f19-41cb-90ef-1e2fb3af95db
+    ActorName: David
+    GroupName: 
+    Type: 1
+    Text: Just remember, man, this is an important job. People are counting on us.
+    EventID: 
+    position: {x: 951, y: -74}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 2f6737e9-d382-4cc6-96af-deefe621c8d2
+  - Guid: 2f6737e9-d382-4cc6-96af-deefe621c8d2
+    ActorName: David
+    GroupName: 
+    Type: 1
+    Text: Why don't you go grab a coffee? I'll cover your calls till you get back.
+    EventID: 
+    position: {x: 1316, y: -71}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 2c129b4e-cee7-4ceb-ba54-4cd5160c63cb
+  - Guid: 2c129b4e-cee7-4ceb-ba54-4cd5160c63cb
     ActorName: You
     GroupName: 
     Type: 1
-    Text: Yeah, i do not know what happened.
+    Text: Yeah, yeah. I'll be back in a minute.
     EventID: 
-    position: {x: 841, y: 44}
+    position: {x: 1720, y: -65}
     PropertyType: 
     PropertyBooleanValue: 0
     PropertyIntValue: 0

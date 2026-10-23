@@ -170,7 +170,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.00990356
+  m_Radius: 0.00550356
   m_Center: {x: 0, y: 0.000025808511, z: -0.00078926486}
 --- !u!114 &3697135003025394945
 MonoBehaviour:
@@ -184,7 +184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b213d46db9bcdf0498827f22ae5b0faf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: InteractionSystem::InteractionSystem.Interactable
-  _objectName: Open
+  _objectName: Door
   _isInteractable: 1
   _as: {fileID: 0}
   _actions:

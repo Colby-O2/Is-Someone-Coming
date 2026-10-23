@@ -659,6 +659,9 @@ MonoBehaviour:
   - id: 0
     name: UIClick
     audio: {fileID: 8300000, guid: bf446cdaa12b3d045bf3c0228b872598, type: 3}
+  - id: 1
+    name: DeskJumpscare
+    audio: {fileID: 8300000, guid: cdb15dab4e1088a498c4a8d0f3806d41, type: 3}
   _musicSource: {fileID: 3638539756700429000}
   _ambientSource: {fileID: 77089400581636699}
   _sfxMainSource: {fileID: 2490435349908403537}
