@@ -15,6 +15,11 @@ TagManager:
   - PlayerCamera
   - CinematicView
   - PlayerChaseStart
+  - Volume
+  - DispatchMonitor
+  - Test
+  - MyDesk
+  - SpookLookAtLoc
   layers:
   - Default
   - TransparentFX

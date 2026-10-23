@@ -158,6 +158,15 @@ namespace ColbyO.SJ26
         public void DisableFlashlight()
         {
             _flashlight.SetActive(false);
+	}
+
+        public Promise LookAt(Vector3 pos, float duration = 0.4f)
+        {
+            Transform head = _viewController.transform;
+            return Utils.Animate(r => head.rotation = r,
+                head.rotation,
+                Quaternion.LookRotation((pos - head.position).normalized, Vector3.up),
+                duration);
         }
     }
 }

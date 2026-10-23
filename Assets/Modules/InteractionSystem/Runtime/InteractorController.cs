@@ -53,8 +53,8 @@ namespace InteractionSystem
         public bool CanInteract {get => _interactionHandler?.CanInteract ?? false; set => _interactionHandler.CanInteract = value; }
 
         internal InteractionHandler GetInteractionHandler() => _interactionHandler;
-        internal MoveableHandler GetMoveableHandler() => _moveableHandler;
-        internal InspectionHandler GetInspectorHandler() => _inspectorHandler;
+        public MoveableHandler GetMoveableHandler() => _moveableHandler;
+        public InspectionHandler GetInspectorHandler() => _inspectorHandler;
         public Transform GetCameraTransform() => _playerCamera;
         public InteractionState CurrentState { get => _state; }
         public Collider[] Colliders { get => _colliders; }

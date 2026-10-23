@@ -2,7 +2,7 @@ using UnityEngine;
 
 using System;
 using System.Collections.Generic;
-
+using System.Linq;
 using PlazmaGames.Core;
 using PlazmaGames.Core.Debugging;
 
@@ -43,6 +43,9 @@ namespace ColbyO.SJ26.Dispatch
 
         public float ResolveStartTime { get; private set; }
         public bool Resolving { get; private set; }
+        public bool Answered = false;
+
+        public bool Cancel = false;
 
         public ActiveDispatchEvent(DispatchEventSO e, string address, EmergencyCallMarker marker, string callId)
         {
@@ -250,19 +253,28 @@ namespace ColbyO.SJ26.Dispatch
 
         public void StartEvent(ActiveDispatchEvent e)
         {
+            Debug.Log("START EVENT");
             if (e?.Marker == null) return;
 
             e.Marker.gameObject.SetActive(true);
-            if (e.IsFailed())
+            if (e.Cancel || e.Event.TotalUnits() == 0)
             {
+            Debug.Log("CANCEL");
+                if (e.Marker.gameObject) GameObject.Destroy(e.Marker.gameObject);
+            }
+            else if (e.IsFailed())
+            {
+            Debug.Log("FAILED");
                 FailEvent(e);
             }
             else if (e.IsResolved())
             {
+            Debug.Log("RESOVL");
                 SuccessEvent(e);
             }
             else
             {
+            Debug.Log("ADD");
                 _events.Add(e);
             }
         }
@@ -306,20 +318,32 @@ namespace ColbyO.SJ26.Dispatch
             //    _newCallCountDown = 3;
             //    return;
             //}
-            
-            _stagedEvent = CreateActiveDispatchEvent(eventSO);
+
+            if (_stagedEvent != null)
+            {
+                _stagedEvent.Cancel = true;
+            }
+
+            ActiveDispatchEvent activeEvent = CreateActiveDispatchEvent(eventSO);
+            _stagedEvent = activeEvent;
             if (_stagedEvent == null) return;
             
             Promise.Any(
-                SJ26GameManager.GlobalScheduler.When(() => _stagedEvent == null),
-                SJ26GameManager.GlobalScheduler.When(() => _stagedEvent?.IsFailed() == true)
+                SJ26GameManager.GlobalScheduler.When(() => _stagedEvent == null || activeEvent == null || activeEvent.Cancel),
+                SJ26GameManager.GlobalScheduler.When(() => activeEvent?.IsFailed() == true)
             ).Then(_ =>
             {
-                if (_stagedEvent == null) return;
+                if (activeEvent.Answered) return;
+                if (activeEvent == null) return;
+                if (activeEvent.Cancel)
+                {
+                    if (activeEvent.Marker) GameObject.Destroy(activeEvent.Marker.gameObject);
+                    return;
+                }
                 _phone.IsEnabled = false;
                 _phoneRinger.Pause();
-                StartEvent(_stagedEvent);
-                _stagedEvent = null;
+                StartEvent(activeEvent);
+                activeEvent = null;
                 if (!DialogueSystem.IsPlayingDialogue())
                 {
                     DialogueSystem.StartDialoguePromise("CallEnded", true);
@@ -328,6 +352,31 @@ namespace ColbyO.SJ26.Dispatch
 
             _phone.IsEnabled = true;
             _phoneRinger.UnPause();
+        }
+
+        public void MakeFailActiveEvents()
+        {
+            for (int i = _events.Count - 1; i >= 0; i--)
+            {
+                FailEvent(_events[i]);
+                _events.RemoveAt(i);
+            }
+        }
+
+        public void RemoveAllEvents()
+        {
+            for (int i = _events.Count - 1; i >= 0; i--)
+            {
+                ActiveDispatchEvent e = _events[i];
+                e.Cancel = true;
+                if (e.Marker.gameObject) GameObject.Destroy(e.Marker.gameObject);
+                _events.RemoveAt(i);
+            }
+        }
+
+        public bool PhoneIsRinging()
+        {
+            return _stagedEvent != null;
         }
 
         private void StartCall()
@@ -494,7 +543,7 @@ namespace ColbyO.SJ26.Dispatch
 
         public DispatchEventSO RandomDispatchEvent()
         {
-            var entries = SJ26GameManager.Preferences.DispatchEvents.GetAllEntries();
+            var entries = SJ26GameManager.Preferences.DispatchEvents.GetAllEntries().Where(e => e.UseInRandom).ToList();
             if (entries == null || entries.Count == 0) return null;
 
             return entries[Random.Range(0, entries.Count)];
@@ -560,7 +609,7 @@ namespace ColbyO.SJ26.Dispatch
                     DialogueSystem?.StartDialoguePromise(dialogue, true);
                 }
 
-                Destroy(marker.gameObject);
+                if (marker.gameObject) GameObject.Destroy(marker.gameObject);
             }
             else if (_selectedFieldUnit != null)
             {
@@ -590,6 +639,8 @@ namespace ColbyO.SJ26.Dispatch
             ActiveDispatchEvent activeEvent = _stagedEvent;
             _stagedEvent = null;
 
+            activeEvent.Answered = true;
+
             SetDialogueContext(activeEvent);
             _inCall = true;
 
@@ -602,7 +653,7 @@ namespace ColbyO.SJ26.Dispatch
                 SJ26GameManager.GlobalScheduler.When(() => activeEvent.IsResolved())
             ).Then(_ =>
             {
-                if (_inCall)
+                if (_inCall && !activeEvent.Cancel)
                 {
                     _inCall = false;
                     DialogueSystem.FinishDialogue();
@@ -624,6 +675,26 @@ namespace ColbyO.SJ26.Dispatch
                 SJ26GameManager.GlobalScheduler
                     .When(() => _inCall == false)
             ).Then(_ => StartEvent(activeEvent));
+        }
+
+        public void HideAllUnits()
+        {
+            foreach (var ecm in GameObject.FindObjectsByType<EmergencyCallMarker>())
+            {
+                if (ecm.gameObject) GameObject.Destroy(ecm.gameObject);
+            }
+            foreach (FieldUnit unit in _registeredUnits)
+            {
+                unit.gameObject.SetActive(false);
+            }
+        }
+        
+        public void UnHideAllUnits()
+        {
+            foreach (FieldUnit unit in _registeredUnits)
+            {
+                unit.gameObject.SetActive(true);
+            }
         }
     }
 

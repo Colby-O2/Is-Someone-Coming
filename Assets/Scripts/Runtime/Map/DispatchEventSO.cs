@@ -10,6 +10,7 @@ namespace ColbyO.SJ26
     [CreateAssetMenu(fileName = "DispatchEventSO", menuName = "SJ26/DispatchEvents/DispatchEventSO")]
     public class DispatchEventSO : BaseSO
     {
+        public bool UseInRandom = true;
         public string CallDialogue;
         public string SuccessDialogue;
         public string FailedDialogue;
@@ -20,5 +21,7 @@ namespace ColbyO.SJ26
         public int RequiredRescue;
         public float TimeToRespond;
         public float TimeToResolve;
+
+        public int TotalUnits() => RequiredFire + RequiredPolice + RequiredEMS + RequiredRescue;
     }
 }

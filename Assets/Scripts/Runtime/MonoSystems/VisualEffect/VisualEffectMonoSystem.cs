@@ -63,7 +63,7 @@ namespace ColbyO.Sj26.Effects
 
         public PSXEffectSettings GetPSXSettings()
         {
-            if (_volume == null) _volume = FindAnyObjectByType<Volume>();
+            if (!_volume) _volume = GameObject.FindWithTag("Volume").GetComponent<Volume>();
 
             if (_volume && _volume.profile && _volume.profile.TryGet(out PSXEffectSettings psx)) return psx;
 
@@ -72,7 +72,7 @@ namespace ColbyO.Sj26.Effects
 
         public CRTSettings GetCRTSettings()
         {
-            if (_volume == null) _volume = FindAnyObjectByType<Volume>();
+            if (!_volume) _volume = GameObject.FindWithTag("Volume").GetComponent<Volume>();
 
             if (_volume && _volume.profile && _volume.profile.TryGet(out CRTSettings crt)) return crt;
 

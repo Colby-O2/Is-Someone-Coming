@@ -1326,6 +1326,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Monitor
       objectReference: {fileID: 0}
+    - target: {fileID: 3510814385815267695, guid: e1075730e691d59a18e5620505e7a2fa, type: 3}
+      propertyPath: m_TagString
+      value: DispatchMonitor
+      objectReference: {fileID: 0}
     - target: {fileID: 4647516371570843936, guid: e1075730e691d59a18e5620505e7a2fa, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.00002
@@ -2133,7 +2137,7 @@ Transform:
   m_GameObject: {fileID: 474302335}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.207, z: -0.58}
+  m_LocalPosition: {x: -0.85, y: 0.539, z: -0.527}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2635,6 +2639,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 633449663}
   m_CullTransparentMesh: 1
+--- !u!1001 &650479144
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5372290939580680493, guid: de269797b97f22b75a6ce57610d6253d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 11.218
+      objectReference: {fileID: 0}
+    - target: {fileID: 5372290939580680493, guid: de269797b97f22b75a6ce57610d6253d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 50.987
+      objectReference: {fileID: 0}
+    - target: {fileID: 5372290939580680493, guid: de269797b97f22b75a6ce57610d6253d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -6.908
+      objectReference: {fileID: 0}
+    - target: {fileID: 8040414941732729504, guid: de269797b97f22b75a6ce57610d6253d, type: 3}
+      propertyPath: m_Name
+      value: SpookAtDesk
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: de269797b97f22b75a6ce57610d6253d, type: 3}
 --- !u!1 &654807299
 GameObject:
   m_ObjectHideFlags: 0
@@ -3205,7 +3238,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b213d46db9bcdf0498827f22ae5b0faf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: InteractionSystem::InteractionSystem.Interactable
-  _objectName: 
+  _objectName: Phone
   _isInteractable: 1
   _as: {fileID: 0}
   _actions:
@@ -13809,6 +13842,35 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1877074326}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1261064484
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7305533326722310574, guid: ffabf0639672fb53ebd9aa28192f144e, type: 3}
+      propertyPath: m_Name
+      value: DeskTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 8688215467831063073, guid: ffabf0639672fb53ebd9aa28192f144e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8688215467831063073, guid: ffabf0639672fb53ebd9aa28192f144e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8688215467831063073, guid: ffabf0639672fb53ebd9aa28192f144e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ffabf0639672fb53ebd9aa28192f144e, type: 3}
 --- !u!1 &1265172480
 GameObject:
   m_ObjectHideFlags: 0
@@ -14183,13 +14245,13 @@ MonoBehaviour:
     _footGroundOffset: 0.02
     _hipBounce: 0
     _hipSway: 0.03
-    _isChasing: 1
+    _isChasing: 0
     _outstretchArmsOnChase: 1
     _chaseSpeedMultiplier: 2.6
     _chaseStrideMultiplier: 1.85
     _chaseStepHeightMultiplier: 2
     _chaseSwayMultiplier: 2.2
-    _chaseHipCrouchOffset: 0
+    _chaseHipCrouchOffset: -0.05
     _chaseArmReachOffset: {x: 0, y: 0.28, z: 0.35}
     _chaseClawIntensity: 0.12
     _timer: 0
@@ -19340,6 +19402,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1797553378}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1963196377
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5372290939580680493, guid: de269797b97f22b75a6ce57610d6253d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -4.756
+      objectReference: {fileID: 0}
+    - target: {fileID: 5372290939580680493, guid: de269797b97f22b75a6ce57610d6253d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.989
+      objectReference: {fileID: 0}
+    - target: {fileID: 5372290939580680493, guid: de269797b97f22b75a6ce57610d6253d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 9.474
+      objectReference: {fileID: 0}
+    - target: {fileID: 5372290939580680493, guid: de269797b97f22b75a6ce57610d6253d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 11.218
+      objectReference: {fileID: 0}
+    - target: {fileID: 5372290939580680493, guid: de269797b97f22b75a6ce57610d6253d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 50.987
+      objectReference: {fileID: 0}
+    - target: {fileID: 5372290939580680493, guid: de269797b97f22b75a6ce57610d6253d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -6.908
+      objectReference: {fileID: 0}
+    - target: {fileID: 8040414941732729504, guid: de269797b97f22b75a6ce57610d6253d, type: 3}
+      propertyPath: m_Name
+      value: SpookAtDesk (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8040414941732729504, guid: de269797b97f22b75a6ce57610d6253d, type: 3}
+      propertyPath: m_TagString
+      value: SpookLookAtLoc
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: de269797b97f22b75a6ce57610d6253d, type: 3}
 --- !u!1 &1963991023
 GameObject:
   m_ObjectHideFlags: 0
@@ -19548,6 +19655,35 @@ RectTransform:
   m_AnchoredPosition: {x: -29.00001, y: 240}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
+--- !u!1001 &2019050901
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 765121074845781031, guid: de526b5e3de33679fbc2e30bfa083a70, type: 3}
+      propertyPath: m_Name
+      value: Coffee
+      objectReference: {fileID: 0}
+    - target: {fileID: 4441513732342897478, guid: de526b5e3de33679fbc2e30bfa083a70, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4441513732342897478, guid: de526b5e3de33679fbc2e30bfa083a70, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -82.166
+      objectReference: {fileID: 0}
+    - target: {fileID: 4441513732342897478, guid: de526b5e3de33679fbc2e30bfa083a70, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: de526b5e3de33679fbc2e30bfa083a70, type: 3}
 --- !u!1 &2088294915
 GameObject:
   m_ObjectHideFlags: 0
@@ -22842,3 +22978,7 @@ SceneRoots:
   - {fileID: 417909653}
   - {fileID: 1970218092}
   - {fileID: 1426011311}
+  - {fileID: 650479144}
+  - {fileID: 1963196377}
+  - {fileID: 2019050901}
+  - {fileID: 1261064484}

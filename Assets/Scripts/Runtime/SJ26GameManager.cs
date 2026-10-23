@@ -13,7 +13,7 @@ namespace ColbyO.SJ26
         [SerializeField] private GameObject _monoSystemHolder;
 
         [SerializeField] private Preferences _preferences;
-
+        
         public static Preferences Preferences { get => (Instance as SJ26GameManager)._preferences; }
 
         public static Scheduler GlobalScheduler = new Scheduler();
@@ -25,6 +25,7 @@ namespace ColbyO.SJ26
         public static MovementController Player;
         public static SitController PlayerSit;
         public static AnimationController PlayerAnimator;
+        public static InteractorController PlayerInteractor;
 
         private void Awake()
         {
@@ -39,6 +40,7 @@ namespace ColbyO.SJ26
             Player = GameObject.FindWithTag("Player").GetComponent<MovementController>();
             PlayerSit = Player.GetComponent<SitController>();
             PlayerAnimator = Player.GetComponent<AnimationController>();
+            PlayerInteractor = Player.GetComponent<InteractorController>();
         }
 
         private void OnEnable()

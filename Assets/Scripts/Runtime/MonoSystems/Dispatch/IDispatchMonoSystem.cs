@@ -17,5 +17,11 @@ namespace ColbyO.SJ26.Dispatch
         void StartTheCalls();
         void StopTheCalls();
         void AnswerPhone();
+        void HideAllUnits();
+        void UnHideAllUnits();
+        public void StartCallWith(DispatchEventSO eventSO);
+        void MakeFailActiveEvents();
+        void RemoveAllEvents();
+        bool PhoneIsRinging();
     }
 }

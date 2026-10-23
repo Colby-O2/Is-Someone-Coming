@@ -10,7 +10,11 @@ namespace ColbyO.SJ26
     public class PhoneAction : InteractionAction
     {
         public override string ActionName => "Answer Phone";
-        
+
+        public override bool IsEnabled { get => GameManager.GetMonoSystem<IDispatchMonoSystem>().PhoneIsRinging();
+            set { }
+        }
+
         public override void Execute(InteractorController interactor)
         {
             GameManager.GetMonoSystem<IDispatchMonoSystem>().AnswerPhone();

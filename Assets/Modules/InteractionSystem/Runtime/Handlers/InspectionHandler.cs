@@ -37,7 +37,7 @@ namespace InteractionSystem.Handlers
         public LayerMask InspectorClickableLayer;
     }
 
-    internal sealed class InspectionHandler
+    public sealed class InspectionHandler
     {
         private const float TRANSITION_TIME = 0.3f;
 
@@ -62,11 +62,11 @@ namespace InteractionSystem.Handlers
         private enum State { Starting, Inspecting, Stopping }
         [SerializeField, ReadOnly] private State _state;
 
-        public List<InspectorProfile> GetProfiles => _profiles;
-        public InspectorProfile GetProfile => _currentProfile;
+        internal List<InspectorProfile> GetProfiles => _profiles;
+        internal InspectorProfile GetProfile => _currentProfile;
         public bool IsInspecting() => _currentProfile != null;
 
-        public InspectionHandler(InteractorController controller, InspectSettings settings)
+        internal InspectionHandler(InteractorController controller, InspectSettings settings)
         {
             _controller = controller;
             _settings = settings;
@@ -88,7 +88,7 @@ namespace InteractionSystem.Handlers
             _currentProfile.Obj.gameObject.SetActive(true);
         }
 
-        public void Inspect(Transform from, InspectorProfile profile)
+        internal void Inspect(Transform from, InspectorProfile profile)
         {
             if (IsInspecting()) return;
 
