@@ -70,6 +70,8 @@ namespace ColbyO.SJ26
 
         private void Update()
         {
+            if (SJ26GameManager.IsPaused) return;
+
             if (!LockHead
                 && !_interactor.IsInspecting()
                 && !_animation.IsChangingState()

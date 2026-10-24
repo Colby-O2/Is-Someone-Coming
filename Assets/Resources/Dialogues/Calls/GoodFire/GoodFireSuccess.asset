@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dde6bf8a896c98c48b27db112dac91a0, type: 3}
   m_Name: GoodFireSuccess
   m_EditorClassIdentifier: DialogueGraph::DialogueGraph.Data.DialogueGraphSO
-  id: 8
+  id: -1
   includeInDatabase: 1
   Name: GoodFireSuccess
   Nodes:
@@ -38,7 +38,7 @@ MonoBehaviour:
     - Text: 
       Next: ada6d6d7-8a4d-4b53-8124-34f967fc6de7
   - Guid: ada6d6d7-8a4d-4b53-8124-34f967fc6de7
-    ActorName: 
+    ActorName: Dispatch
     GroupName: 
     Type: 1
     Text: <i>The firemen manage to quench the flames and save everyone!</i>

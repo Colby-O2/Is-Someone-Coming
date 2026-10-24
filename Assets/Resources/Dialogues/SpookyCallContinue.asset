@@ -79,9 +79,9 @@ MonoBehaviour:
     Choices:
     - Text: Yes
       Next: aa014f9c-cfdf-4f07-a3f2-456c159b28fb
-    - Text: Yes
+    - Text: They will soon
       Next: aa014f9c-cfdf-4f07-a3f2-456c159b28fb
-    - Text: Yes
+    - Text: Any minute now
       Next: aa014f9c-cfdf-4f07-a3f2-456c159b28fb
   - Guid: aa014f9c-cfdf-4f07-a3f2-456c159b28fb
     ActorName: 

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dde6bf8a896c98c48b27db112dac91a0, type: 3}
   m_Name: TrafficBadFailed
   m_EditorClassIdentifier: DialogueGraph::DialogueGraph.Data.DialogueGraphSO
-  id: 4
+  id: -1
   includeInDatabase: 1
   Name: TrafficBadFailed
   Nodes:
@@ -38,10 +38,10 @@ MonoBehaviour:
     - Text: 
       Next: ada6d6d7-8a4d-4b53-8124-34f967fc6de7
   - Guid: ada6d6d7-8a4d-4b53-8124-34f967fc6de7
-    ActorName: 
+    ActorName: Dispatch
     GroupName: 
     Type: 1
-    Text: <i>Not enough units responded to the fire and the entire house with everyone inside burned down...</i>
+    Text: <i>Not enough units responded to the accident, and several victims succumbed to their injuries.</i>
     EventID: 
     position: {x: 297, y: -12}
     PropertyType: 

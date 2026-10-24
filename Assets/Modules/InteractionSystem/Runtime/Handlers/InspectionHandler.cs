@@ -78,7 +78,7 @@ namespace InteractionSystem.Handlers
             _origHeadLoc = headLoc.transform;
         }
 
-        public bool HasUI => _currentProfile.Settings.ShowUi;
+        public bool HasUI => _currentProfile?.Settings?.ShowUi ?? false;
 
         public void SwitchInspectionTo(int index)
         {

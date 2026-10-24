@@ -25,7 +25,11 @@ namespace ColbyO.SJ26.UI
             });
             _controller.OnHide.AddListener(() =>
             {
-                if (!SJ26GameManager.PlayerInteractor.GetInspectorHandler().HasUI) return;
+                if (!SJ26GameManager.PlayerInteractor.GetInspectorHandler().HasUI)
+                {
+                    VirtualCaster.HideCursor();
+                    return;
+                }
                 if (_as && _dropClip) _as.PlayOneShot(_dropClip);
                 GameManager.GetMonoSystem<IUIMonoSystem>().ShowLast();
             });

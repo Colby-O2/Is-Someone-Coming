@@ -38,7 +38,7 @@ MonoBehaviour:
     - Text: 
       Next: ada6d6d7-8a4d-4b53-8124-34f967fc6de7
   - Guid: ada6d6d7-8a4d-4b53-8124-34f967fc6de7
-    ActorName: 
+    ActorName: Dispatch
     GroupName: 
     Type: 1
     Text: <i>Not enough units responded to the fire and the entire house with everyone inside burned down...</i>

@@ -188,7 +188,7 @@ namespace ColbyO.SJ26.GameLogic
                         Refs.DispatchMonitor.ReallyCanInteract = true;
                         Refs.Radio.gameObject.GetComponent<AudioSource>().Play();
                     })
-                    .Then(_ => _sch.When(() => GetCounter("CallsCompleted") >= 5))
+                    .Then(_ => _sch.When(() => GetCounter("CallsCompleted") >= 1)) //
                     .Then(_ =>
                     {
                         crt = _visualEffectMs.GetCRTSettings();
@@ -202,17 +202,17 @@ namespace ColbyO.SJ26.GameLogic
                         DispatchEventSO ev = SJ26GameManager.Preferences.DispatchEvents.GetEntry("SpookyCall");
                         _dispatchMs.StartCallWith(ev);
 
-                        _sch.When(() => _dispatchMs.InCall().Event == ev)
+                        _sch.When(() => _dispatchMs.InCall() != null && _dispatchMs.InCall().Event == ev)
                             .Then(_ => Refs.DispatchMonitor.WaitForEnter())
                             .Then(_ =>
                             {
                                 SJ26GameManager.PlayerInteractor.Controls.InspectionBackAction.Disable();
                                 SJ26GameManager.PlayerInteractor.Controls.InspectionLeaveAction.Disable();
-                                _actorMonoSystem.SendActorTo("Coworker", "SpookAtDesk", 8)
-                                    .Then(_ =>
-                                    {
-                                        _actorMonoSystem.GetActor("Coworker").LookAt(SJ26GameManager.PlayerInteractor.gameObject.transform, 0.1f);
-                                    });
+                                _actorMonoSystem.SendActorTo("Coworker", "SpookAtDesk", 8);
+                                //.Then(_ =>
+                                //{
+                                //    _actorMonoSystem.GetActor("Coworker").LookAt(SJ26GameManager.PlayerInteractor.gameObject.transform, 0.1f);
+                                //});
                             })
                             .Then(_ => _sch.When(() => _dialogueMs.GetFlag("Spooky1")))
                             .Then(_ =>
@@ -292,14 +292,14 @@ namespace ColbyO.SJ26.GameLogic
                     .Then(_ =>
                     {
                         Refs.DispatchMonitor.ReallyCanInteract = false;
-                        _taskMonoSystem.StartTask("Go get a coffee");
+                        _taskMonoSystem.StartTask("Go Get a Coffee");
                     })
                     .Then(_ => _sch.When(() => IsInRange("CoffeeBrewed")))
                     .Then(_ =>
                     {
                         Refs.PlayerSeat.IsEnabled = false;
                         _taskMonoSystem.EndTask();
-                        _taskMonoSystem.StartTask("Bring coffee back to desk");
+                        _taskMonoSystem.StartTask("Bring Coffee Back to Desk");
                     })
                     .Then(_ => _sch.When(() => IsInRange("Mug")))
                     .Then(_ =>
@@ -310,10 +310,11 @@ namespace ColbyO.SJ26.GameLogic
                     .Then(_ => Refs.PlayerSeat.WaitForSit())
                     .Then(_ =>
                     {
+                        SJ26GameManager.PlayerSit.CanUnSit = false;
                         Refs.DispatchMonitor.ReallyCanInteract = true;
                         _dispatchMs.StartTheCalls();
                     })
-                    .Then(_ => _sch.When(() => GetCounter("CallsCompleted") >= 10))
+                    .Then(_ => _sch.When(() => GetCounter("CallsCompleted") >= 2))
                     .Then(_ =>
                     {
                         _dispatchMs.StopTheCalls();
@@ -331,10 +332,16 @@ namespace ColbyO.SJ26.GameLogic
                     })
                 .Then(_ =>
                 {
+                    Refs.Radio.gameObject.GetComponent<AudioSource>().Pause();
+                    return SJ26GameManager.GlobalScheduler.Wait(1f);
+                })
+                .Then(_ =>
+                {
                     Refs.FlashlightPickup.gameObject.SetActive(true);
                 })
                 .Then(_ =>
                 {
+                    SJ26GameManager.PlayerSit.CanUnSit = true;
                     _lightMs.TriggerOutageWithEmergencyBackup(waveOrigin: SJ26GameManager.Player.transform.position);
                 })
                 .Then(_ =>
