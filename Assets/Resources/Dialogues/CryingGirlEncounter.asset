@@ -16,27 +16,6 @@ MonoBehaviour:
   includeInDatabase: 1
   Name: CryingGirlEncounter
   Nodes:
-  - Guid: 3085a053-efd1-41e9-8e78-1e872161276b
-    ActorName: <b><color=red>Little Girl</color></b>
-    GroupName: 
-    Type: 1
-    Text: <b><color=red>No one is coming.</color></b>
-    EventID: 
-    position: {x: 1367, y: 23}
-    PropertyType: 
-    PropertyBooleanValue: 0
-    PropertyIntValue: 0
-    PropertyName: 
-    IncrementAmount: 0
-    ComparisonType: 0
-    ComparsionCondition: 0
-    CameraFromLocationTag: 
-    CameraToLocationTag: 
-    CameraLookAtTag: 
-    Duration: 0
-    Choices:
-    - Text: 
-      Next: 
   - Guid: 629719a0-19a9-4012-9357-08bc6b4c6223
     ActorName: 
     GroupName: 
@@ -98,17 +77,17 @@ MonoBehaviour:
     CameraLookAtTag: 
     Duration: 0
     Choices:
-    - Text: No...
-      Next: b4a1c3dd-8fd8-439a-805a-713f42c26efc
     - Text: Yes...
       Next: af18b04b-7444-4da9-bec0-9c2929b873a0
+    - Text: No...
+      Next: b4a1c3dd-8fd8-439a-805a-713f42c26efc
   - Guid: b4a1c3dd-8fd8-439a-805a-713f42c26efc
     ActorName: Little Girl
     GroupName: 
     Type: 1
     Text: That's right.
     EventID: 
-    position: {x: 996, y: -223}
+    position: {x: 976, y: 222}
     PropertyType: 
     PropertyBooleanValue: 0
     PropertyIntValue: 0
@@ -123,13 +102,34 @@ MonoBehaviour:
     Choices:
     - Text: 
       Next: 3085a053-efd1-41e9-8e78-1e872161276b
+  - Guid: 3085a053-efd1-41e9-8e78-1e872161276b
+    ActorName: <b><color=red>Little Girl</color></b>
+    GroupName: 
+    Type: 1
+    Text: <b><color=red>No one is coming.</color></b>
+    EventID: 
+    position: {x: 1366, y: -8}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 
   - Guid: af18b04b-7444-4da9-bec0-9c2929b873a0
     ActorName: <b><color=red>Little Girl</color></b>
     GroupName: 
     Type: 1
     Text: <b><color=red>Liar</color></b>
     EventID: 
-    position: {x: 994, y: 263}
+    position: {x: 968, y: -228}
     PropertyType: 
     PropertyBooleanValue: 0
     PropertyIntValue: 0

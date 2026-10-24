@@ -1,5 +1,3 @@
-using ColbyO.SJ26.Enviroment;
-using ColbyO.SJ26.UI;
 using InteractionSystem.Controls;
 using InteractionSystem.UI;
 using PlazmaGames.Core;
@@ -10,7 +8,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-namespace ColbyO.SJ26
+namespace ColbyO.SJ26.UI
 {
     public class EndView : View
     {
@@ -48,7 +46,7 @@ namespace ColbyO.SJ26
             SJ26GameManager.PlayerInteractor.Controls.InspectionClickAction.performed += OnClick;
 
             _musicSource.volume = GameManager.GetMonoSystem<IUIMonoSystem>().GetView<MainMenuView>().GetMusicVolume();
-            if (!_musicSource.isPlaying) _musicSource.Play();
+            _musicSource.Play();
 
             SJ26GameManager.LockMovement = true;
         }

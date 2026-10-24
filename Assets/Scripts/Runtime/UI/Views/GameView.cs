@@ -92,7 +92,7 @@ namespace ColbyO.SJ26
 
         private void HandlePause(InputAction.CallbackContext e)
         {
-            if (!SJ26GameManager.HasStarted || SJ26GameManager.PlayerInteractor.IsInspecting()) return;
+            if (!SJ26GameManager.HasStarted || SJ26GameManager.PlayerInteractor.IsInspecting() || SJ26GameManager.GetMonoSystem<IUIMonoSystem>().GetCurrentViewIs<EndView>()) return;
 
             if (SJ26GameManager.IsPaused)
             {

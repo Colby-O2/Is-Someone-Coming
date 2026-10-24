@@ -30,6 +30,7 @@ TagManager:
   - Radio
   - ScareObject
   - EndFire
+  - P1
   layers:
   - Default
   - TransparentFX

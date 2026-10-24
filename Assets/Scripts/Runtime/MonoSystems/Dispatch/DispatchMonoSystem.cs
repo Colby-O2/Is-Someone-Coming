@@ -168,8 +168,7 @@ namespace ColbyO.SJ26.Dispatch
                 _phoneRinger = phoneObj.GetComponent<AudioSource>();
                 if (_phoneRinger != null)
                 {
-                    _phoneRinger.Play();
-                    _phoneRinger.Pause();
+                    _phoneRinger.Stop();
                 }
             }
         }
@@ -366,7 +365,7 @@ namespace ColbyO.SJ26.Dispatch
                 }
 
                 if (_phone != null) _phone.IsEnabled = false;
-                if (_phoneRinger != null) _phoneRinger.Pause();
+                if (_phoneRinger != null) _phoneRinger.Stop();
 
                 StartEvent(activeEvent);
 
@@ -377,7 +376,7 @@ namespace ColbyO.SJ26.Dispatch
             });
 
             if (_phone != null) _phone.IsEnabled = true;
-            if (_phoneRinger != null) _phoneRinger.UnPause();
+            if (_phoneRinger != null) _phoneRinger.Play();
         }
 
         public void MakeFailActiveEvents()
@@ -664,7 +663,7 @@ namespace ColbyO.SJ26.Dispatch
             if (_stagedEvent == null || DialogueSystem == null || DialogueSystem.IsPlayingDialogue()) return;
 
             if (_phone != null) _phone.IsEnabled = false;
-            if (_phoneRinger != null) _phoneRinger.Pause();
+            if (_phoneRinger != null) _phoneRinger.Stop();
 
             ActiveDispatchEvent activeEvent = _stagedEvent;
             _stagedEvent = null;

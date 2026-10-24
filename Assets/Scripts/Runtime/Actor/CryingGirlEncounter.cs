@@ -61,6 +61,7 @@ namespace ColbyO.SJ26.Entities
         private Collider[] _girlColliders;
         private bool _hasCachedDefaults;
         private Promise _promise;
+        private Promise _promiseForce;
 
         public EncounterPhase Phase => _phase;
         public UnityEvent OnJumpscareFinished => _onJumpscareFinished;
@@ -282,13 +283,37 @@ namespace ColbyO.SJ26.Entities
             }
         }
 
-        [ContextMenu("Test Jumpscare Now")]
+        public Promise ForceJumpscare()
+        {
+            ExecuteJumpscare(true);
+
+            return Promise.CreateExisting(ref _promiseForce);
+        }
+
         public void ExecuteJumpscare(bool force = false)
         {
-            if (_phase == EncounterPhase.CaughtPlayer || force) return;
+            if (_phase == EncounterPhase.CaughtPlayer && !force) return;
+
+            if (_girlActor == null)
+                _girlActor = GameManager.GetMonoSystem<IActorMonoSystem>().GetActor(_girlActorName);
+
+            if (_playerTransform == null && SJ26GameManager.Player != null)
+            {
+                _playerTransform = SJ26GameManager.Player.transform;
+                _playerView = SJ26GameManager.Player.GetComponentInChildren<ViewController>();
+            }
+
+            if (_girlActor == null || _playerTransform == null) return;
+
+            StopAllCoroutines();
+
             _phase = EncounterPhase.CaughtPlayer;
 
-            SJ26GameManager.Player.Freeze();
+            if (!_girlActor.gameObject.activeSelf)
+                _girlActor.gameObject.SetActive(true);
+
+            if (SJ26GameManager.Player != null)
+                SJ26GameManager.Player.Freeze();
 
             _girlActor.SetChasingMode(false);
             _girlActor.StopMoving(disableAgent: true);
@@ -381,6 +406,8 @@ namespace ColbyO.SJ26.Entities
                     if (col != null) col.enabled = true;
                 }
             }
+
+            if (_promiseForce != null) Promise.ResolveExisting(ref _promiseForce);
 
             _onJumpscareFinished?.Invoke();
         }

@@ -84,7 +84,7 @@ MonoBehaviour:
     - Text: Any minute now
       Next: aa014f9c-cfdf-4f07-a3f2-456c159b28fb
     - Text: Soon, I promise
-      Next: 
+      Next: aa014f9c-cfdf-4f07-a3f2-456c159b28fb
   - Guid: aa014f9c-cfdf-4f07-a3f2-456c159b28fb
     ActorName: 
     GroupName: 
