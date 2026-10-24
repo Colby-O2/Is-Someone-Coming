@@ -1,8 +1,8 @@
 ﻿<Solution>
   <Project Path="PlazmaGames.Core.csproj" />
   <Project Path="PlazmaGames.Runtime.csproj" />
-  <Project Path="PlazmaGames.Editor.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
+  <Project Path="PlazmaGames.Editor.csproj" />
   <Project Path="ColbyO.VNTG.Editor.csproj" />
   <Project Path="DialogueGraphEditor.csproj" />
   <Project Path="DialogueGraph.csproj" />
