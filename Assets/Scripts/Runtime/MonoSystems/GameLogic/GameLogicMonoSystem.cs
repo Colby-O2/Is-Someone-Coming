@@ -20,6 +20,7 @@ using Unity.Hierarchy;
 using PlazmaGames.Audio;
 using PlazmaGames.UI;
 using ColbyO.SJ26.UI;
+using ColbyO.SJ26.Utilities;
 
 namespace ColbyO.SJ26.GameLogic
 {
@@ -219,11 +220,13 @@ namespace ColbyO.SJ26.GameLogic
                             {
                                 SJ26GameManager.PlayerInteractor.Controls.InspectionBackAction.Disable();
                                 SJ26GameManager.PlayerInteractor.Controls.InspectionLeaveAction.Disable();
+                                _actorMonoSystem.GetActor("Coworker").gameObject.GetComponent<WalkingSound>().enabled = false;
                                 _actorMonoSystem.TellActorToUnsit("Coworker")
                                 .Then(_ => _actorMonoSystem.SendActorTo("Coworker", "SpookAtDesk", 8))
+                                .Then(_ => _actorMonoSystem.GetActor("Coworker").LookAt(SJ26GameManager.PlayerInteractor.gameObject.transform, 0.1f))
                                 .Then(_ =>
                                 {
-                                    _actorMonoSystem.GetActor("Coworker").LookAt(SJ26GameManager.PlayerInteractor.gameObject.transform, 0.1f);
+                                    _actorMonoSystem.GetActor("Coworker").gameObject.GetComponent<WalkingSound>().enabled = true;
                                 });
                             })
                             .Then(_ => _sch.When(() => _dialogueMs.GetFlag("Spooky1")))
