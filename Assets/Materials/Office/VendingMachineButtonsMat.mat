@@ -138,7 +138,7 @@ Material:
     - _GlossyReflections: 0
     - _HueShift: 0
     - _LIGHTINGMETHOD: 2
-    - _LightnessMultiplier: 0.11
+    - _LightnessMultiplier: 0.05
     - _Metallic: 0
     - _Metalness: 0
     - _OcclusionStrength: 1
