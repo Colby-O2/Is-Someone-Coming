@@ -716,7 +716,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: a45c17b933f295a28b926d427e10ef2d, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 8a7bfa36310031a1f8393a5429c64dd7, type: 2}
+      objectReference: {fileID: 2100000, guid: 72332d5cde07cea468e0532fb3f21458, type: 2}
     - target: {fileID: 919132149155446097, guid: a45c17b933f295a28b926d427e10ef2d, type: 3}
       propertyPath: m_Name
       value: OfficeDesk
@@ -1154,7 +1154,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: ade59c6e2f3605e4ab24e8e14540a79a, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 9605c30aee53ff6e38a87512b6260882, type: 2}
+      objectReference: {fileID: 2100000, guid: 660363aff70b0bf48a9d7b183303c2ec, type: 2}
     - target: {fileID: 919132149155446097, guid: ade59c6e2f3605e4ab24e8e14540a79a, type: 3}
       propertyPath: m_Name
       value: TrashBag
@@ -1236,7 +1236,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: ade59c6e2f3605e4ab24e8e14540a79a, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 9605c30aee53ff6e38a87512b6260882, type: 2}
+      objectReference: {fileID: 2100000, guid: 660363aff70b0bf48a9d7b183303c2ec, type: 2}
     - target: {fileID: 919132149155446097, guid: ade59c6e2f3605e4ab24e8e14540a79a, type: 3}
       propertyPath: m_Name
       value: TrashBag (1)
@@ -1596,7 +1596,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 77f75df2df524d107b5205a2cdbd3794, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 2055e72af3cf3fc4fbb12d4c3be983fb, type: 2}
+      objectReference: {fileID: 2100000, guid: 7cbbada13bc287545b21d8ffef6b2101, type: 2}
     - target: {fileID: 919132149155446097, guid: 77f75df2df524d107b5205a2cdbd3794, type: 3}
       propertyPath: m_Name
       value: CircleTable
@@ -2406,7 +2406,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 77f75df2df524d107b5205a2cdbd3794, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 73c2e0008b3f58b4b872f52d77dd9373, type: 2}
+      objectReference: {fileID: 2100000, guid: 7cbbada13bc287545b21d8ffef6b2101, type: 2}
     - target: {fileID: 919132149155446097, guid: 77f75df2df524d107b5205a2cdbd3794, type: 3}
       propertyPath: m_Name
       value: CircleTable (3)
@@ -2488,7 +2488,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: f20a9e5039c1b68c6ba0a94a512ebbdd, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 1a6817733141612c790e57b19b413e3b, type: 2}
+      objectReference: {fileID: 2100000, guid: 660363aff70b0bf48a9d7b183303c2ec, type: 2}
     - target: {fileID: 919132149155446097, guid: f20a9e5039c1b68c6ba0a94a512ebbdd, type: 3}
       propertyPath: m_Name
       value: TrashCan
@@ -3028,7 +3028,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 5b490b26c7d31fc00ba435417c616320, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 2055e72af3cf3fc4fbb12d4c3be983fb, type: 2}
+      objectReference: {fileID: 2100000, guid: 7cbbada13bc287545b21d8ffef6b2101, type: 2}
     - target: {fileID: 919132149155446097, guid: 5b490b26c7d31fc00ba435417c616320, type: 3}
       propertyPath: m_Name
       value: KitchenChair (3)
@@ -3662,7 +3662,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 5b490b26c7d31fc00ba435417c616320, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 2055e72af3cf3fc4fbb12d4c3be983fb, type: 2}
+      objectReference: {fileID: 2100000, guid: 7cbbada13bc287545b21d8ffef6b2101, type: 2}
     - target: {fileID: 919132149155446097, guid: 5b490b26c7d31fc00ba435417c616320, type: 3}
       propertyPath: m_Name
       value: KitchenChair (2)
@@ -3744,7 +3744,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 77f75df2df524d107b5205a2cdbd3794, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 73c2e0008b3f58b4b872f52d77dd9373, type: 2}
+      objectReference: {fileID: 2100000, guid: 660363aff70b0bf48a9d7b183303c2ec, type: 2}
     - target: {fileID: 919132149155446097, guid: 77f75df2df524d107b5205a2cdbd3794, type: 3}
       propertyPath: m_Name
       value: CircleTable (1)
@@ -3826,7 +3826,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 5b490b26c7d31fc00ba435417c616320, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 2055e72af3cf3fc4fbb12d4c3be983fb, type: 2}
+      objectReference: {fileID: 2100000, guid: 7cbbada13bc287545b21d8ffef6b2101, type: 2}
     - target: {fileID: 919132149155446097, guid: 5b490b26c7d31fc00ba435417c616320, type: 3}
       propertyPath: m_Name
       value: KitchenChair
@@ -4018,7 +4018,7 @@ PrefabInstance:
     - target: {fileID: 3753128373176963984, guid: 442243825122f379e9c3c59f09daf1be, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 5049db0db4599d38687c9659ce82169c, type: 2}
+      objectReference: {fileID: 2100000, guid: 5eed83dd123b97d4e945664d3024d31f, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4174,7 +4174,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 55b240e8877f39b00885f4c1ba5c9c6c, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: ce398fd7a99f4e4e381a7b56f1684829, type: 2}
+      objectReference: {fileID: 2100000, guid: 7cbbada13bc287545b21d8ffef6b2101, type: 2}
     - target: {fileID: 919132149155446097, guid: 55b240e8877f39b00885f4c1ba5c9c6c, type: 3}
       propertyPath: m_Name
       value: LivingRoomTable (1)
@@ -4342,7 +4342,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 666c7e43fcfb64ddcb7a71aaebb85f70, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 2055e72af3cf3fc4fbb12d4c3be983fb, type: 2}
+      objectReference: {fileID: 2100000, guid: 7cbbada13bc287545b21d8ffef6b2101, type: 2}
     - target: {fileID: 919132149155446097, guid: 666c7e43fcfb64ddcb7a71aaebb85f70, type: 3}
       propertyPath: m_Name
       value: CouchMedium (1)
@@ -4424,7 +4424,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 666c7e43fcfb64ddcb7a71aaebb85f70, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 2055e72af3cf3fc4fbb12d4c3be983fb, type: 2}
+      objectReference: {fileID: 2100000, guid: 7cbbada13bc287545b21d8ffef6b2101, type: 2}
     - target: {fileID: 919132149155446097, guid: 666c7e43fcfb64ddcb7a71aaebb85f70, type: 3}
       propertyPath: m_Name
       value: CouchMedium
@@ -4866,7 +4866,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: f20a9e5039c1b68c6ba0a94a512ebbdd, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 1a6817733141612c790e57b19b413e3b, type: 2}
+      objectReference: {fileID: 2100000, guid: 660363aff70b0bf48a9d7b183303c2ec, type: 2}
     - target: {fileID: 919132149155446097, guid: f20a9e5039c1b68c6ba0a94a512ebbdd, type: 3}
       propertyPath: m_Name
       value: TrashCan (2)
@@ -4948,7 +4948,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 5b490b26c7d31fc00ba435417c616320, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 2055e72af3cf3fc4fbb12d4c3be983fb, type: 2}
+      objectReference: {fileID: 2100000, guid: 7cbbada13bc287545b21d8ffef6b2101, type: 2}
     - target: {fileID: 919132149155446097, guid: 5b490b26c7d31fc00ba435417c616320, type: 3}
       propertyPath: m_Name
       value: KitchenChair (1)
@@ -5210,7 +5210,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 77f75df2df524d107b5205a2cdbd3794, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 2055e72af3cf3fc4fbb12d4c3be983fb, type: 2}
+      objectReference: {fileID: 2100000, guid: 7cbbada13bc287545b21d8ffef6b2101, type: 2}
     - target: {fileID: 919132149155446097, guid: 77f75df2df524d107b5205a2cdbd3794, type: 3}
       propertyPath: m_Name
       value: CircleTable (2)
@@ -5292,7 +5292,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 55b240e8877f39b00885f4c1ba5c9c6c, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: ce398fd7a99f4e4e381a7b56f1684829, type: 2}
+      objectReference: {fileID: 2100000, guid: 7cbbada13bc287545b21d8ffef6b2101, type: 2}
     - target: {fileID: 919132149155446097, guid: 55b240e8877f39b00885f4c1ba5c9c6c, type: 3}
       propertyPath: m_Name
       value: LivingRoomTable
@@ -5374,7 +5374,7 @@ PrefabInstance:
     - target: {fileID: -3998559533830405104, guid: 3b27a083b8e2aab18b343b7afc445365, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 919b61ca0cd86284898210aa7620b38f, type: 2}
+      objectReference: {fileID: 2100000, guid: 7cbbada13bc287545b21d8ffef6b2101, type: 2}
     - target: {fileID: 919132149155446097, guid: 3b27a083b8e2aab18b343b7afc445365, type: 3}
       propertyPath: m_Name
       value: TVStand
