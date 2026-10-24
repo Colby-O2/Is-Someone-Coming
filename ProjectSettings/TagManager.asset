@@ -28,6 +28,8 @@ TagManager:
   - CallElevator
   - Door4
   - Radio
+  - ScareObject
+  - EndFire
   layers:
   - Default
   - TransparentFX

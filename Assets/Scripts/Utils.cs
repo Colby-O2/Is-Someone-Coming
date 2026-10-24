@@ -41,5 +41,11 @@ namespace ColbyO.SJ26
                 return t < 1;
             });
         }
+
+        public static bool CanCameraSee(Camera camera, Renderer obj)
+        {
+            Plane[] planes = GeometryUtility.CalculateFrustumPlanes(camera);
+            return GeometryUtility.TestPlanesAABB(planes, obj.bounds);
+        }
     }
 }

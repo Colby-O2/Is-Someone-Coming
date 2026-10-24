@@ -13837,6 +13837,7 @@ MonoBehaviour:
   _horizontalVelocity: {x: 0, y: 0}
   _movement: {x: 0, y: 0}
   GravityScale: 1
+  Camera: {fileID: 0}
   LockJustMove: 0
 --- !u!143 &1045683416
 CharacterController:
@@ -21711,6 +21712,35 @@ RectTransform:
   m_AnchoredPosition: {x: -29.00001, y: 240}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
+--- !u!1001 &2040901155
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1072405314525126506, guid: 4c4c83b99934e7ca595db84aa627fc01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1072405314525126506, guid: 4c4c83b99934e7ca595db84aa627fc01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1072405314525126506, guid: 4c4c83b99934e7ca595db84aa627fc01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9164183331812111738, guid: 4c4c83b99934e7ca595db84aa627fc01, type: 3}
+      propertyPath: m_Name
+      value: EndFire
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4c4c83b99934e7ca595db84aa627fc01, type: 3}
 --- !u!1 &2088294915
 GameObject:
   m_ObjectHideFlags: 0
@@ -26378,3 +26408,4 @@ SceneRoots:
   - {fileID: 1261064484}
   - {fileID: 680465067}
   - {fileID: 583823483}
+  - {fileID: 2040901155}
