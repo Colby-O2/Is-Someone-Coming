@@ -78,7 +78,8 @@ namespace ColbyO.SJ26
             float multiplier = 1f;
             if (_movement.y < 0f) multiplier *= _settings.BackwardSpeedMul;
             if (_movement.x != 0f) multiplier *= _settings.StrafingSpeedMul;
-            Vector3 target3D = multiplier * Speed * transform.TransformDirection(local);
+            float speed = (IsRunning ? SJ26GameManager.Preferences.Movement.RunSpeed : Speed);
+            Vector3 target3D = multiplier * speed * transform.TransformDirection(local);
             Vector2 target2D = new Vector2(target3D.x, target3D.z) * controlMultiplier;
 
             _horizontalVelocity = Vector2.Lerp(
@@ -90,6 +91,8 @@ namespace ColbyO.SJ26
             _velocity.x = _horizontalVelocity.x;
             _velocity.z = _horizontalVelocity.y;
         }
+
+        public bool IsRunning = false;
 
         private void UpdateGrounded()
         {

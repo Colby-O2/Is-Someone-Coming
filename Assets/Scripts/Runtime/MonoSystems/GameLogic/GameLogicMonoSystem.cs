@@ -417,11 +417,13 @@ namespace ColbyO.SJ26.GameLogic
                 {
                     SJ26GameManager.LockMovement = false;
                     Refs.CryingGirlEncounter.Force = true;
+                    SJ26GameManager.Player.IsRunning =true;
                 })
                 .Then(_ => Refs.CryingGirlEncounter.TriggerChase())
                 .Then(_ => SJ26GameManager.GlobalScheduler.When(() => IsInRange("InsideElevatorNotify")))
                 .Then(_ =>
                 {
+                    SJ26GameManager.Player.IsRunning =false;
                     Refs.CryingGirlEncounter.Stop();
                     return Refs.Elevator.Close(1.5f);
                 })

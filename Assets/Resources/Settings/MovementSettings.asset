@@ -29,3 +29,4 @@ MonoBehaviour:
   HeadBobAmount: 0.00291
   HeadBobFreqency: 16.7
   HeadBobSmoothing: 59.1
+  RunSpeed: 5

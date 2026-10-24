@@ -27,5 +27,6 @@ namespace ColbyO.SJ26
         [Range(0.001f, 0.01f)] public float HeadBobAmount;
         [Range(1f, 30f)] public float HeadBobFreqency;
         [Range(10f, 100f)] public float HeadBobSmoothing;
+        public float RunSpeed = 4.0f;
     }
 }

@@ -15,6 +15,7 @@ namespace ColbyO.SJ26
         public float MaxCallTime = 20;
         public Color CoffeeColor = Color.brown;
         public float CoffeeBrewTime = 8.0f;
+        public MovementSettings Movement;
 
         public float RandomCallTime() => Random.Range(MinCallTime, MaxCallTime);
     }
