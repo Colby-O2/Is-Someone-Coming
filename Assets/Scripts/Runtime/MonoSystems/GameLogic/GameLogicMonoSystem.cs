@@ -141,7 +141,6 @@ namespace ColbyO.SJ26.GameLogic
 
                     CRTSettings crt;
 
-                    /*
                     _sch.Wait(0.5f)
                     .Then(_ => Promise.All(
                         _visualEffectMs.WriteFadeOutText("October 23rd 22:54\nMississauga, Ontario", 0.1f, 2f)
@@ -342,11 +341,11 @@ namespace ColbyO.SJ26.GameLogic
                     Refs.Radio.gameObject.GetComponent<AudioSource>().Pause();
                     return SJ26GameManager.GlobalScheduler.Wait(1f);
                 })
-                .*/_visualEffectMs.FadeIn(0.5f).Then(_ =>
+                ./*_visualEffectMs.FadeIn(0.5f).Then(_ =>
                     {
                         SJ26GameManager.LockMovement = false;
                     Refs.FlashlightPickup.gameObject.SetActive(true);
-                })
+                })*/
                 .Then(_ =>
                 {
                     SJ26GameManager.PlayerSit.CanUnSit = true;
