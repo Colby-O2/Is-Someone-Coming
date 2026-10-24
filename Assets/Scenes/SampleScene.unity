@@ -13889,7 +13889,7 @@ MonoBehaviour:
   _horizontalVelocity: {x: 0, y: 0}
   _movement: {x: 0, y: 0}
   GravityScale: 1
-  Camera: {fileID: 0}
+  Camera: {fileID: 330585545}
   LockJustMove: 0
   IsRunning: 0
 --- !u!143 &1045683416

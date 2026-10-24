@@ -218,7 +218,6 @@ namespace ColbyO.SJ26.Dispatch
 
         private void UpdateCallTimer()
         {
-            Debug.Log(_stagedEvent == null);
             if (!_takingCalls || _stagedEvent != null) return;
 
             _newCallCountDown -= Time.deltaTime;

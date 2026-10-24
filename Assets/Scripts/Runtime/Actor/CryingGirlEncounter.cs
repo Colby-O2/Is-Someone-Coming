@@ -283,9 +283,9 @@ namespace ColbyO.SJ26.Entities
         }
 
         [ContextMenu("Test Jumpscare Now")]
-        private void ExecuteJumpscare()
+        public void ExecuteJumpscare(bool force = false)
         {
-            if (_phase == EncounterPhase.CaughtPlayer) return;
+            if (_phase == EncounterPhase.CaughtPlayer || force) return;
             _phase = EncounterPhase.CaughtPlayer;
 
             SJ26GameManager.Player.Freeze();

@@ -21,3 +21,4 @@ MonoBehaviour:
   MaxCallTime: 18
   CoffeeColor: {r: 0.2784314, g: 0.21176471, b: 0.105882354, a: 1}
   CoffeeBrewTime: 8
+  Movement: {fileID: 11400000, guid: 6184b17c8ec961740826c755faa6f0d5, type: 2}

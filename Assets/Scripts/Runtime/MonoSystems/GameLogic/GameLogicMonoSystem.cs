@@ -141,6 +141,7 @@ namespace ColbyO.SJ26.GameLogic
 
                     CRTSettings crt;
 
+                    /*
                     _sch.Wait(0.5f)
                     .Then(_ => Promise.All(
                         _visualEffectMs.WriteFadeOutText("October 23rd 22:54\nMississauga, Ontario", 0.1f, 2f)
@@ -341,8 +342,9 @@ namespace ColbyO.SJ26.GameLogic
                     Refs.Radio.gameObject.GetComponent<AudioSource>().Pause();
                     return SJ26GameManager.GlobalScheduler.Wait(1f);
                 })
-                .Then(_ =>
-                {
+                .*/_visualEffectMs.FadeIn(0.5f).Then(_ =>
+                    {
+                        SJ26GameManager.LockMovement = false;
                     Refs.FlashlightPickup.gameObject.SetActive(true);
                 })
                 .Then(_ =>
@@ -439,12 +441,14 @@ namespace ColbyO.SJ26.GameLogic
                     Refs.EndFire.SetActive(true);
                     return Refs.Elevator.Open(1.5f);
                 })
+                .Then(_ => _sch.Wait(0.5f))
                 .Then(_ => _sch.When(() => !Utils.CanCameraSee(SJ26GameManager.Player.Camera, Refs.ScareObject)))
                 .Then(_ => _sch.Wait(0.4f))
                 .Then(_ => _sch.When(() => Utils.CanCameraSee(SJ26GameManager.Player.Camera, Refs.ScareObject)))
                 .Then(_ =>
                 {
-                    Refs.CryingGirlEncounter.ForceEvent();
+                    Debug.Log("CCCCCCCC");
+                    Refs.CryingGirlEncounter.ExecuteJumpscare(true);
                 });
 
                 break;
