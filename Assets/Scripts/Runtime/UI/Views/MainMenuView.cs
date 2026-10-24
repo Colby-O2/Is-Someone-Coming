@@ -76,6 +76,8 @@ namespace ColbyO.SJ26.UI
             SJ26GameManager.PlayerInteractor.Controls.InspectionClickAction.performed -= OnClick;
         }
 
+        public float GetMusicVolume() => _musicSource.volume; 
+
         public void OnClick(InputAction.CallbackContext ctx)
         {
             ClickUI();
