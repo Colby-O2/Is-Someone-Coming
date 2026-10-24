@@ -808,7 +808,6 @@ MonoBehaviour:
   _defaultSpawnConfigs:
   - unitData: {fileID: 11400000, guid: c4066115ffdf13744ba3bed9f7485762, type: 2}
   - unitData: {fileID: 11400000, guid: c4066115ffdf13744ba3bed9f7485762, type: 2}
-  - unitData: {fileID: 11400000, guid: c4066115ffdf13744ba3bed9f7485762, type: 2}
   - unitData: {fileID: 11400000, guid: 319ed3bbcfa96d14cbe1ec3e20effd02, type: 2}
   - unitData: {fileID: 11400000, guid: 319ed3bbcfa96d14cbe1ec3e20effd02, type: 2}
   - unitData: {fileID: 11400000, guid: 10d370763f2c4914c879c387abc32ad0, type: 2}

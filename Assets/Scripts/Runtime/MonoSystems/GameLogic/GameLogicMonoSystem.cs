@@ -56,6 +56,8 @@ namespace ColbyO.SJ26.GameLogic
             public static DoorAction Door2;
             public static DoorAction Door3;
             public static DoorAction Door4;
+            public static GameObject EndFire;
+            public static Renderer ScareObject;
         }
 
         private void OnEnable()
@@ -84,6 +86,9 @@ namespace ColbyO.SJ26.GameLogic
             Refs.Door2 = GameObject.FindWithTag("Door2").GetComponent<Interactable>().GetAction<DoorAction>();
             Refs.Door3 = GameObject.FindWithTag("Door3").GetComponent<Interactable>().GetAction<DoorAction>();
             Refs.Door4 = GameObject.FindWithTag("Door4").GetComponent<Interactable>().GetAction<DoorAction>();
+            Refs.EndFire = GameObject.FindWithTag("EndFire");
+            Refs.ScareObject = GameObject.FindWithTag("ScareObject").GetComponent<Renderer>();
+            Refs.EndFire.SetActive(false);
             Refs.Radio = GameObject.FindWithTag("Radio").GetComponent<Interactable>();
 
             Refs.Radio.GetAction<RadioAction>().IsEnabled = false;
@@ -188,7 +193,7 @@ namespace ColbyO.SJ26.GameLogic
                         Refs.DispatchMonitor.ReallyCanInteract = true;
                         Refs.Radio.gameObject.GetComponent<AudioSource>().Play();
                     })
-                    .Then(_ => _sch.When(() => GetCounter("CallsCompleted") >= 5))
+                    .Then(_ => _sch.When(() => GetCounter("CallsCompleted") >= 3))
                     .Then(_ =>
                     {
                         crt = _visualEffectMs.GetCRTSettings();
@@ -313,7 +318,7 @@ namespace ColbyO.SJ26.GameLogic
                         Refs.DispatchMonitor.ReallyCanInteract = true;
                         _dispatchMs.StartTheCalls();
                     })
-                    .Then(_ => _sch.When(() => GetCounter("CallsCompleted") >= 10))
+                    .Then(_ => _sch.When(() => GetCounter("CallsCompleted") >= 6))
                     .Then(_ =>
                     {
                         _dispatchMs.StopTheCalls();
@@ -418,7 +423,19 @@ namespace ColbyO.SJ26.GameLogic
                     Refs.FireHallway.SetActive(false);
                 })
                 .Then(_ => Refs.Elevator.StartMoving())
-                .Then(_ => Refs.Elevator.StopMoving(2.5f));
+                .Then(_ => Refs.Elevator.StopMoving(2.5f))
+                .Then(_ =>
+                {
+                    Refs.EndFire.SetActive(true);
+                    return Refs.Elevator.Open(1.5f);
+                })
+                .Then(_ => _sch.When(() => !Utils.CanCameraSee(SJ26GameManager.Player.Camera, Refs.ScareObject)))
+                .Then(_ => _sch.Wait(0.4f))
+                .Then(_ => _sch.When(() => Utils.CanCameraSee(SJ26GameManager.Player.Camera, Refs.ScareObject)))
+                .Then(_ =>
+                {
+                    Refs.CryingGirlEncounter.ForceEvent();
+                });
 
                 break;
 

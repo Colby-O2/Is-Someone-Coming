@@ -40,6 +40,8 @@ namespace ColbyO.SJ26
         private float Speed => _settings.Speed;
         public float GravityScale = 1.0f;
         private float Gravity => GRAVITY * _settings.GravityMul * GravityScale;
+        public Camera Camera;
+
         [NonSerialized] public Vector3? LerpTo = null;
 
         public bool LockJustMove = false;
