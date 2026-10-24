@@ -31,6 +31,7 @@ TagManager:
   - ScareObject
   - EndFire
   - P1
+  - Mug
   layers:
   - Default
   - TransparentFX

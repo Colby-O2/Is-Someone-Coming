@@ -53,6 +53,7 @@ namespace ColbyO.SJ26.GameLogic
             public static GameObject FireGirl;
             public static GameObject FireHallway;
             public static OpenElevatorAction CallElevator;
+            public static GameObject Mug;
 
             public static DoorAction Door1;
             public static DoorAction Door2;
@@ -104,12 +105,14 @@ namespace ColbyO.SJ26.GameLogic
             Refs.FireGirl = GameObject.FindWithTag("FireGirl");
             Refs.FireHallway = GameObject.FindWithTag("FireHallway");
             Refs.CallElevator = GameObject.FindWithTag("CallElevator").GetComponent<Interactable>().GetAction<OpenElevatorAction>();
+            Refs.Mug = GameObject.FindWithTag("Mug");
 
             Refs.CryingGirlEncounter.gameObject.SetActive(false);
             Refs.FlashlightPickup.gameObject.SetActive(false);
             Refs.FireGirl.SetActive(false);
             Refs.FireHallway.SetActive(false);
 
+            Refs.Mug.SetActive(false);
 
             Refs.DispatchMonitor = GameObject.FindWithTag("DispatchMonitor").GetComponent<Interactable>().GetAction<UseDispatchViewAction>();
             Refs.DispatchMonitor.ReallyCanInteract = false;
@@ -301,6 +304,7 @@ namespace ColbyO.SJ26.GameLogic
                     .Then(_ =>
                     {
                         Refs.DispatchMonitor.ReallyCanInteract = false;
+                        Refs.Mug.SetActive(true);
                         _taskMonoSystem.StartTask("Go Get a Coffee");
                     })
                     .Then(_ => _sch.When(() => IsInRange("CoffeeBrewed")))
