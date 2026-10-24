@@ -74,7 +74,6 @@ namespace ColbyO.SJ26.Entities
 
         private IEnumerator Start()
         {
-            GetComponent<Collider>().isTrigger = true;
             yield return null;
 
             _girlActor = GameManager.GetMonoSystem<IActorMonoSystem>().GetActor(_girlActorName);

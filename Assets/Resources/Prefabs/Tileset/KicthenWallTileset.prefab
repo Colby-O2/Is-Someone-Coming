@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 1212122306931222054}
   - component: {fileID: 4362586273081384816}
   - component: {fileID: 8630119346147477594}
+  - component: {fileID: 1749442397511320391}
   m_Layer: 0
   m_Name: KitchenWall
   m_TagString: Untagged
@@ -98,7 +99,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 685d11ecf4910ff4da909a65ce5abeaa, type: 2}
+  - {fileID: 2100000, guid: 1b7141594784ad347826e23ff35c73f5, type: 2}
   - {fileID: 2100000, guid: 864e22fc862251b4dabc738bc0dd0c60, type: 2}
   - {fileID: 2100000, guid: e4a2a2ac1eddc7241886bf55f62bca01, type: 2}
   - {fileID: 2100000, guid: 64c1ba4847d1506468f7ef14e43a3d78, type: 2}
@@ -126,3 +127,24 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &1749442397511320391
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7464267741171266917}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.02005333, y: 0.18560086, z: 0.04265943}
+  m_Center: {x: -0.000026664733, y: 1.1500876, z: 0.020488784}

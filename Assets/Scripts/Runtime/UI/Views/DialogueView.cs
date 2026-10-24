@@ -32,6 +32,8 @@ namespace ColbyO.SJ26.UI
         [Header("Settings")]
         [SerializeField] private float _typeSpeed = 0.05f;
         [SerializeField] private float _delayBetweenDialogues = 3f;
+        [SerializeField] private int _characterThreshold = 50;
+        [SerializeField] private float _extraTimePerCharacter = 0.05f;
 
         [Header("Choice UI")]
         [SerializeField] private GameObject _choiceHolder;
@@ -54,6 +56,7 @@ namespace ColbyO.SJ26.UI
         [SerializeField, ReadOnly] private bool _isPassive;
         [SerializeField, ReadOnly] string _fullCurrentMessage;
         [SerializeField, ReadOnly] private float _timeWaitingForInput;
+        [SerializeField, ReadOnly] private float _currentDialogueDelay;
         [SerializeField, ReadOnly] private bool _canAutoAdvance;
 
         public UnityEvent<int> OnChoiceSelected { get; private set; }
@@ -87,7 +90,7 @@ namespace ColbyO.SJ26.UI
             if (_isWaitingForInput && _isPassive && _canAutoAdvance)
             {
                 _timeWaitingForInput += Time.deltaTime;
-                if (_timeWaitingForInput > _delayBetweenDialogues)
+                if (_timeWaitingForInput > _currentDialogueDelay)
                 {
                     _timeWaitingForInput = 0.0f;
                     OnRequestNext?.Invoke();
@@ -108,6 +111,7 @@ namespace ColbyO.SJ26.UI
         {
             base.Show();
         }
+
         public override void Hide()
         {
             DisableChoiceInput();
@@ -148,6 +152,7 @@ namespace ColbyO.SJ26.UI
             _fullCurrentMessage = GameManager.GetMonoSystem<IDialogueMonoSystem>().ParaseMsgForVariables(message);
             _dialogueAvatarName.text = GameManager.GetMonoSystem<IDialogueMonoSystem>().ParaseMsgForVariables(actor);
 
+            _currentDialogueDelay = CalculateDialogueDelay(_fullCurrentMessage);
             _timeWaitingForInput = 0.0f;
 
             _dialogueHolder.SetActive(true);
@@ -163,6 +168,24 @@ namespace ColbyO.SJ26.UI
             if (this == null) return;
 
             _typeRoutine = StartCoroutine(TypewriterRoutine(_fullCurrentMessage));
+        }
+
+        private float CalculateDialogueDelay(string message)
+        {
+            if (string.IsNullOrEmpty(message)) return _delayBetweenDialogues;
+
+            int visibleCount = 0;
+            bool insideTag = false;
+
+            for (int i = 0; i < message.Length; i++)
+            {
+                if (message[i] == '<') insideTag = true;
+                else if (message[i] == '>') insideTag = false;
+                else if (!insideTag) visibleCount++;
+            }
+
+            int extraChars = Mathf.Max(0, visibleCount - _characterThreshold);
+            return _delayBetweenDialogues + (extraChars * _extraTimePerCharacter);
         }
 
         public void DisplayChoices(List<DialogueChoiceData> choices)
@@ -247,7 +270,6 @@ namespace ColbyO.SJ26.UI
                 _dialogueText.text = text.Substring(0, visibleCharacters);
                 yield return new WaitForSeconds(_typeSpeed);
             }
-
 
             if (_as) _as.Stop();
 
