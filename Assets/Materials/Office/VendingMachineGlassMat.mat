@@ -28,18 +28,16 @@ Material:
   - _DITHERINGMETHOD_TEXTURERELATIVE
   - _LIGHTINGMETHOD_TEXEL_LIT
   - _SHADINGMETHOD_DEFAULT
-  - _SURFACE_TYPE_TRANSPARENT
   - _TEXTURESAMPLEMODE_BILINEAR
   - _VERTEXJITTERMODE_VIEW_SPACE
   m_InvalidKeywords:
-  - _ALPHABLEND_ON
   - _SurfaceType_TRANSPARENT
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3000
+  m_CustomRenderQueue: 2000
   stringTagMap:
-    RenderType: Transparent
+    RenderType: Opaque
   disabledShaderPasses:
   - MOTIONVECTORS
   m_LockedProperties: 
@@ -109,7 +107,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _AddPrecomputedVelocity: 0
-    - _AffineWrapStrength: 0.2
+    - _AffineWrapStrength: 0.15
     - _Alpha: 0.49
     - _AlphaClip: 0
     - _AlphaClipThreshold: 0
@@ -129,7 +127,7 @@ Material:
     - _DetailNormalMapScale: 1
     - _DitherScale: 1
     - _DitherStrength: 1
-    - _DstBlend: 10
+    - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnableAffineTextureMapping: 1
     - _EnableDithering: 0
@@ -159,7 +157,7 @@ Material:
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _SrcBlend: 5
+    - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
     - _SurfaceType: 1
@@ -171,11 +169,11 @@ Material:
     - _UseSpecular: 0
     - _UseVertexColor: 0
     - _VERTEXJITTERMODE: 1
-    - _VertexPrecision: 32
+    - _VertexPrecision: 64
     - _WorkflowMode: 1
     - _XRMotionVectorsPass: 1
     - _ZTest: 4
-    - _ZWrite: 0
+    - _ZWrite: 1
     - _ZWriteControl: 0
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}

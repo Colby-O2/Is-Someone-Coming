@@ -108,7 +108,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _AddPrecomputedVelocity: 0
-    - _AffineWrapStrength: 0.2
+    - _AffineWrapStrength: 0.15
     - _Alpha: 1
     - _AlphaClip: 0
     - _AlphaClipThreshold: 0
