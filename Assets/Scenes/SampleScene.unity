@@ -5183,6 +5183,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: d6ed3d42cefb72248b792ba5c3d7f7b2, type: 2}
+    - target: {fileID: 2338257604050819290, guid: 20a4e5081170d694da0cb772fd6b6465, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -5.709
+      objectReference: {fileID: 0}
     - target: {fileID: 3356630618064196192, guid: 20a4e5081170d694da0cb772fd6b6465, type: 3}
       propertyPath: managedReferences[5241022807519002696]._settings.HoldDistance
       value: 0.6
